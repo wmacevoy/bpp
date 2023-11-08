@@ -1,0 +1,6 @@
+<html>
+<form name="MyForm">
+     <label id="nameLabel">Name?</label>
+     <input id="nameTextbox" type="textbox" name="nameTextbox" value=""/>
+</form>
+</html>

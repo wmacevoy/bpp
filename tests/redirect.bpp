@@ -1,0 +1,26 @@
+testing redirect.
+#import bpp.Redirect;
+#Redirect.begin("redirect.test1");
+#System.out.println("one");
+#print(1);
+#Redirect.end();
+test 1:
+#cat("redirect.test1");
+#cp("redirect.test1","redirect.test2");
+#Redirect.append("redirect.test2");
+two
+#Redirect.end();
+test 2:
+#cat("redirect.test2");
+#Redirect.begin("redirect.test3");
+here's some stuff.
+#Redirect.begin("redirect.test4");
+oh, and this.
+#Redirect.end();
+and some more stuff.
+#Redirect.end();
+test 3:
+#cat("redirect.test3");
+test 4:
+#cat("redirect.test4");
+done.

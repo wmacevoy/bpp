@@ -1,0 +1,28 @@
+# //
+# // read in our form using JDOM
+# //
+# org.jdom.Element form = 
+#      new org.jdom.input.SAXBuilder().build(
+#         new BufferedInputStream(
+#             new FileInputStream("MyForm.xml")))
+#                .getRootElement();
+#
+# String v(org.jdom.Element element, String attribute) {
+#   return element.getAttributeValue(attribute);
+# }
+<html>
+<form name="$(v(form,"name"))">
+#for(e:form.getChildren("element")) {
+#  String type=v(e,"type");
+#  String name=v(e,"name");
+#  String value=v(e,"value");
+#  if (type.equals("label")) {
+     <label id="$name">$value</label>
+#  } else if (type.equals("textbox")) {
+     <input id="$name" type="textbox" name="$name" value="$value"/>
+#  } else { // throw error at preprocess time...
+#     throw new RuntimeException("Unknown element type: $type");
+#  }
+#} // for each element
+</form>
+</html>

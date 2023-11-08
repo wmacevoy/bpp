@@ -1,0 +1,45 @@
+# //
+# // read in our form using JDOM
+# //
+# org.jdom.Element form = 
+#      new org.jdom.input.SAXBuilder().build(
+#         new BufferedInputStream(
+#             new FileInputStream("MyForm.xml")))
+#                .getRootElement();
+#
+# String v(org.jdom.Element element, String attribute) {
+#   return element.getAttributeValue(attribute);
+# }
+#
+# static import bpp.Format.*;
+
+import java.awt.*;
+import javax.swing.*;
+
+public class $(v(form,"name")) extends JFrame {
+
+// declare components
+//
+#for(e:form.getChildren("element")) {
+#  String type=v(e,"type");
+#  String name=v(e,"name");
+#  String value=v(e,"value");
+# if (type.equals("label")) {
+   JLabel $name = new JLabel($(literal(value)));
+# } else if (type.equals("textbox")) {
+   JTextField $name = new JTextField($(literal(value)));
+# } else { // throw error at preprocess time...
+#   throw new RuntimeException("Unknown element type: $type");
+# }
+#} // for each element
+#
+
+  // add them to the content pane:
+  public void init() {
+    Container cp = getContentPane();
+#for(e:form.getChildren("element")) {
+#   String name=v(e,"name");
+    cp.add($name);
+#} // for each element
+  } // init()
+}

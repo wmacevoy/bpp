@@ -1,0 +1,45 @@
+ //
+ // get some useful Java formatting tools:
+ //
+ static import bpp.Format.*;
+
+ //
+ // use the lang property to get the current language
+ // default is english (en)
+ //
+ String lang=System.getProperty("lang");
+ if (lang==null) lang="en";
+
+ //
+ // read in our dictionary using JDOM
+ //
+ org.jdom.Element dictionary = 
+      new org.jdom.input.SAXBuilder().build(
+         new BufferedInputStream(
+             new FileInputStream("dictionary.xml")))
+                .getRootElement();
+
+ //
+ // stick all the words in a hash map
+ //
+ Map words = new HashMap();
+ for (i:dictionary.getChildren()) { 
+    words.put(i.getAttributeValue("name"),i); 
+ }
+
+
+ // shorthand function for looking up a word
+ // according to its name and encoding it
+ // as a Java string literal
+ String word(String name) { 
+    return literal(words.get(name)
+       .getAttributeValue(lang)); 
+ }
+
+print("public class Greet");
+print("{");
+print("  public static final String LANGUAGE=\""+lang+"\";");
+print("  public String toString() { ");
+print("    return "+(word("helloworld"))+";");
+print("  }");
+print("}");

@@ -1,0 +1,2 @@
+#!/bin/bash
+bpp -a one -a two args0.bpp

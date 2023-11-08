@@ -1,0 +1,18 @@
+
+import java.awt.*;
+import javax.swing.*;
+
+public class MyForm extends JFrame {
+
+// declare components
+//
+   JLabel nameLabel = new JLabel("Name?");
+   JTextField nameTextbox = new JTextField("");
+
+  // add them to the content pane:
+  public void init() {
+    Container cp = getContentPane();
+    cp.add(nameLabel);
+    cp.add(nameTextbox);
+  } // init()
+}

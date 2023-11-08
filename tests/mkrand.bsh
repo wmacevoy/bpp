@@ -1,0 +1,63 @@
+//
+// great UTF encoding summary @
+// http://www.azillionmonkeys.com/qed/unicode.html
+// thanks Paul Hsieh!
+
+public class mkrand {
+  public static void main(String[] args) throws Exception {
+OutputStream out = new BufferedOutputStream(new FileOutputStream("rand.bpp",false));
+
+OutputStream vfy = new BufferedOutputStream(new FileOutputStream("rand.verify",false));
+
+String eols = System.getProperty("line.separator");
+byte[] EOL = new byte[eols.size()];
+for (int k=0; k<EOL.length; ++k) {
+  EOL[k]=(byte)(eols.charAt(k));
+}
+
+for (int line=0; line<1000; ++line) {
+  ByteArrayOutputStream baos=new ByteArrayOutputStream();
+  int codes;
+  if (Math.random()<0.5) {
+    codes = (int)(10*Math.random());
+  } else {
+    codes = (int)(100*Math.random());
+  }
+  boolean quote=false;
+
+  for (i=0; i<codes; ++i) {
+    for (;;) {
+      int utf8= (int)(3*Math.random());
+      int utfcode;
+      switch(utf8) {
+      case 0:
+        utfcode=0x0+(int)((0x80-0x0)*Math.random());
+        if (utfcode == '\n' || utfcode == '\r') continue;
+	if (utfcode == '$' || (i==0 && utfcode=='#')) quote=true;
+	baos.write(utfcode);
+	break;
+      case 1:
+        utfcode=0x80+(int)((0x800-0x80)*Math.random());
+        baos.write((06<<5)&((utfcode & 07700)>>6));
+        baos.write(((02<<6)&((utfcode & 00077))));
+	break;
+      case 2:	
+        utfcode=0x800+(int)((0x10000-0x800)*Math.random());
+	baos.write(((016<<4)&((utfcode & 0770000)>>12)));
+	baos.write(((02<<6)&((utfcode & 0007700)>>6)));
+	baos.write(((02<<6)&((utfcode & 0000077)>>0)));
+	break;
+      }
+      break;
+    }
+  }
+  baos.write(EOL,0,EOL.length);
+  if (quote) out.write('\'');
+  byte[] data = baos.toByteArray();
+  out.write(data,0,data.length);
+  vfy.write(data,0,data.length);
+}
+out.close();
+vfy.close();
+}
+}
