@@ -1,0 +1,13 @@
+#title="BPP: Home Page";
+# source("sourceall.bsh");
+#
+# doctype();
+<html>
+# head();
+  <body>
+#   banner();
+#   menu("Home");
+    <center><img src="logos/Two Beans.jpg" alt="Fancy BPP Logo"/></center>
+#   footer();
+  </body>
+</html>

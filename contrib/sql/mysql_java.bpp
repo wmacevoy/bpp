@@ -1,0 +1,66 @@
+package site.mysql;
+
+
+public class MySQLDB {
+  String name;
+  String hostname;
+  int port;
+  String password;
+}
+
+public class MySQLTableRow {
+  MySQLDB db;
+  String  table;
+  MySQLPrimaryKey id;
+}
+
+public class UserIterator {
+  private Iterator generic;
+  public Iterator generic();
+  public boolean hasNext() { return generic.hasNext(); }
+  public User next() { return (User) generic.next(); }
+  public User insert
+  
+
+}
+public class User extends MySQLTableRow {
+  private MySQLPrimaryKey id;
+  private MySQLString     username;
+  private MySQLPassword   password;
+  private MySQLString     email;
+  private MySQLString     firstname;
+  private MySQLString     lastname;
+  private MySQLString     middleinitial;
+  private MySQLListTableGroup groups;
+
+  public MySQLTableUser()
+  {
+    super("site","user");
+    key = new MySQLPrimaryKey(this,"id");
+    username = new MySQLString(this,"username");
+    password = new MySQLPassword(this,"password");
+    email = new MySQLString(this,"email");
+    firstname = new MySQLString(this,"firstname");
+    lastname = new MySQLString(this,"lastname");
+    middleinitial = new MySQLString(this,"middleinitial");
+    groups = new MySQLListTableGroup(this,"groups");
+  }
+
+  public String getUsername() { return username.get(); }
+  public void setUsername(String _username)   { username.set(_username); }
+  public String getPassword() { return password.get(); }
+  public void setPassword(String _password) { password.set(_password); }
+  public String getEmail() { return email.get(); }
+  public void  setEmail(String _email) { email.set(_email); }
+  public String getFirstname() { return firstname.get(); }
+  public void setFirstname(String _firstname) { firstname.set(_firstname); }
+  public String getLastname() { return lastname.get(); }
+  public void setLastname(String _lastname) { lastname.set(_lastname); }
+  public String getMiddleinitial() { return middleinitial.get(); }
+uu  public void setMiddleinitial(String _middleinitial) { middleinitial.set(_middleinitial); }
+  public MySQLListTableGroup getGroups() { return groups.get(); }
+  public void setMiddleinitial(MySQLListTableGroup _groups) { groups.set(_groups); }
+}
+
+
+

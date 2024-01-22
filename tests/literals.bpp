@@ -1,0 +1,24 @@
+#static import bpp.Format.*;
+#String[] primitives=new String[] { "byte" , "char" , "short" , "int" , "long" , "float" , "double" };
+#for (int i=0; i<primitives.length; ++i) {
+#type=primitives[i];
+defval($type)=$(defval(type))
+#}
+##static import bpp.Format.*;
+#pi=$(literal(Math.PI));
+pi=$pi: $(literal(Math.PI == pi))
+#e=$(literal(Math.exp(1)));
+e=$e: $(literal(Math.exp(1) == e))
+#int failures=0;
+#for (int i=0; i<1000; ++i) {
+#  double x=Math.random()/Math.random();
+#  if (x != Double.parseDouble(literal(x))) {
+x=$x: false!
+#    ++failures;
+#  }
+#}
+$failures failures on 1000 random tests.
+literal('\'')=$(literal(literal('\'')))
+literal("\tHit \'return\' to continue\n")=$(literal(literal("\tHit \'return\' to continue\n")))
+
+

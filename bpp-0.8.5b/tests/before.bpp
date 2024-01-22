@@ -1,0 +1,11 @@
+a=0;
+#b=1;
+##c=2;
+###d=3;
+###sb = new StringBuffer();
+###sb.append(after.after.b);
+##sb = before.sb;
+##sb.append(c);
+#sb = before.sb;
+#sb.append(before.before.d);
+sb=$sb

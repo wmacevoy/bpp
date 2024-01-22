@@ -1,0 +1,63 @@
+## static import bpp.Format.*;
+##
+## class FileComparator implements Comparator {
+##   public int compare(Object _a,Object _b) {
+##     String a=(String) _a;
+##     String b=(String) _b;
+##     int ans;
+##//     System.err.print("compare(" + a + "," + b +")");
+##     int i=0;
+##     int j=0;
+##     for (;;) {
+##       int ca = (i < a.length()) ? a.charAt(i) : -1;
+##       int cb = (j < b.length()) ? b.charAt(j) : -1;
+##       if (ca == -1 || cb == -1) { ans=ca-cb; break; }
+##       if (ca == '.') ca = Integer.MAX_VALUE;
+##	 if (cb == '.') cb = Integer.MAX_VALUE;
+##       ++i; ++j;
+##       if (Character.isDigit((char)ca) || Character.isDigit((char)cb)) {
+##         if (Character.isDigit((char)ca)) {
+##           ca = ca - '0';
+##           while (i<a.length() && Character.isDigit(a.charAt(i))) {
+##             ca = ca*10 + (a.charAt(i)-'0');
+##             ++i;
+##           }
+##         } else {
+##           --i;
+##           ca=0;
+##         }
+##         if (Character.isDigit((char)cb)) {
+##           cb = cb - '0';
+##           while (j<b.length() && Character.isDigit(b.charAt(j))) {
+##             cb = cb*10 + (a.charAt(j)-'0');
+##             ++j;
+##           }
+##         } else {
+##           --j;
+##           cb=0;
+##         }
+##       }
+##       if (ca != cb) { ans=ca-cb; break; }
+##     }
+##//     System.err.println("=" + ans);
+##     return ans;
+##   }
+##   public boolean equals(Object a,Object b) { return a.equals(b); }
+## }
+##
+## String getLatest() {
+##   File [] download  = new File("download").listFiles();
+##   ArrayList versions = new ArrayList();
+##   for (int i=0; i<download.length; ++i) {
+##     if (download[i].isDirectory()) {
+##       String dir = download[i].toString();
+##       if (!dir.endsWith("-")) {
+##         versions.add(dir);
+##       }
+##     }
+##   }
+##   Collections.sort(versions,new FileComparator());
+##   String latest = versions.get(versions.size()-1);
+##   return latest.replaceAll("\\\\","/");
+## }
+#String LATEST=$(literal(getLatest()));

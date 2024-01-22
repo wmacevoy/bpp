@@ -1,0 +1,58 @@
+//
+// Although a little unconventional, RedirectBegin() and
+// RedirectEnd() allow for output stream redirection in
+// beanshell.  
+//
+// This is handy for generating multiple output files 
+// from one preprocessor script.  Use is simple enough:
+//
+// source("redirect.bsh");
+// RedirectBegin("there.dat");
+// print("there"); // shows up in "there.dat"
+// RedirectEnd("there.dat");
+// print("here"); // shows up on console
+// 
+// The name of the RedirectEnd() must match the name of the RedirectBegin().
+// there are a few globals starting with Redirect:
+//
+//   RedirectSaveOut
+//   RedirectSaveCurrent
+//   RedirectSaveFile
+//
+// These should not be fooled with directly.
+//
+
+PrintStream RedirectSaveOut=null;
+PrintStream RedirectSaveCurrent=null;
+String RedirectSaveFile=null;
+
+void RedirectBegin(String file,boolean append) {
+  if (RedirectSaveOut != null) {
+    throw new RuntimException("already redirected!");
+  }
+  RedirectSaveOut=System.out;
+  RedirectSaveFile=file;
+  RedirectSaveCurrent=new PrintStream(new BufferedOutputStream(new FileOutputStream(file,append)),false,"UTF-8");
+  this.interpreter.setOut(RedirectSaveCurrent);
+}
+
+void RedirectBegin(String file) {
+  RedirectBegin(file,false);
+}
+
+void RedirectAppend(String file) {
+  RedirectBegin(file,true);
+}
+
+void RedirectEnd(String file) {
+  if (RedirectSaveOut == null) {
+    throw new RuntimeException("end redirect without matching begin!");
+  }
+  if (!RedirectSaveFile.equals(file)) {
+    throw new RuntimeException("began redirect on " + RedirectSaveFile + ", but ended on " + file + "!");
+  }
+  RedirectSaveCurrent.close();
+  this.interpreter.setOut(RedirectSaveOut);
+  RedirectSaveOut=null;
+  RedirectSaveFile=null;
+}

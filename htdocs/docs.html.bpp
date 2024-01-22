@@ -1,0 +1,16 @@
+#title="BPP: Documentation";
+# source("sourceall.bsh");
+#
+# doctype();
+<html>
+# head();
+  <body>
+#   banner();
+#   menu("Docs");
+<p><a href="doc/article/index.html"><b>JDJ article</b></a>.  This is an introduction to BPP for the Java Developer's Journal.  <font color="red">This <i>draft</i> article uses out of date syntax.  See the actual JDJ for current syntax.</font></p>
+<p><a href="$LATEST/doc/tutorial/index.html"><b>BPT: The Beanshell Preprocessor Tutorial</b></a>.  A good place to start.</p>
+<p><a href="$LATEST/doc/javadoc/index.html"><b>Javadocs</b></a>.  Mostly for BPP developers, but <a href="$LATEST/doc/javadoc/bpp/Format.html"><tt>bpp.Format</tt></a> and <a href="$LATEST/doc/javadoc/bpp/BPP.html"><tt>bpp.BPP</tt></a> have useful information for developers using BPP.</p>
+
+#   footer();
+  </body>
+</html>

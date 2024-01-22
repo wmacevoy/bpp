@@ -1,0 +1,49 @@
+# static import bpp.Format.*;
+# source("sourceall.bsh");
+# title="BPP: Download";
+#
+# long filesize(String filename) { return new File(filename).length(); }
+#
+# String md5sum(String filename) {
+#   java.security.MessageDigest md5 = java.security.MessageDigest.getInstance("MD5");
+#   BufferedInputStream in = new BufferedInputStream(new FileInputStream(filename));
+#   byte[] block = new byte[64*1024];
+#   for (;;) {
+#     int bytes=in.read(block);
+#     if (bytes<=0) break;
+#     md5.update(block,0,bytes);
+#   }
+#   byte[] digest = md5.digest();
+#   StringBuffer ans = new StringBuffer();
+#   for (int i=0; i<digest.length; ++i) {
+#     int digit=0xFF & digest[i];
+#     if (i!=0) ans.append(":");
+#     if (digit < 0x10) ans.append("0");
+#     ans.append(Integer.toHexString(digit));
+#   }
+#   return ans.toString();
+# }
+#
+# String link(String filename) {
+#   StringWriter outs=new StringWriter(); 
+#   PrintWriter out=new PrintWriter(outs);
+   <a href="$filename">$filename (size=$(N(filesize(filename)/1024.0,"#.0"))kb, md5=$(md5sum(filename)))</a>
+#   out.close();
+#   return outs.toString(); 
+# }
+#
+<html>
+# head();
+  <body>
+#   banner();
+#   menu("Download");
+<p>Here are the latest downloads from <a href="$LATEST/">$LATEST/</a>:
+<ul>
+  <li>Binary (jar) file only: $(link(LATEST+"/bpp.jar"))</li>
+  <li>Windows-style source zip file: $(link(LATEST+".zip"))</li>
+  <li>BZ2-compressed tar file: $(link(LATEST+".tar.bz2"))</li>
+</ul>
+See the <a href="http://sourceforge.net/project/showfiles.php?group_id=102406">bpp project download page</a> for all downloads.</p>
+#   footer();
+  </body>
+</html>

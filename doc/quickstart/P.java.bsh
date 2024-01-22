@@ -1,0 +1,19 @@
+out.println("//");
+{out.print("// ");out.print(BPP.source);out.print(" -> ");out.print(BPP.destination);out.print(" on ");out.println(new Date());}
+out.println("//");
+out.println("public class P {");
+
+String[] streams = new String[] { "out","err" };
+String[] types = new String[] { "boolean","int","long","double","Object" };
+
+for (int i=0; i<streams.length; ++i) {
+ String stream=streams[i];
+ for (int j=0; j<types; ++j) {
+   String type = types[j];
+{out.print("  public final void ");out.print(stream);out.print("(");out.print(type);out.println(" value) ");}
+out.println("  {");
+{out.print("    System.");out.print(stream);out.println(".print(value);");}
+out.println("  }");
+ } // for types
+} // for streams
+out.println("}");

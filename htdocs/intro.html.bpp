@@ -1,0 +1,20 @@
+#title="BPP: Introduction";
+# source("sourceall.bsh");
+#
+# doctype();
+<html>
+# head();
+  <body>
+#   banner();
+#   menu("Intro");
+<p><b>BPP</b> is a tool for Java developers to use Java as a preprocessor. It is a single executable jar file that works with <a href="http://www.beanshell.org">beanshell</a> to create a flexible and powerful preprocessing environment.</p>
+
+<p><b>BPP</b> is a <i>Symmetric Preprocessor</i>.  This means the preprocessor is essentially the <i>same</i> as the host language, including the fact that it has a preprocessor, ad. infinitum.  For developers who know the host language, they can now benefit from using the same language as a preprocessor.</p>
+
+<p>The illustration summarizes it all:  Bob(##) builds Pat(#) who paints Pam.  Bob and Pat represent the first and second preprocessor stages.  The goal of the higher preprocessor is to build the source file for the next stage.  Most preprocessing requires only one level, but BPP gives you the flexibility of as many levels as you need.</p>
+
+<p>If you want more information, I suggest you check out the <a href="docs.html">documentation</a>, especially <a href="$LATEST/doc/tutorial">BPT: The Beanshell Preprocessor Tutorial</a>.
+
+#   footer();
+  </body>
+</html>

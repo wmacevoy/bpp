@@ -1,0 +1,8 @@
+#!/bin/bash
+export CVS_RSH=ssh
+for d in tests doc src
+do
+  echo "checking out $d..."
+  cvs -d:ext:wmacevoy@cvs.sourceforge.net:/cvsroot/bpp checkout $d
+  rm -rf $d/commit.txt
+done

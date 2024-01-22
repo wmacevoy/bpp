@@ -1,0 +1,18 @@
+#title="BPP: Contact";
+# source("sourceall.bsh");
+#
+# doctype();
+<html>
+# head();
+  <body>
+#   banner();
+#   menu("Contact");
+<p>Please use the forums hosted on the main sourceforge site for questions or discussions with other users:
+<ul>
+<a href="http://www.sourceforge.net/projects/bpp">http://www.sourceforge.net/projects/bpp</a>
+</ul>
+In particular, there are lists for developers and users you may find of use.
+</p>
+#   footer();
+  </body>
+</html>

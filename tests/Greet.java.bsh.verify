@@ -36,10 +36,10 @@
        .getAttributeValue(lang)); 
  }
 
-print("public class Greet");
-print("{");
-print("  public static final String LANGUAGE=\""+lang+"\";");
-print("  public String toString() { ");
-print("    return "+(word("helloworld"))+";");
-print("  }");
-print("}");
+out.println("public class Greet");
+out.println("{");
+{out.print("  public static final String LANGUAGE=\"");out.print(lang);out.println("\";");}
+out.println("  public String toString() { ");
+{out.print("    return ");out.print(word("helloworld"));out.println(";");}
+out.println("  }");
+out.println("}");

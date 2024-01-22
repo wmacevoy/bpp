@@ -1,0 +1,525 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BPT: The Beanshell Preprocessor Tutorial</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id5385409"></a>BPT: The Beanshell Preprocessor Tutorial</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Warren</span> <span class="surname">MacEvoy</span></h3></div></div><div><p class="copyright">Copyright © 2004 Warren D. MacEvoy jr.</p></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#id5385444">Introduction</a></span></dt><dt><span class="chapter"><a href="#id5385645">1. A (yawn) preprocessor?</a></span></dt><dt><span class="chapter"><a href="#id5385682">2. Installation</a></span></dt><dt><span class="chapter"><a href="#id5385820">3. Caio Mondo!</a></span></dt><dt><span class="chapter"><a href="#id5386033">4. BPK: The Beanshell Preprocessor Katas, White Belt</a></span></dt><dt><span class="chapter"><a href="#id5386727">5. BPK: The Beanshell Preprocessor Katas, Green Belt</a></span></dt><dt><span class="appendix"><a href="#id5387123">A. Docbook</a></span></dt></dl></div><div class="list-of-tables"><p><b>List of Tables</b></p><dl><dt>4.1. <a href="#id5386389">BPP to Beanshell translation</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385444"></a>Introduction</h2></div></div><div></div></div><p>
+The Beanshell Preprocessor, or BPP for short, is the first of a type of preprocessor known as a <span class="emphasis"><em>symmetric</em></span> preprocessor.  It allows  <span class="trademark">Java</span>&#8482; programmers to use all of Java as a preprocessor for either Java source files or to produce other text (possibly unicode) documents.
+</p><p>
+The fact that you can use a full-featured language such as Java as a preprocessor greatly strengthens the expressiveness available in the preprocessor.  The same idea could be applied to other programming languages; but so far only Perl has a similar preprocessing language (see <span class="emphasis"><em>PerlPP: CPP on Steriods</em></span> in the Linux Gazette).  The real value of using the preprocessor is to leverage skills: if you already <span class="emphasis"><em>know</em></span> Java, then, in the short time it takes to read and understand this tutoral, you will know how to use Java to write Java, XML, HTML, SQL or COBOL for that matter.
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385645"></a>Chapter 1. A (yawn) preprocessor?</h2></div></div><div></div></div><p>
+Yes, BPP is a preprocessor.  Its intention is to take marked up (mostly ASCII) text documents and produce similar (but somehow better) text documents, which are also probaly also mostly ASCII.
+</p><p>
+Didn't preprocessors die out a long time ago?  Yes and no.  If <span class="emphasis"><em>preprocessor</em></span> makes you think of M4 and CPP, then there hasn't been much innovation in those kind of preprocessors for some time.  If you think of JSP, PHP and XSLT, you might realize that automated preprocessing is alive and kicking, but changed its name to keep away from the Unfashionable Lingo police.
+</p><p>
+BPP can be thought of as an extraordinarily superior version of the C preprocessor for the Java programming language.  I know that sounds like an unsupportable claim, but you can be the judge after reading this tutorial.
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385682"></a>Chapter 2. Installation</h2></div></div><div></div></div><p>
+BPP uses Java, Beanshell, and some of the examples in this tutorial use JDOM.  You can get the latest JDK from Sun at <a href="http://java.sun.com" target="_top">java.sun.com</a>.  Beanshell is a Java interpreter available from <a href="http://beanshell.org" target="_top">beanshell.org</a>, and JDOM is a Java XML document object model available from <a href="http://www.jdom.org" target="_top">www.jdom.org</a>.  The versions available at the time of writing this tutorial are:  JDK SE 1.4.2_03, Beanshell 2.0b1, and JDOM Beta 10.  BPP is available from SourceForge at <a href="http://bpp.sourceforge.net" target="_top">bpp.sourceforge.net</a>.
+</p><p>
+Beyond the JDK, each of the other components arrive as jar files.  BPP is itself an executable jar file, and as such may be run with the -jar option.  BPP relies on beanshell, and so beanshell's jar file (bsh-2.0b1.jar) must be in the class path for BPP to work properly.  The XML examples use JDOM, and so for those to work JDOM's jar file (jdom.jar) must also be in your class path.
+</p><p>
+If Java is set up properly, then typing <tt class="code">java -version</tt> at the console should produce version information.  See the documentation on Sun's website (or the thousands of other resources on the net) if you are having trouble getting Java to work.
+</p><p>
+Once java is set up, you can check to see if beanshell is working properly by typing,
+</p><pre class="screen">
+java -cp <span class="emphasis"><em>class_path_to_beanshell_and_jdom</em></span> bsh.Console
+</pre><p>
+To check that beanshell sees JDOM, type <tt class="code">d=new org.jdom.Document();</tt> in the beanshell console.  Beanshell should respond with no errors.  BPP uses beanshell indirectly, so you can close the console for now.
+</p><p>
+Finally, you can check if BPP is properly set up.  Create a file called <tt class="code">hello.bpp</tt> containing:
+</p><pre class="programlisting">
+#name=&quot;World&quot;;
+#greet=&quot;Hello&quot;;
+$greet, $name!
+
+</pre><p>
+Type 
+</p><pre class="screen">
+java -cp <span class="emphasis"><em>class_path_to_beanshell</em></span> -jar <span class="emphasis"><em>path_to_bp</em></span>/bpp.jar hello.bpp
+</pre><p>
+If this works correctly, then you have just created a file named <tt class="code">hello</tt> containing:
+</p><pre class="programlisting">
+Hello, World!
+
+</pre><p>
+</p><p>
+Contratulations! We are now ready to explore the power and expressiveness of BPP.
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385820"></a>Chapter 3. Caio Mondo!</h2></div></div><div></div></div><p>
+Suppose you wanted to deliver an application in various <span class="emphasis"><em>specific</em></span> languages.  The product you deliver to your customer is a simple small application with information in thier language, without the bulk and burden of carrying information about <span class="emphasis"><em>all</em></span> languages.  Consider this modified &quot;hello world&quot; program, presumably written in <tt class="code">HelloWorld.java.bpp</tt>:
+</p><pre class="programlisting">
+# //
+# // get some useful Java formatting tools:
+# //
+# static import bpp.Format.*;
+#
+# //
+# // use the lang property to get the current language
+# // default is english (en)
+# //
+# String lang=System.getProperty(&quot;lang&quot;);
+# if (lang==null) lang=&quot;en&quot;;
+#
+# //
+# // read in our dictionary using JDOM
+# //
+# org.jdom.Element dictionary = 
+#      new org.jdom.input.SAXBuilder().build(
+#         new BufferedInputStream(
+#             new FileInputStream(&quot;dictionary.xml&quot;)))
+#                .getRootElement();
+#
+# //
+# // stick all the words in a hash map
+# //
+# Map words = new HashMap();
+# for (i:dictionary.getChildren()) { 
+#    words.put(i.getAttributeValue(&quot;name&quot;),i); 
+# }
+#
+#
+# // shorthand function for looking up a word
+# // according to its name and encoding it
+# // as a Java string literal
+# String word(String name) { 
+#    return literal(words.get(name)
+#       .getAttributeValue(lang)); 
+# }
+#
+public class HelloWorld
+{
+  public static final String LANGUAGE=&quot;$lang&quot;;
+  public static void main(String [] args) 
+  {
+    System.out.println($(word(&quot;helloworld&quot;)));
+  }
+}
+
+</pre><p>
+Now create the <tt class="code">dictionary.xml</tt> file with the following contents:
+</p><pre class="programlisting">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;dictionary&gt;
+  &lt;word name=&quot;helloworld&quot; 
+    en=&quot;Hello World!&quot; 
+    it=&quot;Ciao Mondo!&quot; 
+    ru=&quot;&amp;#x043F;&amp;#x0440;&amp;#x0438;&amp;#x0432;&amp;#x0435;&amp;#x0442; &amp;#x043C;&amp;#x0438;&amp;#x0440;&quot;
+  /&gt;
+&lt;/dictionary&gt;
+
+</pre><p>
+You may now produce an English, Italian, and Russian version of HelloWorld with:
+</p><pre class="screen">
+java -Dlang=<span class="emphasis"><em>lang</em></span> -cp <span class="emphasis"><em>class_path_to_beanshell</em></span> -jar <span class="emphasis"><em>path_to_bpp</em></span>/bpp.jar HelloWorld.java.bpp
+</pre><p>
+Note that each time you run BPP, it will overwrite <tt class="code">HelloWorld.java</tt> with a new version.  You can redirect the ouput of BPP with the <tt class="code">-o</tt> option if you want to.  For example:
+</p><pre class="screen">
+java -Dlang=it -cp <span class="emphasis"><em>class_path_to_beanshell</em></span> -jar <span class="emphasis"><em>path_to_bpp</em></span>/bpp.jar -o it/HelloWorld.java HelloWorld.java.bpp
+</pre><p>
+</p><p>Let's look at the Java source file generated as the Italian translation:
+</p><pre class="programlisting">
+public class HelloWorld
+{
+  public static final String LANGUAGE=&quot;it&quot;;
+  public static void main(String [] args)
+  {
+    System.out.println(&quot;Ciao Mondo&quot;);
+  }
+}
+
+</pre><p>
+There are several important points here:
+</p><div class="itemizedlist"><ul type="disc"><li>  
+First, the code does not suffer from any bloat: it can be built and distributed independently of JDOM, XML, or BPP.  Even though it takes advantage of all three in the build process.
+</li><li>
+Second, there is no run-time overhead for the language support.  Most solutions to this ship <span class="emphasis"><em>all</em></span> the languages and looks up specific entries at run time.  All the table creation and lookups happen at build time with BPP.
+</li><li>
+Third, if a competitor got all of the versions of the HelloWorld source files (or reverse engineered the class files), they would still have no particular insight as to how you support three languages in your application.  A typical distribution would allow a competitor to reverse engineer your IP and deliver an application in a similarly economic way.
+</li><li>
+Fourth, there is absolutely no possibility of doing this using a simple preprocessor like CPP.  At least, last time I checked I could not read in an XML document and stuff it in a hash table in CPP.
+</li><li>
+Fifth, the preprocessor code is just Java (well, Beanshell) code with a <tt class="code">#</tt> in front of it.  That means all the tools and tricks you have built up for Java you may now use to <span class="emphasis"><em>write</em></span> Java.
+</li></ul></div><p>
+These are all significant payoffs.  Now aren't you glad that you read up to here?
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5386033"></a>Chapter 4. BPK: The Beanshell Preprocessor Katas, White Belt</h2></div></div><div></div></div><div class="abstract"><p class="title"><b>Abstract</b></p>
+The basics of Beanshell, a simplfied anatomy of BPP, and one post-mortem.
+</div><p>
+Seeing something happen isn't as easy as making it happen (and you haven't seen everything anyway), so lets start with some simple exercises to get the basic ideas.  We will move on to some power tools later on.
+</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id5386053"></a>Beanshell</h3></div></div><div></div></div><p>
+I mentioned already that BPP uses beanshell under the hood.  If you are familar with Java it should take you a very short time to become familar with Beanshell, and there are some excellent tutorials on the <a href="http://www.beanshell.org" target="_top">official beanshell website</a>.  However, here are a few samples good enough to get through this tutorial on BPP.
+</p><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id5386077"></a>Beanshell example 1: Hello World, version 3</h4></div></div><div></div></div><p>
+Writing a console application in Java takes a bit of typing.  Here is <tt class="code">hello.bsh</tt>:
+</p><pre class="programlisting">
+print(&quot;hello world!&quot;);
+
+</pre><p>
+You can run this by typing the above into the beanshell console, or directly interpret it with
+</p><pre class="screen">
+java -cp <span class="emphasis"><em>class_path_to_beanshell</em></span> bsh.Interpreter hello.bsh
+</pre><p>
+</p><p>
+In short, Beanshell is a get-to-the-point Java.  It allows you to use native Java in an interpreted environment, and is written in Java.  In the example above, <tt class="code">print(&quot;hello world&quot;)</tt> in Beanshell is equivalent to <tt class="code">System.out.println(&quot;hello world&quot;)</tt>, and there are a number of other useful shorthand notations as well, but if you write Java statements beanshell will interpret them the same way Java does.
+</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id5386129"></a>Beanshell example 2: Types</h4></div></div><div></div></div><p>
+One important simplification Beanshell supports is the idea of an &quot;any&quot; type.  &quot;Any&quot; types are simply used without a declaration, and take on whatever value is assigned to them.  For example, running
+</p><pre class="programlisting">
+x=1
+print(&quot;x=&quot;+x);
+x=&quot;two&quot;
+print(&quot;x=&quot;+x);
+x=new Date();
+print(&quot;x=&quot;+x);
+
+</pre><p>
+will produce
+</p><pre class="screen">
+x=1
+x=two
+x=Tue Feb 17 12:53:30 MST 2004
+</pre><p>
+&quot;Wait!&quot; You say.  What about type safety?  Java saves my cookies all the time by remembering what is what.  You <span class="emphasis"><em>can</em></span> declare <tt class="code">x</tt> and give it a type and Beanshell will check its type during assignments, but you <span class="emphasis"><em>don't have to</em></span>.  You can also set strict java modes if you are paranoid.  Don't be too paranoid in the preprocessor; any bad code generated by the preprocessor must also pass the plain old java compiler.
+</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id5386174"></a>Beanshell example 3: JDK 1.5 extensions</h4></div></div><div></div></div><p>
+There are two convenient syntaxes which will be supported in the JDK 1.5 that beanshell already supports.  The first is the idea of a <tt class="code">static import</tt>, and the second is an iterator over a collection notation.  These two extensions are illustrated in the following:
+</p><pre class="programlisting">
+// get static methods and values from the java.Math class
+static import java.lang.Math.*;
+
+x=cos(PI/6); // JDK1.5 extension
+y=Math.sin(Math.PI/6); // the old painful way.
+
+print(&quot;(x,y)=(&quot; + x + &quot;,&quot; + y + &quot;)&quot;); 
+
+// Make a list of things:
+list = new LinkedList();
+list.add(&quot;thing one&quot;);
+list.add(&quot;thing two&quot;);
+
+// print out the things:
+for(item:list) print(&quot;new: &quot;+ item); // JDK1.5 extension
+
+// print out the things the old way
+for (Iterator i=list.iterator(); i.hasNext(); ) {
+  item=i.next();
+  print(&quot;old: &quot;+item);
+}
+
+</pre><p>
+Running this example through beanshell produces the output
+</p><pre class="screen">
+(x,y)=(0.8660254037844387,0.49999999999999994)
+new: thing one
+new: thing two
+old: thing one
+old: thing two
+</pre><p>
+Most people aren't paid more to type more, and the new syntax is easier to read, so why not use it?
+</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id5386207"></a>Beanshell example 4: Downcasts and exceptions.</h4></div></div><div></div></div><p>
+I slipped something by you on the last example.  I assign a <tt class="code">LinkedList</tt> to an &quot;any&quot; type variable called <tt class="code">list</tt>.  Later on, I ask for <tt class="code">list.iterator()</tt>.  Generally speaking, I might get a <tt class="code">ClassCastException</tt> if I had, say, made <tt class="code">list</tt> an array instead.  There are several aspects of loosening up strict java syntax here:
+</p><div class="itemizedlist"><ul type="disc"><li>Beanshell uses reflection to invoke methods and inspect or change attributes.  This means that, if you know a list contains only <tt class="code">StringBuffer</tt> elements, you can append an &quot;x&quot; to each of them with:
+<pre class="programlisting">
+for(item:list) item.append(&quot;x&quot;);
+
+</pre>
+Instead of the standard Java:
+<pre class="programlisting">
+for(Iterator i=list.iterator(); i.hasNext(); ) {
+  StringBuffer item = (StringBuffer)i.next();
+  item.append(&quot;x&quot;);
+}
+
+</pre>
+In the beanshell specific example, you will get an exception if the list contains an object with no appropriate <tt class="code">append()</tt> method.  This is an example of automatic down-casting, which isn't automatic in plain Java.
+</li><li>Beanshell allows you to invoke a method without necessarily catching any exceptions that might be thrown.  Again, you <span class="emphasis"><em>can</em></span> write <tt class="code">try .. catch</tt> blocks, but if you don't, and no exceptions are thrown, the script will execute fine.  For example, working with files usually requires that you account for <tt class="code">IOException</tt> exceptions ocurring, but in beanshell you can write a script that ignores those possibilities.  Such a script will generate a <tt class="code">RuntimeException</tt> if an exception happens.
+</li></ul></div><p>
+</p><p>
+Beanshell is an extremely useful tool independently of BPP, and you will need to be modestly comfortable with it before understanding and using BPP.  I suggest you spend a little time working through some tutorials on Beanshell.  It is sure to get into your development process somewhere.
+</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id5386344"></a>A simplified reduction of BPP.</h3></div></div><div></div></div><p>
+Let me begin by stating that I am lying to you.  BPP does more than what you will read in this section, but it is a convenient jumping-off point for understanding BPP.
+</p><p>Let's begin by inspecting what BPP does to transform the <tt class="code">HelloWorld.java.bpp</tt> BPP source file into the <tt class="code">HelloWorld.java</tt> java source file.  You can see this by running BPP with the <tt class="code">-b</tt> option; which means &quot;generate a beanshell script, but don't execute it.&quot;  On the left is the origional source file (<tt class="code">HelloWorld.java.bpp</tt>) and on the right is the generated beanshell script (<tt class="code">HelloWorld.java.bsh</tt>):
+</p><div class="table"><a name="id5386389"></a><p class="title"><b>Table 4.1. BPP to Beanshell translation</b></p><table summary="BPP to Beanshell translation" border="1"><colgroup><col><col></colgroup><thead><tr><th align="left"><tt class="code">HelloWorld.java.bpp</tt></th><th align="left"><tt class="code">HelloWorld.java.bsh</tt></th></tr></thead><tbody><tr><td align="left"><pre class="programlisting">
+# //
+# // get some useful Java formatting tools:
+# //
+# static import bpp.Format.*;
+#
+# //
+# // use the lang property to get the current language
+# // default is english (en)
+# //
+# String lang=System.getProperty(&quot;lang&quot;);
+# if (lang==null) lang=&quot;en&quot;;
+#
+# //
+# // read in our dictionary using JDOM
+# //
+# org.jdom.Element dictionary = 
+#      new org.jdom.input.SAXBuilder().build(
+#         new BufferedInputStream(
+#             new FileInputStream(&quot;dictionary.xml&quot;)))
+#                .getRootElement();
+#
+# //
+# // stick all the words in a hash map
+# //
+# Map words = new HashMap();
+# for (i:dictionary.getChildren()) { 
+#    words.put(i.getAttributeValue(&quot;name&quot;),i); 
+# }
+#
+#
+# // shorthand function for looking up a word
+# // according to its name and encoding it
+# // as a Java string literal
+# String word(String name) { 
+#    return literal(words.get(name)
+#       .getAttributeValue(lang)); 
+# }
+#
+public class HelloWorld
+{
+  public static final String LANGUAGE=&quot;$lang&quot;;
+  public static void main(String [] args) 
+  {
+    System.out.println($(word(&quot;helloworld&quot;)));
+  }
+}
+
+</pre></td><td align="left"><pre class="programlisting">
+ //
+ // get some useful Java formatting tools:
+ //
+ static import bpp.Format.*;
+
+ //
+ // use the lang property to get the current language
+ // default is english (en)
+ //
+ String lang=System.getProperty(&quot;lang&quot;);
+ if (lang==null) lang=&quot;en&quot;;
+
+ //
+ // read in our dictionary using JDOM
+ //
+ org.jdom.Element dictionary = 
+      new org.jdom.input.SAXBuilder().build(
+         new BufferedInputStream(
+             new FileInputStream(&quot;dictionary.xml&quot;)))
+                .getRootElement();
+
+ //
+ // stick all the words in a hash map
+ //
+ Map words = new HashMap();
+ for (i:dictionary.getChildren()) { 
+    words.put(i.getAttributeValue(&quot;name&quot;),i); 
+ }
+
+
+ // shorthand function for looking up a word
+ // according to its name and encoding it
+ // as a Java string literal
+ String word(String name) { 
+    return literal(words.get(name)
+       .getAttributeValue(lang)); 
+ }
+
+print(&quot;public class HelloWorld&quot;);
+print(&quot;{&quot;);
+print(&quot;  public static final String LANGUAGE=\&quot;&quot;+lang+&quot;\&quot;;&quot;);
+print(&quot;  public static void main(String [] args) &quot;);
+print(&quot;  {&quot;);
+print(&quot;    System.out.println(&quot;+(word(&quot;helloworld&quot;))+&quot;);&quot;);
+print(&quot;  }&quot;);
+print(&quot;}&quot;);
+
+</pre></td></tr></tbody></table></div><p>
+At the first level, 
+</p><div class="itemizedlist"><ul type="disc"><li>All lines which begin with a <tt class="code">#</tt> are copied to the beanshell script verbatim (except for the <tt class="code">#</tt> itself).</li><li>Other normal lines are translated into <tt class="code">print()</tt> statements, which, if executed, reproduce the origional line of text.</li><li><tt class="code"><span class="emphasis"><em>$JAVA_IDENTIFIER</em></span></tt> and <tt class="code"><span class="emphasis"><em>$(JAVA_EXPRESSION)</em></span></tt> are translated in a magical way so that values in the beanshell script can be easily used to generate text output.</li></ul></div><p>
+</p><p>
+Executing the script on the right will produce the various versions of the HelloWorld class given the proper <tt class="code">lang</tt> system property.  However, it is easier to <span class="emphasis"><em>maintain</em></span> the BPP code on the left, because it knows how to encode odd characters like the double quote without you worrying about it.
+</p><p>Without the <tt class="code">-b</tt> option, BPP generates and executes the beanshell script on the right (without ever explicitly creating the file <tt class="code">HelloWorld.java.bsh</tt>).  For a number of substantial problems, this is enough to use BPP effectively.</p><p>Knowing this allows us to simplify the maintenence of several source files all of which have to allow for various language translations.  Since reading the dictionary is a common feature of such an application, it would be smarter to have a single beanshell source file with the dictionary code in it, called <tt class="code">dictionary.bsh</tt>:
+</p><pre class="programlisting">
+//
+// get some useful Java formatting tools:
+//
+static import bpp.Format.*;
+
+//
+// use the lang property to get the current language
+// default is english (en)
+//
+String lang=System.getProperty(&quot;lang&quot;);
+if (lang==null) lang=&quot;en&quot;;
+
+//
+// read in our dictionary using JDOM
+//
+org.jdom.Element dictionary = 
+     new org.jdom.input.SAXBuilder().build(
+        new BufferedInputStream(
+            new FileInputStream(&quot;dictionary.xml&quot;)))
+               .getRootElement();
+
+//
+// stick all the words in a hash map
+//
+Map words = new HashMap();
+for (i:dictionary.getChildren()) { 
+   words.put(i.getAttributeValue(&quot;name&quot;),i); 
+}
+
+
+// shorthand function for looking up a word
+// according to its name and encoding it
+// as a Java string literal
+String word(String name) { 
+   return literal(words.get(name)
+      .getAttributeValue(lang)); 
+}
+
+</pre><p>
+With this handy file, the typical translated source file would look like:
+</p><pre class="programlisting">
+#
+# source(&quot;dictionary.bsh&quot;);
+#
+public class HelloWorld2
+{
+  public static final String LANGUAGE=&quot;$lang&quot;;
+  public static void main(String [] args) 
+  {
+    System.out.println($(word(&quot;helloworld&quot;)));
+  }
+}
+
+</pre><p>
+If you are new to Beanshell, think that <tt class="code">source()</tt> in beanshell is equivalent to <tt class="code">#include</tt> in the C preprocessor.
+Now it looks almost like plain Java, and we have seperated any details about our dictionary support to one script file and one dictionary.  A production-level solution in a few dozen lines of code.
+</p><p>
+A few parting words before I let the translate-at-preprocess-time idea go.  First, for a large dictionary, a better solution would be to use a database to store the translations.  In our model that only implies changing the contents of the <tt class="code">dictionary.bsh</tt> file to reflect using JDBC to access the new flavor of dictionary.  If you are used to the power of the C preprocessor, you probably see how BPP broadens your vision what a preprocessor can do for you.
+</p><p>
+In the next Chapter, we'll talk about generating other kinds of source files (like C programs) using BPP.  This will bring a few more details about BPP syntax for non-default translation rules.
+</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5386727"></a>Chapter 5. BPK: The Beanshell Preprocessor Katas, Green Belt</h2></div></div><div></div></div><div class="abstract"><p class="title"><b>Abstract</b></p>
+Cross-dressing and hints.
+</div><p>
+Suppose you wanted certain &quot;unusual&quot; numerical constants to be defined in a C program, but defined in such a way that these constants were computed at compile time.  The natural place to put these in a C program is in a header file.  As an example, suppose we wanted something along the lines of the following header file <tt class="code">MyConstants.h</tt>:
+</p><pre class="programlisting">
+#ifndef MY_CONSTANTS_H
+#define MY_CONSTANTS_H
+
+#define X 12.0
+#define CUBE_ROOT_X   2.2894284851066637356160844238794
+#define SINE_X       -0.536572918004349716653742282424
+
+#endif
+
+</pre><p>
+The problem with this technique is pretty obvious:  there is no way to inspect the correctness of this header file.  In fact it is wrong; the correct value to <tt class="code">SINE_X</tt> is <tt class="code">-0.536572918<span class="emphasis"><em>000</em></span>4349716653742282424</tt> (three zeros instead of two).  This could easily happen with an accidental press of the delete key and would create a very subtle error.  How about this instead (now defined in <tt class="code">MyConstants.h.bpp</tt>, and not yet quite correct):
+</p><pre class="programlisting">
+#static import java.lang.Math.*;
+#static import bpp.Format.*;
+#ifndef MY_CONSTANTS_H
+#define MY_CONSTANTS_H
+
+#x=12.0
+
+#define X $(literal(x))
+#define CUBE_ROOT_X   $(literal(pow(x,1.0/3.0)))
+#define SINE_X        $(literal(sin(x)))
+
+#endif
+
+</pre><p>
+How much more confident would you be about the correctness of the results of this header file?  If it <span class="emphasis"><em>worked</em></span> that is.  This source file suffers from a conflict of interest: are the <tt class="code">#</tt> symbols in column 1 indicating something for the C preprocessor (lines 3 and 4), or BPP (lines 1 and 2)?
+</p><p>
+BPP has some syntax to clear this up.  Here are some more detailed translation rules (yes, I'm still leaving some things out):
+</p><div class="itemizedlist"><ul type="disc"><li>
+Lines with a <tt class="code">#</tt> (pound) in column 1 have the remainder of the line copied exactly to the Beanshell script.  For example,
+<pre class="programlisting">
+#static import bpp.Format.*;
+
+</pre>
+will be translated into the beanshell code:
+<pre class="programlisting">
+static import bpp.Format.*;
+
+</pre>
+This is the problem rule for the example.  The C preprocessor likes to interpret <tt class="code">#</tt>-signs too, which compells us to put <tt class="code">#</tt>-signs in column 1 for other reasons.  How do we tell BPP to leave these lines alone?  There are two <span class="emphasis"><em>explicit</em></span> translation rules to force BPP to make other choices.
+</li><li>
+Lines with a <tt class="code">&quot;</tt> (double quote) in column 1 are forced to translate the remainder of the line <span class="emphasis"><em>magically</em></span>, which means to convert it into a print statement, accounting for <tt class="code">$JAVA_IDENTIFIER</tt> and <tt class="code">$(JAVA_EXPRESSION)</tt>.  For example,
+<pre class="programlisting">
+&quot;#define X $x
+&quot;  String LANGUAGE=&quot;$lang&quot;;
+&quot;  System.out.println($(word(&quot;helloworld&quot;)));
+
+</pre>
+will be translated into the beanshell code:
+<pre class="programlisting">
+print(&quot;#define X &quot;+x);
+print(&quot;  String LANGUAGE=\&quot;&quot;+lang+&quot;\&quot;;&quot;);
+print(&quot;  System.out.println(&quot;+(word(&quot;helloworld&quot;))+&quot;);&quot;);
+
+</pre>
+Executing the first line of this in the context that <tt class="code">x=12.0</tt> would produce the C preprocessor-style definition
+<pre class="programlisting">
+#define X 12
+
+</pre>
+This is the reason we started down this road.  By putting a double quote in column 1, you can <span class="emphasis"><em>force</em></span> magic translation on lines which would appear by the default rules to take some other translation.  While this solves the <span class="emphasis"><em>force</em></span>, it is worth mentioning the <span class="emphasis"><em>prohibit</em></span> syntax as well.
+</li><li>
+There are reasonable situations where you do not want to have a magic translation, even on lines that have lots of <tt class="code">$</tt>'s in them.  A good example of this would be to quote a part of PHP or Perl script, which use a <tt class="code">$</tt>-sign in front of all (PHP) or many (Perl) variables.  The way to force BPP to <span class="emphasis"><em>quote exactly</em></span> is to place a single quote in column 1.  Doing this causes BPP to encode that line as a print statement that will exactly reproduce the line (except for the leading single quote) exactly.  For example,
+<pre class="programlisting">
+'#define X $x
+'  String LANGUAGE=&quot;$lang&quot;;
+'  System.out.println($(word(&quot;helloworld&quot;)));
+
+</pre>
+will be translated into the beanshell code:
+<pre class="programlisting">
+print(&quot;#define X $x&quot;);
+print(&quot;  String LANGUAGE=\&quot;$lang\&quot;;&quot;);
+print(&quot;  System.out.println($(word(\&quot;helloworld\&quot;)));&quot;);
+
+</pre></li></ul></div><p>
+</p><p>
+What does BPP do with a line that has not translate directive in column 1?  It applies the <span class="emphasis"><em>default</em></span>.  If BPP is run normally, then the default is to quote magially (like a double quote <tt class="code">&quot;</tt> in column 1).  If, however, you pass the -q option to BPP, it will quote exactly by default.
+</p><p>So now we can fix the C header file (now <tt class="code">MyHeader.h.bpp</tt>):
+</p><pre class="programlisting">
+#static import java.lang.Math.*;
+#static import bpp.Format.*;
+&quot;#ifndef MY_CONSTANTS_H
+&quot;#define MY_CONSTANTS_H
+&quot;
+#x=12.0
+&quot;
+&quot;#define X $(literal(x))
+&quot;#define CUBE_ROOT_X   $(literal(pow(x,1.0/3.0)))
+&quot;#define SINE_X        $(literal(sin(x)))
+&quot;
+&quot;#endif
+
+</pre><p>
+Now the world makes sense again.  There is one value to adjust (x), and the preprocessor calculates the rest of the parameters in a way that is guaranteed to be consistent and easy to check the correctness of.  For example deleting any character on the <tt class="code">SINE_X</tt> line will cause a compile-time error, eithe because BPP fails to execute or it produces code that does not make sense.
+</p><p>
+There is one more translation rule you will eventually need to know about.  What if you want to generate a line that uses preprocessor values (and so is magic), and yet has literal <tt class="code">$</tt> values which you want to have BPP leave alone?  There are two ways around this: 
+</p><p>
+First, on lines that are translated magically, two adjacent dollar-signs (<tt class="code">$$</tt>) always means a non-magic <tt class="code">$</tt>.  So a section of perl script processed by BPP might have:
+</p><pre class="programlisting">
+#x=12.0;
+$$x=$x;
+
+</pre><p>
+The first line is an assignment in BPP.  The second line becomes the equivalent perl assignment statement:
+</p><pre class="programlisting">
+#x=12.0;
+$x=12.0;
+
+</pre><p>
+</p><p>
+Second, if you find yourself working too hard to use the BPP syntax, you can always just write your own <tt class="code">print()</tt> statement:
+</p><pre class="programlisting">
+#print(&quot;$x=&quot;+x+&quot;;&quot;);
+
+</pre><p>
+Would generate the perl statement <tt class="code">$x=12</tt> just as well as <tt class="code">$$x=$x</tt> would.
+</p><p>
+You now have seen a lot about BPP.  You have seen how it works by translating the BPP source file in a Beanshell script, and executes that to produce an output file.  You also know the small number of translation rules it has about how to translate a source line into a beanshell script line.  There is really only one more thing to know: the preprocessor has a preprocessor (with a preprocessor, etc.).
+</p><p>
+I'm actually going to talk about that <span class="emphasis"><em>two</em></span> chapters from here.  For now it is more important to see how to use this syntax to do a lot of useful things.  So the next chapter is a preprocessor <span class="emphasis"><em>patterns</em></span> recipie book.
+</p></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5387123"></a>Appendix A. Docbook</h2></div></div><div></div></div><p>
+
+This tutorial was created using DocBook.  See <a href="http://www.oasis-open.org/docbook/documentation/reference/html/docbook.html" target="_top">DocBook: The Definiative Guide</a> and <a href="http://www.sagehill.net/docbookxsl" target="_top">www.sagehill.net</a> for a tutorial on using DocBook tools.
+...</p></div></div></body></html>

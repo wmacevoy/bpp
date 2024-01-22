@@ -1,0 +1,26 @@
+void banner() {
+out.println("<table border=\"0\" class=\"banner\" width=\"100%\">");
+out.println("  <tr>");
+out.println("    <td align=\"left\" valign=\"center\">");
+out.println("      <img src=\"logos/bpp.jpg\" width=\"148\" height=\"87\" alt=\"Bob Pat and Pam\"/>");
+out.println("    </td>");
+out.println("    <td width=\"50\">");
+out.println("    </td>");
+out.println("    <td>");
+out.println("      <table border=\"0\" class=\"banner\">");
+out.println("        <tr>");
+out.println("          <td align=\"left\" class=\"banner\">BPP: The Beanshell Preprocessor</td>");
+out.println("        </tr>");
+out.println("        <tr>");
+out.println("          <td align=\"right\" class=\"banner_quote\"><i>The fully caffeinated preprocessor</i></td>");
+out.println("        </tr>");
+out.println("      </table>");
+out.println("    </td>");
+out.println("    <td width=\"50\">");
+out.println("    </td>");
+out.println("    <td align=\"right\" valign=\"center\">");
+out.println("      <img src=\"logos/bpp-draft.jpg\" width=\"221\" height=\"126\" alt=\"Bob Pat and Pam draft\"/>");
+out.println("    </td>");
+out.println("  </tr>");
+out.println("</table>");
+}

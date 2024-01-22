@@ -1,0 +1,4 @@
+#source("makeMultipleInheretence.bsh");
+#makeMultipleInheretence(
+#  "Mongrel",
+#  new String[]{"java.lang.Boolean","java.lang.Double","java.lang.String"});

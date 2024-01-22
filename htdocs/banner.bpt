@@ -1,0 +1,26 @@
+#void banner() {
+<table border="0" class="banner" width="100%">
+  <tr>
+    <td align="left" valign="center">
+      <img src="logos/bpp.jpg" width="148" height="87" alt="Bob Pat and Pam"/>
+    </td>
+    <td width="50">
+    </td>
+    <td>
+      <table border="0" class="banner">
+        <tr>
+          <td align="left" class="banner">BPP: The Beanshell Preprocessor</td>
+        </tr>
+        <tr>
+          <td align="right" class="banner_quote"><i>The fully caffeinated preprocessor</i></td>
+        </tr>
+      </table>
+    </td>
+    <td width="50">
+    </td>
+    <td align="right" valign="center">
+      <img src="logos/bpp-draft.jpg" width="221" height="126" alt="Bob Pat and Pam draft"/>
+    </td>
+  </tr>
+</table>
+#}

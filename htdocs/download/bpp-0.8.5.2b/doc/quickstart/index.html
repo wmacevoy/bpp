@@ -1,0 +1,214 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BQG: The BeanShell Quickstart Guide</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id5385411"></a>BQG: The BeanShell Quickstart Guide</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Warren</span> <span class="surname">MacEvoy</span></h3></div></div><div><p class="copyright">Copyright © 2004 Warren D. MacEvoy jr.</p></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="chapter"><a href="#id5385446">1. Quick Installation</a></span></dt><dt><span class="chapter"><a href="#id5385476">2. Hello World!</a></span></dt><dt><span class="chapter"><a href="#id5385682">3. The Three Things You Need To Know</a></span></dt><dt><span class="chapter"><a href="#id5385804">4. Format</a></span></dt></dl></div><div class="list-of-examples"><p><b>List of Examples</b></p><dl><dt>2.1. <a href="#id5385485">hello.bpp: Hello, World!</a></dt><dt>3.1. <a href="#id5385756">P.java.bpp: Quick Prints</a></dt><dt>3.2. <a href="#id5385778">P.java: Quick Prints (preprocessed)</a></dt><dt>4.1. <a href="#id5385830">Constants.java.bpp: Format examples</a></dt><dt>4.2. <a href="#id5385847">Constants.java: Format examples (preprocessed)</a></dt></dl></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385446"></a>Chapter 1. Quick Installation</h2></div></div><div></div></div><p>
+Add BPP's latest <a href="http://bpp.sourceforge.net/download.html" target="_top">bpp.jar</a> and BeanShell's latest <a href="http://beanshell.org/download" target="_top">bpp.jar</a> to your classpath, or drop them into the <tt class="code">jre/lib/ext</tt> directory of your JRE.
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385476"></a>Chapter 2. Hello World!</h2></div></div><div></div></div><p>
+Create a hello world message using BPP:
+</p><div class="example"><a name="id5385485"></a><p class="title"><b>Example 2.1. hello.bpp: Hello, World!</b></p><pre class="programlisting">
+Hello, $(System.getProperty(&quot;name&quot;,&quot;World&quot;))!
+</pre></div><p>
+</p><p>To create your hello world message,
+</p><pre class="screen">
+java -cp <span class="emphasis"><em>path/to/bsh.jar;path/to/bpp.jar</em></span> bpp.BPP -Dname=<span class="emphasis"><em>non-default-name</em></span> -o - hello.bpp
+</pre><p>
+Omitting the <tt class="code">-o -</tt> causes the output to be saved in <tt class="code">hello</tt>.
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385682"></a>Chapter 3. The Three Things You Need To Know</h2></div></div><div></div></div><p>
+</p><div class="itemizedlist"><ul type="disc"><li><tt class="code">$(expr)</tt> evaluates <tt class="code">expr</tt>, <tt class="code">$id</tt> evaluates <tt class="code">id</tt>, and <tt class="code">$$</tt> evaluates to <tt class="code">$</tt></li><li><tt class="code"># code</tt> becomes immediate (preprocess time) <tt class="code">code</tt>.  If you don't want this to happen, <tt class="code">&quot;# stuff</tt> generates a <tt class="code">#</tt> and treats the rest of the line like item 1.
+</li><li>
+I can&quot;t think of a third thing you absolutely gotta know.
+</li></ul></div><p>
+</p>
+So
+<div class="example"><a name="id5385756"></a><p class="title"><b>Example 3.1. P.java.bpp: Quick Prints</b></p><pre class="programlisting">
+//
+// $(BPP.source) -&gt; $(BPP.destination) on $(new Date())
+//
+public class P {
+#
+#String[] streams = new String[] { &quot;out&quot;,&quot;err&quot; };
+#String[] types = new String[] { &quot;boolean&quot;,&quot;int&quot;,&quot;long&quot;,&quot;double&quot;,&quot;Object&quot; };
+#
+#for (int i=0; i&lt;streams.length; ++i) {
+# String stream=streams[i];
+//
+// Shorthand prints for System.$stream
+//
+# for (int j=0; j&lt;types.length; ++j) {
+#   String type = types[j];
+  public static final void $stream($type value) 
+  {
+    System.$stream.print(value);
+  }
+
+  public static final void $(stream)ln($type value) 
+  {
+    System.$stream.println(value);
+  }
+# } // for types
+#} // for streams
+}
+</pre></div>
+Processing this with 
+<pre class="screen">
+java -cp <span class="emphasis"><em>path/to/bsh.jar;path/to/bpp.jar</em></span> bpp.BPP P.java.bpp
+</pre>
+produces the following source file (P.java)
+<div class="example"><a name="id5385778"></a><p class="title"><b>Example 3.2. P.java: Quick Prints (preprocessed)</b></p><pre class="programlisting">
+//
+// P.java.bpp -&gt; P.java on Sat Oct 16 18:50:14 PDT 2004
+//
+public class P {
+//
+// Shorthand prints for System.out
+//
+  public static final void out(boolean value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(boolean value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(int value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(int value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(long value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(long value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(double value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(double value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(Object value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(Object value) 
+  {
+    System.out.println(value);
+  }
+//
+// Shorthand prints for System.err
+//
+  public static final void err(boolean value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(boolean value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(int value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(int value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(long value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(long value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(double value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(double value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(Object value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(Object value) 
+  {
+    System.err.println(value);
+  }
+}
+</pre></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id5385804"></a>Chapter 4. Format</h2></div></div><div></div></div><p>If, near the top of a file to preprocess, you include the statement
+</p><pre class="screen">
+#static import bpp.Format.*
+</pre><p>
+You can take advantage of a number of convenient formatting code for producing java source code.  These are <tt class="code">literal(x)</tt> for formatting literal constants, and <tt class="code">N(x,format)</tt> for formatting numbers in particular ways.  For example
+</p><div class="example"><a name="id5385830"></a><p class="title"><b>Example 4.1. Constants.java.bpp: Format examples</b></p><pre class="programlisting">
+# static import bpp.Format.*;
+#
+# String CONST=&quot;public static final&quot;;
+#
+# String s1=&quot;Plain&quot;;
+# String s2=&quot;\&quot;Quoted\&quot;&quot;;
+#
+# double n1=Math.atan(1.0);
+# double n2=Math.sqrt(2.0);
+#
+public class Constants {
+  //
+  // same as $CONST S1=&quot;$s1&quot;;
+  $CONST S1=$(literal(s1)); 
+
+  //
+  // better than $CONST S2=&quot;$s2&quot;;
+  $CONST S2=$(literal(s2)); 
+
+  // perfect precision (no lost information)
+  $CONST N1version1=$(literal(n1));
+  $CONST N2version1=$(literal(n2));
+
+  // five digits of precision
+  $CONST N1version2=$(N(n1,&quot;0.00000&quot;));
+  $CONST N2version2=$(N(n2,&quot;0.00000&quot;));
+}
+</pre></div><p>
+Processing this with 
+</p><pre class="screen">
+java -cp <span class="emphasis"><em>path/to/bsh.jar;path/to/bpp.jar</em></span> bpp.BPP Constants.java.bpp
+</pre><p>
+produces the following source file (Constants.java)
+</p><div class="example"><a name="id5385847"></a><p class="title"><b>Example 4.2. Constants.java: Format examples (preprocessed)</b></p><pre class="programlisting">
+public class Constants {
+  //
+  // same as public static final S1=&quot;Plain&quot;;
+  public static final S1=&quot;Plain&quot;; 
+
+  //
+  // better than public static final S2=&quot;&quot;Quoted&quot;&quot;;
+  public static final S2=&quot;\&quot;Quoted\&quot;&quot;; 
+
+  // perfect precision (no lost information)
+  public static final N1version1=0.7853981633974483;
+  public static final N2version1=1.4142135623730951;
+
+  // five digits of precision
+  public static final N1version2=0.78540;
+  public static final N2version2=1.41421;
+}
+</pre></div><p>
+</p></div></div></body></html>

@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "`uname -o`" = "Cygwin" ] ; then
+    java -classpath "$BPP_HOME\bin\bpp.jar;$BPP_CLASSPATH" bpp.BPP "$@"
+else
+    java -classpath "$BPP_HOME/bin/bpp.jar:$BPP_CLASSPATH" bpp.BPP "$@"
+fi

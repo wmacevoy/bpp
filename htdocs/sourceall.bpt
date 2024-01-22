@@ -1,0 +1,10 @@
+#// source in all template files
+##static import bpp.Format.*;
+##String[] ls = new File(".").list();
+##for (int i=0; i<ls.length; ++i) {
+##  name=ls[i];
+##  if (name.endsWith(".bpt") && !name.endsWith("sourceall.bpt")) {
+##    sname=name.substring(0,name.length()-4)+".bsh";
+#source($(literal(sname)));
+##  }
+##}

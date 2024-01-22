@@ -1,0 +1,59 @@
+
+.banner { 
+  color:#804000;
+  background-color:white;
+  font-family:arial;
+  font-weight:bold;
+  font-size:18pt;
+}
+
+.banner_quote { 
+  color:#804000;
+  background-color:white;
+  font-family:arial;
+  font-weight:bold;
+  font-size:14pt;
+}
+.menu { 
+  color:white;
+  background-color:#804000;
+  font-family:arial;
+  font-weight:bold;
+  font-size:14pt;
+}
+
+a.menu { 
+  color:white;
+  background-color:#804000;
+  font-family:arial;
+  font-weight:bold;
+  font-size:14pt;
+  text-decoration: none;
+}
+
+a.menu:hover { 
+  color:#804000;
+  background-color:white;
+  font-family:arial;
+  font-weight:bold;
+  font-size:14pt;
+  text-decoration: none;
+}
+
+a.menu_reverse { 
+  color:#804000;
+  background-color:white;
+  font-family:arial;
+  font-weight:bold;
+  font-size:14pt;
+  text-decoration: none;
+}
+
+a.menu_reverse:hover { 
+  color:#804000;
+  background-color:white;
+  font-family:arial;
+  font-weight:bold;
+  font-size:14pt;
+  text-decoration: none;
+}

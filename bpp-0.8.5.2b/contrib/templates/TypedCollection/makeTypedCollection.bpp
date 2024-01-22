@@ -1,0 +1,70 @@
+#
+#import pp.Format.*;
+#
+#void makeTypedCollection(String className,String element) {
+#wrapper=Format.getWrapper(element); // null if element is not a primitive type
+#zero=Format.defval(element);
+#warg1=Format.wrap(element,"arg1");
+import java.util.*;
+
+public class $className {
+  public static class $(className)Iterator { 
+    java.util.Iterator iterator;
+    public $(className)Iterator(java.util.Iterator _iterator) { iterator=_iterator; }
+    public boolean hasNext() { return iterator.hasNext(); }
+    public $element next() { 
+#if (wrapper == null) {
+      return ($element) iterator.next();
+#} else {
+      return (($wrapper) iterator.next()).$(element)Value();
+#}
+    }
+    public void remove() { iterator.remove(); }
+  }
+  protected java.util.Collection collection;
+  public $className(Collection _collection) { collection=_collection; } 
+  public boolean add($element arg1) { return collection.add($warg1); }
+  public boolean contains($element arg1) { return collection.contains($warg1); }
+  public boolean remove($element arg1) { return collection.remove($warg1); }
+  public $(className)Iterator iterator() { 
+   return new $(className)Iterator(collection.iterator()); 
+  }
+  public int hashCode ()  { return collection.hashCode(); }
+  public boolean equals (java.lang.Object arg1)  {
+   return collection.equals(arg1); 
+  }
+  public boolean addAll ($className arg1)  { 
+    return collection.addAll(arg1.collection);
+  }
+  public int size ()  { return collection.size(); }
+  public $element[] toArray() { 
+#if (wrapper==null) {
+  return ($element[])collection.toArray(); 
+#} else {
+  $wrapper[] tmp = ($wrapper[])collection.toArray();
+  $element[] ans = new $element[tmp.length];
+  for (int i=tmp.length-1; i>=0; --i) ans[i]=tmp[i].$(element)Value();
+  return ans;
+#}
+}
+  public $element[] toArray($element[] arg1) { 
+#if (wrapper == null) {
+  return ($element[])collection.toArray(); 
+#} else {
+  $wrapper[] tmp = ($wrapper[])collection.toArray();
+  $element[] ans = (arg1.length >= tmp.length) ? arg1 : new $element[tmp.length];
+  for (int i=ans.length-1; i>=tmp.length; --i) ans[i]=$zero;
+  for (int i=tmp.length-1; i>=0; --i) ans[i]=tmp[i].$(element)Value();
+  return ans;
+#}
+  }
+  public void clear ()  { collection.clear(); }
+  public boolean isEmpty ()  { return collection.isEmpty(); }
+  public boolean containsAll ($className arg1)  { return collection.containsAll(arg1.collection); }
+
+  public boolean removeAll ($className arg1)  { return collection.removeAll(arg1.collection); }
+
+  public boolean retainAll ($className arg1)  { return collection.retainAll(arg1.collection); }
+
+}
+#} // makeTypedCollection

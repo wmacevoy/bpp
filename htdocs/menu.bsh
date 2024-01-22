@@ -1,0 +1,24 @@
+void menu(String selected) {
+ String [][] m=new String[][] {
+   { "Home" , "index.html" },
+   { "Intro" , "intro.html" },
+   { "Docs" , "docs.html" },
+   { "Download" , "download.html" },
+   { "Contact" , "contact.html" },
+   { "###" , "pounds.html" },
+ };
+ double percent=100.0/m.length;
+
+out.println("<table width=\"100%\" border=\"2\" cellspacing=\"0\" cellpadding=\"0\">");
+out.println("  <tr>");
+   for (int i=0; i<m.length; ++i) {
+     if (m[i][0].equals(selected)) {
+       cls="menu_reverse";
+     } else {
+       cls="menu";
+     }
+{out.print("    <td align=\"center\" class=\"");out.print(cls);out.print("\" width=\"");out.print(percent);out.print("%\"><a class=\"");out.print(cls);out.print("\" href=\"");out.print(m[i][1]);out.print("\"> ");out.print(m[i][0]);out.println(" </a></td>");}
+   }
+out.println("  </tr>");
+out.println("</table>");
+}

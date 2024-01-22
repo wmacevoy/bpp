@@ -1,0 +1,10 @@
+'PAGES=$(subst .html.bpp,.html,$(wildcard *.html.bpp))
+'TEMPLATES=$(subst .bpt,.bsh,$(wildcard *.bpt))
+'
+'all : $(TEMPLATES) $(PAGES)
+'
+'%.bsh : %.bpt
+'	bpp -o $*.bsh -b $*.bpt
+'
+'%.html : $(TEMPLATES) %.html.bpp
+'	bpp -o $*.html $*.html.bpp

@@ -1,0 +1,4 @@
+package adapters;
+
+#source("makeNullAdapter.bsh");
+#makeNullAdapter("java.awt.Adjustable");

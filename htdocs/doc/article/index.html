@@ -1,0 +1,1037 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=us-ascii">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="article_files/filelist.xml">
+<link rel=Edit-Time-Data href="article_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>BP: The Beanshell Preprocessor</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PostalCode"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="State"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="Street"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="address"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PlaceType"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PlaceName"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="City"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Joe</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Warren MacEvoy</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>234</o:TotalTime>
+  <o:Created>2004-02-17T21:36:00Z</o:Created>
+  <o:LastSaved>2004-02-18T04:23:00Z</o:LastSaved>
+  <o:Pages>7</o:Pages>
+  <o:Words>2334</o:Words>
+  <o:Characters>13309</o:Characters>
+  <o:Company>ibm</o:Company>
+  <o:Lines>110</o:Lines>
+  <o:Paragraphs>31</o:Paragraphs>
+  <o:CharactersWithSpaces>15612</o:CharactersWithSpaces>
+  <o:Version>10.3501</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:13.5pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:red;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+address
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-style:italic;}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";}
+tt
+	{font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:71972627;
+	mso-list-template-ids:413298286;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l1
+	{mso-list-id:75170788;
+	mso-list-template-ids:-128385662;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:143014283;
+	mso-list-template-ids:-1309233122;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3
+	{mso-list-id:144664158;
+	mso-list-template-ids:-85680578;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:1754934769;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1764647284 558145184 -160385206 758659316 1290416452 2120509410 -1480832770 -1080819238 1419289982 -2140242528;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l4:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5
+	{mso-list-id:1921406904;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-619514414 1142313066 1520740968 -739998864 -1054154332 -107043420 7501550 186659666 1437113832 1483514712;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<h1>BPP: The <span class=SpellE>Beanshell</span> Preprocessor</h1>
+
+<h3>By Warren <span class=SpellE>MacEvoy</span></h3>
+
+<p class=MsoNormal align=center style='text-align:center'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal align=center style='text-align:center'><o:p>&nbsp;</o:p></p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</div>
+
+
+<h3 align=center style='text-align:center;tab-stops:335.25pt'>
+
+</h3>
+
+<h3 style='tab-stops:335.25pt'>What is the <span class=SpellE>Beanshell</span>
+Preprocessor?<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></h3>
+
+<p>The <span class=SpellE>Beanshell</span> preprocessor, or BPP for short, is
+intended for Java developers as a convenient and powerful preprocessing tool.
+It is convenient because the preprocessor is based on <span class=SpellE>Beanshell</span>,
+which is essentially interpreted Java. This means that Java or <span
+class=SpellE>Beanshell</span> programmers can quickly use all of <span
+class=SpellE>BPP's</span> features. It is powerful for the same reasons: all
+the power of the Java SDK in the convenience of the <span class=SpellE>Beanshell</span>
+scripting language is available as double payment; once as a development
+language and once as a preprocessing language. </p>
+
+<p>In the current world of sexy words for new concepts in software development,
+a new <i>preprocessor</i> is sure to draw a yawn. But for Java developers, <i>this</i>
+preprocessor can revolutionize core software development.<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>The reason is because it
+isn&#8217;t actually just a new processor, but an entire different kind of
+preprocessor: a symmetric preprocessor.<span style='mso-spacerun:yes'>&nbsp;
+</span>A language with a symmetric preprocessor gives the full power (and
+syntax) of the language as a preprocessor, including the provision for a
+preprocessor, and so on.</p>
+
+<h3>Getting BPP and <span class=SpellE>Beanshell</span></h3>
+
+<p>BPP is available as an executable jar file from <a
+href="http://bpp.sourceforge.net/">http://bpp.sourceforge.net</a>. <span
+class=SpellE>Beanshell</span> is available from <a
+href="http://www.beanshell.org/download.html">http://beanshell.org</a>. BPP
+uses <span class=SpellE>Beanshell</span> under the hood, and so must find its
+jar file in the class path. Putting the bsh-2.0b1.jar in your <span
+class=SpellE>classpath</span> ensures it will be found.<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>Once this has been set up
+correctly, use the command </p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=GramE><tt><span
+style='font-size:10.0pt'>java</span></tt></span><tt><span style='font-size:
+10.0pt'> <span class=SpellE>bsh.Console</span></span></tt> </p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=GramE>from</span> a command shell to start up
+the <span class=SpellE>beanshell</span> desktop. A windowed <span class=SpellE>Beanshell</span>
+desktop should appear. In the window, type: </p>
+
+<pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+.5in'><span class=GramE>you</span>=&quot;Jay R. EE&quot;;</pre><pre
+style='margin-left:.5in'><span class=GramE>print(</span>&quot;Welcome, &quot; + you);</pre><pre
+style='margin-left:.5in'><o:p>&nbsp;</o:p></pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>After
+seeing the expected message, add a sticky note to your monitor with the words:
+&#8220;Learn <span class=SpellE>Beanshell</span> now; <span class=GramE>save</span>
+time later.&#8221;<span style='mso-spacerun:yes'>&nbsp; </span>For now, just
+close the <span class=SpellE>Beanshell</span> desktop.<span
+style='mso-spacerun:yes'>&nbsp; </span>BPP does not use the <span class=SpellE>beanshell</span>
+desktop, but instead uses the <span class=SpellE><tt><span style='font-size:
+10.0pt'>bsh.Interpreter</span></tt></span> class internally as a lightweight
+Java interpreter.</p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:green'>&lt;&lt;Insert figure: <span class=SpellE>desktop.png</span>&gt;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>Screenshot of the <span class=SpellE>beanshell</span> <span
+class=SpellE>deskop</span>.</span></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:red'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width="80%"
+ style='width:80.0%;mso-cellspacing:1.5pt;margin-left:.5in;background:#F0F0F0;
+ mso-padding-alt:0in 0in 0in 0in'>
+ <tr style='mso-yfti-irow:0;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><b>You <span class=GramE>is</span> what?</b> </p>
+  <p><span class=SpellE>Beanshell</span> is a get-to-the-point Java. Typing </p>
+  <pre style='margin-left:.5in'><tt><span style='color:red'>you=&quot;Jay R. EE&quot;;<o:p></o:p></span></tt></pre><pre
+  style='margin-left:.5in'><tt><span style='color:red'>print(&quot;Welcome, &quot; + you);<o:p></o:p></span></tt></pre><pre
+  style='margin-left:.5in'><tt><span style='color:red'><o:p>&nbsp;</o:p></span></tt></pre>
+  <p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>in
+  <span class=SpellE>Beanshell</span> is equivalent to compiling and executing
+  the following Java code: </p>
+  <pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+  .5in'>public class <span class=SpellE>SomeClass</span></pre><pre
+  style='margin-left:.5in'>{</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span>public static void main(String[] <span
+  class=SpellE>args</span>)</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span>{</pre><pre
+  style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>String <span
+  style='color:red'>you=&quot;Jay R. EE&quot;;</span></pre><pre
+  style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+  class=SpellE>System.out.<span style='color:red'>print</span><b>ln</b></span><span
+  style='color:red'>(&quot;Welcome, &quot; + you);</span></pre><pre
+  style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span>}</pre><pre
+  style='margin-left:.5in'>}</pre>
+  <p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Which
+  one would you rather type? See the <a href="http://www.beanshell.org">www.beanshell.org</a>
+  web site for many useful resources on <span class=SpellE>Beanshell</span>.
+  For now, here is what I claim to be the shortest tutorial of a production
+  programming language in history: </p>
+  <p class=MsoNormal style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+  class=SpellE>Beanshell</span> is an interpreted version of Java with optional
+  types. </p>
+  <p class=MsoNormal style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+  <p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Types
+  are great for safety, but they can turn the quick and dirty into the slow and
+  tedious. <span class=SpellE>Beanshell</span> adheres to types you specify,
+  but also allows unspecified types, so you can choose your safety level. As of
+  version 2.0, <span class=SpellE>Beanshell</span> has seamless integration
+  with JDK 1.3 and above. Thus <span class=SpellE>Beanshell</span> is a
+  flexible superset of Java I encourage any Java developer to get to know. </p>
+  </td>
+ </tr>
+</table>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Show
+me how useful BPP is!</h3>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>BPP
+allows you to write Java code that writes Java code in a convenient way.<span
+style='mso-spacerun:yes'>&nbsp; </span>The preprocessor lines begin with a #
+sign, and are executed at preprocess time, while normal lines are undecorated.<span
+style='mso-spacerun:yes'>&nbsp; </span>$id and $(<span class=SpellE>expr</span>)
+on otherwise normal lines are translated in a natural way.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, the following BPP source
+file will create the traditional &#8220;Hello World&#8221; java program, but
+with the message appearing in four different languages.</p>
+
+<pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+.5in'>#</pre><pre style='margin-left:.5in'># <span class=GramE>greetings=</span>new String[] {</pre><pre
+style='margin-left:.5in'><span class=GramE>#<span style='mso-spacerun:yes'>&nbsp; </span>&quot;</span><span
+class=SpellE>hola</span> <span class=SpellE>mundo</span>&quot;,<o:p></o:p></pre><pre
+style='margin-left:.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'>#<span style='mso-spacerun:yes'>&nbsp; </span>&quot;<span
+class=SpellE>ciao</span> mondo&quot;,<o:p></o:p></span></pre><pre
+style='margin-left:.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'>#<span style='mso-spacerun:yes'>&nbsp; </span>&quot;<span
+class=SpellE>hello</span> <span class=SpellE>world</span>&quot;,<o:p></o:p></span></pre><pre
+style='margin-left:.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'>#<span style='mso-spacerun:yes'>&nbsp; </span>&quot;\<span
+class=SpellE>u043F</span>\u0440<span class=SpellE>\u0438</span>\u0432<span
+class=SpellE>\u0435</span>\u0442 \<span class=SpellE>u043C</span>\u0438<span
+class=SpellE>\u0440</span>&quot;,<o:p></o:p></span></pre><pre style='margin-left:
+.5in'># };</pre><pre style='margin-left:.5in'>#</pre><pre style='margin-left:
+.5in'><span class=GramE>public</span> class Xample1 {</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+class=GramE>public</span> static void main(String[] <span class=SpellE>args</span>) {</pre><pre
+style='margin-left:.5in'>#for (<span class=SpellE>i</span>=0<span class=GramE>;i</span>&lt;<span
+class=SpellE>greetings.length</span>; ++<span class=SpellE>i</span>) {</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=SpellE><span class=GramE>System.out.println</span></span><span
+class=GramE>(</span>&quot;$(greetings[<span class=SpellE>i</span>])&quot;);</pre><pre
+style='margin-left:.5in'>#}</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span>}</pre><pre
+style='margin-left:.5in'>}</pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>If
+you save the above text in a file named <tt><span style='font-size:10.0pt'>Xample1.java.bp</span></tt>,
+then running BPP with the line </p>
+
+<pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+.5in'><span class=GramE><span lang=ES-MX style='mso-ansi-language:ES-MX'>java</span></span><span
+lang=ES-MX style='mso-ansi-language:ES-MX'> -<span class=SpellE>jar</span> <span
+class=SpellE>bp.jar</span> Xample1.<span class=SpellE>java.bp</span><o:p></o:p></span></pre><pre
+style='margin-left:.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'><o:p>&nbsp;</o:p></span></pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>will</span> produce the following text in <tt><span
+style='font-size:10.0pt'>Xample1.java</span></tt>: </p>
+
+<pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+.5in'><span class=GramE>public</span> class Xample1 {</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+class=GramE>public</span> static void main(String[] <span class=SpellE>args</span>) {</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=SpellE><span class=GramE>System.out.println</span></span><span
+class=GramE>(</span>&quot;<span class=SpellE>hola</span> <span class=SpellE>mundo</span>&quot;);</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=SpellE><span class=GramE>System.out.println</span></span><span
+class=GramE>(</span>&quot;ciao <span class=SpellE>mondo</span>&quot;);</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=SpellE><span class=GramE>System.out.println</span></span><span
+class=GramE>(</span>&quot;hello world&quot;);</pre><pre style='margin-left:
+.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=SpellE><span class=GramE>System.out.println</span></span><span
+class=GramE>(</span>&quot;<span class=SpellE>&#1087;&#1088;&#1080;&#1074;&#1077;&#1090;</span> <span
+class=SpellE>&#1084;&#1080;&#1088;</span>&quot;);</pre><pre style='margin-left:
+.5in'><span style='mso-spacerun:yes'>&nbsp; </span>}</pre><pre
+style='margin-left:.5in'>}</pre><pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>The
+last line is &quot;hello world&quot; in Russian, and may appear strangely on
+systems that don't understand UTF-8 encoded <span class=SpellE>unicode</span>.
+Point <span class=GramE>is, the #'ed lines are executed at &quot;preprocess
+time&quot; by BPP.</span> <span class=GramE>This results</span> in a Java
+source file with, in compiler optimization parlance, an &quot;unwound
+loop.&quot;</p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Admittedly,
+unwinding the above loop at preprocess time will give no particular advantage
+over executing the loop at run time. There are places where such unwinding
+could make a great deal of difference. Similar preprocessor code could write a
+substantial &#8220;boiler plate&#8221; code which you might otherwise use a
+more traditional &#8220;copy/paste/edit&#8221; approach on, but we will leave
+that to the reader&#8217;s imagination (and online tutorials on the BPP web
+site).<span style='mso-spacerun:yes'>&nbsp; </span>The next example takes on a
+loftier software engineering goal: compile time vs. run time safety.<span
+style='color:red'><o:p></o:p></span></p>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Safe
+Sets</h3>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>It
+is a basic principle of software engineering that the earlier you find an
+error, the less expensive it is correct. The collections framework in Java is a
+good example of something that is run-time safe (because you can't put in an <tt><span
+style='font-size:10.0pt'>Apple</span></tt> and treat it like an <st1:City><st1:place><tt><span
+  style='font-size:10.0pt'>Orange</span></tt></st1:place></st1:City> without a <span
+class=SpellE><tt><span style='font-size:10.0pt'>ClassCastException</span></tt></span>),
+but it isn't compile-time safe, since you can add any <tt><span
+style='font-size:10.0pt'>Object</span></tt> to any <tt><span style='font-size:
+10.0pt'>Collection</span></tt>, even if you only really wanted <st1:City><st1:place><tt><span
+  style='font-size:10.0pt'>Orange</span></tt>s</st1:place></st1:City> in it. </p>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>BPP
+can quickly create compile-time type-safe wrapper classes for collections (or
+wherever else you need them). Here is a snippet of the type-safe template for
+Collection: </p>
+
+<pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+.5in'>#void <span class=SpellE><span class=GramE>makeTypedCollection</span></span><span
+class=GramE>(</span>String <span class=SpellE>className,String</span> element) {</pre><pre
+style='margin-left:.5in'><span class=GramE>public</span> class $<span
+class=SpellE>className</span> {</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+class=GramE>public</span> static class $(<span class=SpellE>className</span>)<span
+class=SpellE>Iterator</span> { </pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+class=SpellE><span class=GramE>java.util.Iterator</span></span> <span
+class=SpellE>iterator</span>;</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span style='mso-spacerun:yes'>&nbsp;&nbsp;</span><span
+class=GramE>public</span> <span class=SpellE>Iterator</span>(<span
+class=SpellE>java.util.Iterator</span> _<span class=SpellE>iterator</span>) { <span
+class=SpellE>iterator</span>=_<span class=SpellE>iterator</span>; }</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=GramE>public</span> <span class=SpellE>boolean</span> <span class=SpellE>hasNext</span>() { return <span
+class=SpellE>iterator.hasNext</span>(); }</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=GramE>public</span> $element next() { return ($element)<span
+class=SpellE>iterator.next</span>(); }</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=GramE>public</span> void remove() { <span class=SpellE>iterator.remove</span>(); }</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span>}</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+class=GramE>protected</span> <span class=SpellE>java.util.Collection</span> collection;</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+class=GramE>public</span> $<span class=SpellE>className</span>(Collection _collection) { collection=_collection; } </pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;</span><span
+class=GramE>public</span> <span class=SpellE>boolean</span> add($element arg1) { return <span
+class=SpellE>collection.add</span>(arg1); }</pre><pre style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+class=GramE>public</span> <span class=SpellE>boolean</span> contains($element arg1) { return <span
+class=SpellE>collection.contains</span>(arg1); }</pre><pre style='margin-left:
+.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span class=GramE>public</span> <span
+class=SpellE>boolean</span> remove($element arg1) { return <span class=SpellE>collection.remove</span>(arg1);</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+class=GramE>public</span> $(<span class=SpellE>className</span>)<span
+class=SpellE>Iterator</span> <span class=SpellE>iterator</span>() { </pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;</span><span
+class=GramE>return</span> new $(<span class=SpellE>className</span>)<span
+class=SpellE>Iterator</span>(<span class=SpellE>collection.iterator</span>()); </pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp;&nbsp;</span>}</pre><pre
+style='margin-left:.5in'>}</pre><pre style='margin-left:.5in'>#} // <span
+class=SpellE>makeTypedCollection</span></pre><pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>To
+use this, save this in a file called &quot;<span class=SpellE>makeTypedCollection.bp</span>&quot;,
+and generate the equivalent <span class=SpellE>Beanshell</span> script with </p>
+
+<pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+.5in'><span class=GramE>java</span> -jar <span class=SpellE>bp.jar</span> <b>-b</b> <span
+class=SpellE>makeTypedCollection.bp</span></pre><pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>The
+-b option tells BPP to create the script, but not execute it. The script is
+written in this case to <span class=SpellE><tt><span style='font-size:10.0pt'>makeTypedCollection.bsh</span></tt></span>.
+With this handy &quot;template&quot; around, creating a compile-time type safe
+collection is a snap. For example a string collection would be the following
+smidgen of lines in <span class=SpellE>StringCollection.java.bp</span>: </p>
+
+<pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:
+.5in'>#<span class=GramE>source(</span>&quot;<span class=SpellE>makeTypedCollection.bsh</span>&quot;);</pre><pre
+style='margin-left:.5in'>#<span class=SpellE><span class=GramE>makeTypedCollection</span></span><span
+class=GramE>(</span>&quot;<span class=SpellE>StringCollection&quot;,&quot;java.lang.String</span>&quot;);</pre><pre
+style='margin-left:.5in'><o:p>&nbsp;</o:p></pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>Notice that I <tt><span style='font-size:10.0pt'>source</span></tt>
+the <span class=SpellE>Beanshell</span> script generated by BPP, not the BPP
+script</span> itself. </p>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>There
+is a philosophical point here: judicious use of BPP can move many checks from
+&quot;run-time&quot; to &quot;compile-time&quot;. This can make an order-of-magnitude
+difference in how long takes (and expensive it is) to find and correct
+mistakes.<span style='mso-spacerun:yes'>&nbsp; </span>Now let&#8217;s look at
+how BPP does its magic.</p>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width="80%"
+ style='width:80.0%;mso-cellspacing:1.5pt;margin-left:.5in;background:#F0F0F0;
+ mso-padding-alt:0in 0in 0in 0in'>
+ <tr style='mso-yfti-irow:0;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p>Dr. <span class=SpellE>Piet</span> Jonas in his <a
+  href="http://www.javaworld.com/javaworld/jw-04-2001/jw-0427-collections.html">Type
+  Safe Collections</a> article in <span class=SpellE>JavaWorld</span> also
+  addresses type safety, but in another manner.</p>
+  <p>Jonas' idea is to verify the types for collections at insertion time using
+  run-time type information. This causes an exception to be thrown early (at
+  insertion time) rather than late (at extraction time). However, in either
+  case, the exception is thrown at <i>run time</i>. </p>
+  <p>The type-safe wrappers we suggest using here allow for <i>compile-time</i>
+  safety.</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><o:p>&nbsp;</o:p></p>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Ok,
+so how does it work?</h3>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>BPP
+is similar in nature to <span class=SpellE>servelets</span> and <span
+class=SpellE>php</span> (and a very similar <span class=SpellE>perl</span>-based
+preprocessor, <a href="http://tldp.org/LDP/LG/issue44/macevoy/macevoy.html"><span
+class=SpellE>perlpp</span></a>). It works by translating the BPP code into <span
+class=SpellE>Beanshell</span> code under the following rules: </p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>&middot;<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Lines <span class=GramE>with a <tt><span
+style='font-size:10.0pt'>#</span></tt></span> (pound) in column 1 have the
+remainder of the line copied exactly to the <span class=SpellE>Beanshell</span>
+script.</p>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>For
+example, </p>
+
+<pre style='margin-left:1.0in'>#n=10;</pre><pre style='margin-left:1.0in'>#<span
+class=GramE>for(</span><span class=SpellE>i</span>=0; <span class=SpellE>i</span>&lt;n; ++<span
+class=SpellE>i</span>) {</pre>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>becomes</span> </p>
+
+<pre style='margin-left:1.0in'>n=10;</pre><pre style='margin-left:1.0in'><span
+class=GramE>for(</span><span class=SpellE>i</span>=0; <span class=SpellE>i</span>&lt;n; ++<span
+class=SpellE>i</span>) {</pre>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>in</span> the <span class=SpellE>Beanshell</span> script.</p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo2;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>&middot;<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Lines with a <tt><span style='font-size:10.0pt'>&quot;</span></tt>
+(double quote) in column 1 have the remainder of the line &quot;quoted
+magically.&quot; This means it becomes a print statement with $IDENTIFIER and
+$(EXPRESSION) patterns concatenated in.</p>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Two
+compromises were made in the magic translation: </p>
+
+<ul type=disc>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l4 level2 lfo2;tab-stops:list 1.0in'>$ is a legal start and
+      part of a Java identifier. If you need to have such a value in a BP script
+      use $(<span class=SpellE>my$strange$id</span>). </li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l4 level2 lfo2;tab-stops:list 1.0in'>When $ is not
+      succeeded by an identifier, a left parentheses, or another $, it simply
+      represents a single $. $$ on a magically quoted line represents a single
+      $. </li>
+ </ul>
+</ul>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>For
+example, </p>
+
+<pre style='margin-left:1.0in'>#static import <span class=SpellE>pp.Format</span>.*;</pre><pre
+style='margin-left:1.0in'>&quot;Dear $title $<span class=SpellE>lastName</span>;</pre><pre
+style='margin-left:1.0in'>&quot;You owe $$$(<span class=GramE>N(</span>blnc,&quot;#,###.00&quot;)).</pre>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>becomes</span> </p>
+
+<pre style='margin-left:1.0in'><span class=GramE>static</span> import <span
+class=SpellE>pp.Format</span>.*;</pre><pre style='margin-left:1.0in'><span
+class=GramE>print(</span>&quot;Dear &quot;+title+&quot; &quot;+<span
+class=SpellE>lastName</span>+&quot;;&quot;);</pre><pre style='margin-left:1.0in'><span
+class=GramE>print(</span>&quot;You owe $&quot;+(N(blnc,&quot;#,###.00&quot;))+&quot;.&quot;);</pre>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>in</span> the <span class=SpellE>Beanshell</span> script. For those
+new to <span class=SpellE>Beanshell</span>, <span class=GramE><tt><span
+style='font-size:10.0pt'>print(</span></tt></span><tt><span style='font-size:
+10.0pt'>)</span></tt> is equivalent to <span class=SpellE><tt><span
+style='font-size:10.0pt'>System.out.println</span></tt></span><tt><span
+style='font-size:10.0pt'>()</span></tt>. The <span class=GramE><tt><span
+style='font-size:10.0pt'>N(</span></tt></span><tt><span style='font-size:10.0pt'>Number
+<span class=SpellE>n,String</span> f)</span></tt> method is a static member of
+the <span class=SpellE>pp.Format</span> class as a convenience for formatting
+numbers.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo2;tab-stops:list .5in'>Lines with a <tt><span
+     style='font-size:10.0pt'>'</span></tt> (single quote) in column 1 have the
+     remainder of the line 'quoted exactly'. This generates a print statement
+     in the <span class=SpellE>Beanshell</span> script that will faithfully
+     reproduce the line of text. </li>
+</ul>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>For
+example, </p>
+
+<pre style='margin-left:1.0in'>'#static import <span class=SpellE>pp.Format</span>.*;</pre><pre
+style='margin-left:1.0in'>'Dear $title $<span class=SpellE>lastName</span>;</pre><pre
+style='margin-left:1.0in'>'You owe $(<span class=GramE>N(</span>blnc,&quot;$#,###.00&quot;)).</pre>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>becomes</span> </p>
+
+<pre style='margin-left:1.0in'><span class=GramE>print(</span>&quot;#static import <span
+class=SpellE>pp.Format</span>.*;&quot;);</pre><pre style='margin-left:1.0in'><span
+class=GramE>print(</span>&quot;Dear $title $<span class=SpellE>lastName</span>;&quot;);</pre><pre
+style='margin-left:1.0in'><span class=GramE>print(</span>&quot;You owe $(N(blnc,\&quot;$#,###.00\&quot;)).&quot;);</pre>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>in</span> the <span class=SpellE>Beanshell</span> script.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo2;tab-stops:list .5in'>Lines with none of the above
+     &quot;translation codes&quot; have the default translation applied to
+     them. This is &quot;quoted magically&quot; unless the -q ('quote exactly
+     by default') option is passed to BPP.</li>
+</ul>
+
+<pre style='margin-left:.5in'>Putting these together for the first example, the first BPP source file, <tt>Xample1.java.bp</tt>, produces the <span
+class=SpellE>Beanshell</span> script <span style='mso-tab-count:1'> </span><span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></pre><pre
+style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre
+style='margin-left:.5in'> <span class=GramE>greetings=</span>new String[] {</pre><pre
+style='margin-left:.5in'><span style='mso-spacerun:yes'>&nbsp; </span><span
+lang=ES-MX style='mso-ansi-language:ES-MX'>&quot;hola mundo&quot;,<o:p></o:p></span></pre><pre
+style='margin-left:.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'><span style='mso-spacerun:yes'>&nbsp; </span>&quot;<span
+class=SpellE>ciao</span> mondo&quot;,<o:p></o:p></span></pre><pre
+style='margin-left:.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'><span style='mso-spacerun:yes'>&nbsp; </span>&quot;<span
+class=SpellE>hello</span> <span class=SpellE>world</span>&quot;,<o:p></o:p></span></pre><pre
+style='margin-left:.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'><span style='mso-spacerun:yes'>&nbsp; </span>&quot;\<span
+class=SpellE>u043F</span>\u0440<span class=SpellE>\u0438</span>\u0432<span
+class=SpellE>\u0435</span>\u0442 \<span class=SpellE>u043C</span>\u0438<span
+class=SpellE>\u0440</span>&quot;,<o:p></o:p></span></pre><pre style='margin-left:
+.5in'><span lang=ES-MX style='mso-ansi-language:ES-MX'> </span>};</pre><pre
+style='margin-left:.5in'><o:p>&nbsp;</o:p></pre><pre style='margin-left:.5in'><span
+class=GramE>print(</span>&quot;&quot;);</pre><pre style='margin-left:.5in'><span
+class=GramE>print(</span>&quot;public class Xample1 {&quot;);</pre><pre
+style='margin-left:.5in'><span class=GramE>print(</span>&quot;<span style='mso-spacerun:yes'>&nbsp; </span>public static void main(String[] <span
+class=SpellE>args</span>) {&quot;);</pre><pre style='margin-left:.5in'><span
+class=GramE>for</span> (<span class=SpellE>i</span>=0;i&lt;<span class=SpellE>greetings.length</span>; ++<span
+class=SpellE>i</span>) {</pre><pre style='margin-left:.5in'><span class=GramE>print(</span>&quot;<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span
+class=SpellE>System.out.println</span>(\&quot;&quot;+(greetings[<span
+class=SpellE>i</span>])+&quot;\&quot;);&quot;);</pre><pre style='margin-left:
+.5in'>}</pre><pre style='margin-left:.5in'><span class=GramE>print(</span>&quot;<span style='mso-spacerun:yes'>&nbsp; </span>}&quot;);</pre><pre
+style='margin-left:.5in'><span class=GramE>print(</span>&quot;}&quot;);</pre><pre
+style='margin-left:.5in'><o:p>&nbsp;</o:p></pre>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Executing
+this script with <span class=SpellE>beanshell</span> generates the promised
+pure-java source file shown above as <tt><span style='font-size:10.0pt'>Xample1.java</span></tt>.</p>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=GramE>In Conclusion...</span></h3>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>BPP
+facilitates: versioning, templates, macros, optimizations, and compile-time
+type safety. These things are a normal expectation of preprocessors. However,
+because the preprocessor is essentially the same full-featured language as the
+target language, <i>including the fact that it has a preprocessor</i>, these
+features are much more accessible than <span class=GramE>say,</span> C++
+templates are to C programmers. This gives big productivity benefits.</p>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Here
+are a few other gains: </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo8;tab-stops:list .5in'><b>Have fun!</b> Writing code
+     over and over that's just a little different from the last time is <i>boring</i>.
+     After the third time, you usually see the part that's staying the same and
+     what is changing. With BPP you can <span class=SpellE>codefy</span> that
+     and stick to the fun (new) stuff.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo8;tab-stops:list .5in'><b>Big tools to make little
+     ones.</b> You can use BPP in development and take advantage of the latest
+     and greatest <span class=SpellE>JDK's</span> in your <span class=SpellE><i>developement</i></span><i>
+     environment</i> to produce solutions in any target language/architecture.
+     BPP is used in this way to support a multi-language environment called <a
+     href="http://mepas.pnl.gov/earth">FRAMES</a> in this way.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo8;tab-stops:list .5in'><b>Protecting IP.</b> The
+     Java Bean model is to <i>reduce</i> an <span class=SpellE>uber</span>-model
+     to one that solves a particular problem. Giving such a bean to someone
+     else allows them to reverse-engineer your IP. BPP can generate a <i>specific</i>
+     solution to a problem without revealing any general techniques on how that
+     specific solution was constructed. Karl Castleton is writing a BPP-based
+     tool to generate 80% of the boiler plate code for a Java <span
+     class=SpellE>Servelet/MySQL</span> web site based on an XML description of
+     the database architecture. This includes the SQL initialization, basic
+     form pages, and compile-time-safe SQL access classes.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo8;tab-stops:list .5in'><b>Simplification.</b> In
+     both the above cases, the code that BPP writes is as readable as what a
+     specific programmer would have written to solve the same problem. For
+     example, the above SQL framework generates code that a Java programmer
+     that knows nothing about BP, XML, or even SQL can easily use. In the
+     FRAMES application, BPP writes specific documentation appropriate for each
+     supported target language based on a single document root.</li>
+</ul>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Enjoy
+BPP!</p>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>References</h3>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=SpellE><b>Beanshell</b></span>: <a href="http://www.beanshell.org">http://www.beanshell.org</a></p>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><b>BPP</b>:
+<a href="http://bpp.sourceforge.net/">http://bpp.sourceforge.net</a></p>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><b>FRAMES</b>:
+<a href="http://mepas.pnl.gov/earth">http://mepas.pnl.gov/earth</a>. Click on
+the &quot;FRAMES&quot; link.</p>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=SpellE><b>BPPSql</b></span><b>:</b> <a
+href="http://home.mesastate.edu/~kcastlet/BPPSql.html">http://home.mesastate.edu/~kcastlet/BPPSql.html</a>
+</p>
+
+<p style='margin-left:.5in;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=SpellE><span class=GramE><b>perlpp</b></span></span>: <a
+href="http://tldp.org/LDP/LG/issue44/macevoy/macevoy.html">http://tldp.org/LDP/LG/issue44/macevoy/macevoy.html</a>
+</p>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Bio</h3>
+
+<p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Dr.
+Warren <span class=SpellE>MacEvoy</span> has been editor of corporate java
+training manuals and lead Java instructor for Sun java programmer certification
+programs. He has been a programmer and educator since time immemorial (or a
+least since 1995). He is the Rocky Mountain Regional director of the ACM
+intercollegiate programming contest, which is his main contribution to fun for
+young software engineers. Away from a CPU, he enjoys hiking and canoeing in <st1:place>Western
+ Colorado</st1:place>.</p>
+
+<h3 align=center style='text-align:center;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>
+
+<hr size=2 width="100%" align=center>
+
+</h3>
+
+<h3 style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'>Contact
+Info</h3>
+
+<table class=MsoNormalTable border=0 cellpadding=0 style='mso-cellspacing:1.5pt;
+ margin-left:24.0pt;mso-padding-alt:0in 0in 0in 0in'>
+ <tr style='mso-yfti-irow:0'>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal>Dr. Warren <span class=SpellE>MacEvoy</span> </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal align=right style='text-align:right'>Email: </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><a
+  href="mailto:Warren%20D.%20MacEvoy%3Cwmacevoy@mesastate.edu%3E">wmacevoy@mesastate.edu</a>
+  </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><st1:place><st1:PlaceName>Mesa</st1:PlaceName> <st1:PlaceType>State</st1:PlaceType></st1:place>
+  College </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal align=right style='text-align:right'>Office: </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><a href="directions.html"><span class=SpellE>Wubben</span>
+  186</a> </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal>CSMS Department </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal align=right style='text-align:right'>Phone: </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal>(970) 248-1070 </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><st1:Street><st1:address>1100 North Ave.</st1:address></st1:Street>
+  </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal align=right style='text-align:right'>FAX: </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal>(970) 248-1324 </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><st1:place><st1:City>Grand Junction</st1:City>, <st1:State>CO</st1:State>
+   <st1:PostalCode>81501</st1:PostalCode></st1:place> </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal align=right style='text-align:right'>Web: </p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><a href="http://www.mesastate.edu/~wmacevoy">http://www.mesastate.edu/~wmacevoy</a>
+  </p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><o:p>&nbsp;</o:p></p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td style='padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><span style='font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='mso-spacerun:yes'>&nbsp;</span><!-- hhmts end --></p>
+
+<h3 align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</h3>
+
+
+</body>
+
+</html>

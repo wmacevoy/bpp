@@ -1,0 +1,106 @@
+//
+// Although a little unconventional, RedirectBegin() and
+// RedirectEnd() allow for output stream redirection in
+// beanshell.  
+//
+// This is handy for generating multiple output files 
+// from one preprocessor script.  Use is simple enough:
+//
+// source("redirect.bsh");
+// out=System.out;
+// RedirectBegin("there.dat");
+// out.println("there"); // shows up in "there.dat"
+// RedirectEnd("there.dat");
+// out.println("here"); // shows up on console
+// 
+// The name of the RedirectEnd() must match the name of the RedirectBegin().
+// 
+//
+// Redirects may be nested, and redirects may be directed to string buffer
+// writers:
+//
+// RedirectBegin()
+// out.println("alice");
+// RedirectBegin()
+// out.println("tuesday");
+// sb1=RedirectEnd();
+// out.println("bob");
+// sb2=RedirectEnd();
+//
+// // at this point, sb1 is a StringBuffer containing the line "tuesday",
+// // and sb2 is a StringBuffer containing two lines: "alice" and "bob".
+
+
+// internal use
+class RedirectNameOut {
+  public RedirectNameOut(String _name,Object _out) { name=_name; out=_out; }
+  public String name;
+  public Object out;
+}
+
+// internal use
+void RedirectBegin(String _name,Object _out) {
+  LinkedList redirects = this.interpreter.get("RedirectStack");
+  if (redirects == null) {
+    redirects = new LinkedList();
+    this.interpreter.set("RedirectStack",redirects);
+  }
+  RedirectNameOut nameOut = new RedirectNameOut(_name,this.interpreter.get("out"));
+  nameOut.out.flush();
+  redirects.addLast(nameOut);
+  this.interpreter.set("out",_out);
+}
+
+// start redirecting output to given file with
+// given append mode.
+//
+void RedirectBegin(String file,boolean append) {
+  RedirectBegin(file,
+    new PrintStream(
+      new BufferedOutputStream(
+        new FileOutputStream(file,append)),true,"UTF-8"));
+}
+
+
+// start redirecting to new (empty) string buffer
+void RedirectBegin() {
+  RedirectBegin("STRING",new bpp.PrintStringBufferWriter());
+}
+
+// start redirecting to new (empty) file
+void RedirectBegin(String file) {
+  RedirectBegin(file,false);
+}
+
+// start redirecting to end of file
+void RedirectAppend(String file) {
+  RedirectBegin(file,true);
+}
+
+// start redirecting to end of string buffer
+void RedirectAppend(StringBuffer sb) {
+  RedirectBegin("STRING",new bpp.PrintStringBufferWriter(sb));
+}
+
+// recover string buffer after string buffer redirection.
+StringBuffer RedirectEnd() { 
+  StringBuffer ans = out.toStringBuffer();
+  RedirectEnd("STRING");
+  return ans;
+}
+
+// close file and restore previous redirection
+void RedirectEnd(String file) {
+  LinkedList redirects = this.interpreter.get("RedirectStack");
+  if (redirects == null) {
+    throw new RuntimeException("end redirect without matching begin!");
+  }
+  RedirectNameOut nameOut=redirects.removeLast();
+  if (!nameOut.name.equals(file)) {
+    throw new RuntimeException("began redirect on " + nameOut.name + ", but ended on " + file + "!");
+  }
+  
+  Object out=this.interpreter.get("out");
+  out.close();
+  this.interpreter.set("out",nameOut.out);
+}

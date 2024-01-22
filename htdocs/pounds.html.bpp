@@ -1,0 +1,20 @@
+#title="BPP: ###";
+# source("sourceall.bsh");
+#
+# doctype();
+<html>
+# head();
+  <body>
+#   banner();
+#   menu("###");
+<h3>###</h3>
+<p>About 80% of the life of BPP is spent processing code with no # symbols.</p>
+
+<p><b>#</b> Of the remaining 20%, about 80% of <i>that</i> is spent with the first-level preprocessor.</p>
+
+<p><b>##</b> Of the remaining 20%, all the useful preprocessor code we have written or seen has used only the second level processor.</p>
+
+<p><b>###</b> If, in writing a practical application, you find that <tt>###</tt>-level preprocessor steps help, I would love to hear about it.  Then I'll change this to the ####-page...</p>
+#   footer();
+  </body>
+</html>

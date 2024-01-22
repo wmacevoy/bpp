@@ -1,0 +1,27 @@
+#import bpp.Format;
+#source("makeTypedCollection.bsh");
+#source("../../bsh/redirect.bsh");
+#pkg="";
+#for (i=Format.PRIMITIVES.values().iterator(); i.hasNext(); ) {
+#  primitive=i.next();
+#  Primitive=primitive.substring(0,1).toUpperCase()+primitive.substring(1);
+#  wrapper=Format.getWrapper(primitive);
+#
+#String file=Primitive+"Collection.java";
+Generating $file
+#RedirectBegin(file);
+#if (!pkg.equals("")) {
+package $pkg;
+#}
+#makeTypedCollection(Primitive+"Collection",primitive);
+#RedirectEnd(file);
+#
+#String file="Wrapped" + Primitive+"Collection.java";
+Generating $file
+#RedirectBegin(file);
+#if (!pkg.equals("")) {
+package $pkg;
+#}
+#makeTypedCollection("Wrapped" +Primitive+"Collection",wrapper);
+#RedirectEnd(file);
+#}

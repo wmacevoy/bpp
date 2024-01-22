@@ -1,0 +1,18 @@
+#source("../contrib/bsh/redirect.bsh");
+#
+#StringBuffer mkLink(String url) { 
+#RedirectBegin();
+<a href="$url">$url</a>
+#return RedirectEnd(); 
+#}
+#RedirectBegin();
+#RedirectBegin();
+See $(mkLink("http://bpp.sf.net")) for more information.
+#sb1=RedirectEnd();
+sb1=$sb1
+#sb2=RedirectEnd();
+sb2=$sb2
+#RedirectAppend(sb1);
+oh, I forgot this.
+#RedirectEnd();
+sb1=$sb1

@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>The Three Things You Need To Know</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="BQG: The BeanShell Quickstart Guide"
+HREF="book1.html"><LINK
+REL="PREVIOUS"
+TITLE="Hello World!"
+HREF="c16.html"><LINK
+REL="NEXT"
+TITLE="Format"
+HREF="c52.html"></HEAD
+><BODY
+CLASS="chapter"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>BQG: The BeanShell Quickstart Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c16.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c52.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="chapter"
+><H1
+><A
+NAME="AEN28"
+></A
+>The Three Things You Need To Know</H1
+>
+<P
+>&#13;<P
+></P
+><UL
+><LI
+>&#13;<FONT
+COLOR="RED"
+>$(expr)</FONT
+> evaluates <FONT
+COLOR="RED"
+>expr</FONT
+>, <FONT
+COLOR="RED"
+>$id</FONT
+> evaluates <FONT
+COLOR="RED"
+>id</FONT
+>, and <FONT
+COLOR="RED"
+>$$</FONT
+> evaluates to <FONT
+COLOR="RED"
+>$</FONT
+>
+</LI
+><LI
+>&#13;<FONT
+COLOR="RED"
+># code</FONT
+> becomes immediate (preprocess time) <FONT
+COLOR="RED"
+>code</FONT
+>, but <FONT
+COLOR="RED"
+>"# stuff</FONT
+> generates a <FONT
+COLOR="RED"
+>#</FONT
+> and treats the rest of the line like item 1.
+</LI
+></UL
+>
+</P
+>
+So
+<DIV
+CLASS="example"
+><A
+NAME="AEN44"
+></A
+><P
+><B
+>Example 1. P.java.bpp: Quick Prints</B
+></P
+>
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="programlisting"
+>&#13;//
+// $(BPP.source) -&#62; $(BPP.destination) on $(new Date())
+//
+public class P {
+#
+#String[] streams = new String[] { "out","err" };
+#String[] types = new String[] { "boolean","int","long","double","Object" };
+#
+#for (int i=0; i&#60;streams.length; ++i) {
+# String stream=streams[i];
+//
+// Shorthand prints for System.$stream
+//
+# for (int j=0; j&#60;types.length; ++j) {
+#   String type = types[j];
+  public static final void $stream($type value) 
+  {
+    System.$stream.print(value);
+  }
+
+  public static final void $(stream)ln($type value) 
+  {
+    System.$stream.println(value);
+  }
+# } // for types
+#} // for streams
+}
+</PRE
+></TD
+></TR
+></TABLE
+>
+</DIV
+>
+Processing this with 
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="screen"
+>&#13;java -cp <I
+CLASS="emphasis"
+>path/to/beanshell;path/to/bpp</I
+> bpp.BPP P.java.bpp
+</PRE
+></TD
+></TR
+></TABLE
+>
+produces the following source file (P.java)
+<DIV
+CLASS="example"
+><A
+NAME="AEN49"
+></A
+><P
+><B
+>Example 2. P.java: Quick Prints (preprocessed)</B
+></P
+>
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="programlisting"
+>&#13;//
+// P.java.bpp -&#62; P.java on Sat Oct 16 18:50:14 PDT 2004
+//
+public class P {
+//
+// Shorthand prints for System.out
+//
+  public static final void out(boolean value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(boolean value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(int value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(int value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(long value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(long value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(double value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(double value) 
+  {
+    System.out.println(value);
+  }
+  public static final void out(Object value) 
+  {
+    System.out.print(value);
+  }
+
+  public static final void outln(Object value) 
+  {
+    System.out.println(value);
+  }
+//
+// Shorthand prints for System.err
+//
+  public static final void err(boolean value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(boolean value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(int value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(int value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(long value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(long value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(double value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(double value) 
+  {
+    System.err.println(value);
+  }
+  public static final void err(Object value) 
+  {
+    System.err.print(value);
+  }
+
+  public static final void errln(Object value) 
+  {
+    System.err.println(value);
+  }
+}
+</PRE
+></TD
+></TR
+></TABLE
+>
+</DIV
+>
+</DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c16.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="book1.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c52.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Hello World!</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Format</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,15 @@
+void footer() {
+out.println("<hr/>");
+out.println("<table border=\"0\" width=\"100%\">");
+out.println("  <tr>");
+out.println("    <td>");
+out.println("      Copyright &copy; 2003-2004 <a href=\"mailto:wmacevoy@mesastate.edu\">Warren D. MacEvoy jr. &lt;wmacevoy@mesastate.edu&gt;</a>");
+{out.print("      <br/>Generated from ");out.print(BPP.source);out.print(" with BPP on ");out.print(new Date());out.println(".");}
+out.println("      <a href=\"how.html\">HOW</a>");
+out.println("    </td>");
+out.println("    <td align=right>");
+out.println("      <a href=\"http://bpp.sourceforge.net\"><img src=\"logos/bpp_logo.jpg\" alt=\"BPP Logo\" width=\"90\" height=\"53\" border=\"0\"/></a>");
+out.println("    </td>");
+out.println("  </tr>");
+out.println("</table>");
+}

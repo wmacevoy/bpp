@@ -1,0 +1,14 @@
+class English {
+#System.setProperty("lang","en");
+#source("Greet.java.bsh");
+}
+
+class Italian {
+#System.setProperty("lang","it");
+#source("Greet.java.bsh");
+}
+
+class Russian {
+#System.setProperty("lang","ru");
+#source("Greet.java.bsh");
+}

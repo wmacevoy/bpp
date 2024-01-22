@@ -1,0 +1,101 @@
+/**
+    BPP: The Beanshell Preprocessor, version 0.4
+    Copyright (C) 2003-2004  Warren D. MacEvoy jr.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
+package bpp;
+
+import java.util.*;
+import java.io.*;
+
+public class ComposedFilter implements Filter {
+
+  // in -> (before) -> printwriter -> pipedwriter -> pipedreader -> bufferedreader -> (after) -> out
+  //
+  Filter before;
+  Filter after;
+
+  class Pump extends Thread {
+    PrintWriter printWriter;
+    PipedReader pipedReader;
+    PipedWriter pipedWriter;
+    BufferedReader in;
+    PrintWriter out;
+    
+    IOException exception;
+
+    Pump(PrintWriter _out) {
+      out=_out;
+      pipedWriter = new PipedWriter();
+      printWriter = new PrintWriter(pipedWriter);
+
+      exception=null;
+      start();
+      synchronized(this) {
+        while (in == null) {
+          try {
+            wait();
+          } catch (InterruptedException e) {}
+        }
+      }
+    }
+
+    public void run() {
+      synchronized(this) {
+        try {
+          pipedReader = new PipedReader(pipedWriter);
+        } catch (IOException e) {
+          throw new RuntimeException(e.getMessage());
+        }
+        in = new BufferedReader(pipedReader);
+        notifyAll();
+      }
+      try {
+        after.filter(in,out);
+      } catch (IOException _exception) {
+        exception=_exception;
+      } finally {
+        try {
+          in.close();
+        } catch (IOException e) {
+          throw new RuntimeException(e.getMessage());
+        }
+        out.flush();
+      }
+    }
+
+    public finish() {
+      synchronized(this) {
+        try {
+          p.join();
+        } catch (InterruptedException e) {}
+      }
+    }
+  }
+
+  public ComposedFilter(Filter _before,Filter _after) {
+    before=_before;
+    after=_after;
+  }
+
+  public void filter(BufferedReader in,PrintWriter out) throws IOException {
+    Pump p = new Pump(out);
+    before.filter(in,p.printWriter);
+    p.finish();
+    if (p.exception != null) throw p.exception;
+  }
+}

@@ -1,0 +1,101 @@
+import java.util.*;
+import java.lang.reflect.*;
+static import bpp.Format.*;
+String nameof(Class c) { return typename(c); }
+
+void makeMultipleInheretence(String name,String[] bases) {
+
+ ArrayList classes = new ArrayList();
+ ArrayList interfaces = new ArrayList();
+
+ //find classes and interfaces
+ for (i=0; i<bases.length; ++i) {
+   Class c = Class.forName(bases[i]);
+   classes.add(c);
+   if (c.isInterface()) interfaces.add(c);
+ }
+
+ // create "implements" line for interfaces
+ impl = new StringBuffer();
+ if (interfaces.size() > 0) {
+   impl.append(" implements ");
+   impl.append(interfaces.get(0).getName());
+   for (i=1; i<interfaces.size(); ++i) {
+     impl.append(",");
+     impl.append(interfaces.get(i).getName());
+   }
+ }
+
+ // create base names of the form package_BaseClassName
+ bname = new String[classes.size()];
+ for (i=0; i<classes.size(); ++i) {
+  bname[i]=nameof(classes.get(i)).replace('.','_').replaceAll("\\[\\]","_array");
+ }
+
+ // keep track of signatures in case of conflicts:
+ sigs = new HashMap();
+print("class "+(name)+(impl)+" {");
+for (k=0; k<classes.size(); ++k) { c=classes.get(k);
+print("    public "+(nameof(c))+" super_"+(bname[k])+";");
+}
+
+ // generate calls back to implementations for each "base" class:
+for (k=-1; k<classes.size(); ++k) { 
+ c=(k>=0)?classes.get(k):Class.forName("java.lang.Object");
+ m=c.getMethods();
+ for (i=0; i<m.length; ++i) {
+   mods=(m[i].getModifiers() & ~(Modifier.NATIVE|Modifier.ABSTRACT));
+   modifiers=Modifier.toString(mods);
+   isStatic=Modifier.isStatic(mods);
+   returns=nameof(m[i].getReturnType());
+   name=m[i].getName();
+   p=m[i].getParameterTypes();
+   parms = new StringBuffer();
+   args = new StringBuffer();
+   for (j=0; j<p.length; ++j) {
+     if (j==0) {
+       parms.append(nameof(p[j])+" arg"+(j+1));
+       args.append("arg"+(j+1));
+     } else { 
+       parms.append(","); parms.append(nameof(p[j])+" arg"+(j+1)); 
+       args.append(",arg"+(j+1));
+     }
+   }
+   e=m[i].getExceptionTypes();
+   excepts = new StringBuffer();
+   for (j=0; j<e.length; ++j) {
+     if (j==0) excepts.append("throws " + nameof(e[j]));
+     else { excepts.append(", "); excepts.append(nameof(e[j])); }
+   }
+   sig=name+"("+parms+")";
+   if (sigs.get(sig)==null) { 
+      suffix="";
+      sigs.put(sig,1);
+   } else {
+      suffix=sigs.get(sig);
+      sigs.put(sig,suffix+1);
+   }
+if (returns.equals("void")) {
+  prefix="";
+} else {
+  prefix="return ";
+}
+if (k>=0) {
+if (isStatic) {
+  call=nameof(c);
+} else {
+  call="super_"+bname[k];
+}
+print("   "+modifiers+" "+returns+" "+(bname[k])+"_"+name+"("+parms+") "+excepts+" {");
+print("     "+prefix+call+"."+name+"("+args+");");
+print("   }");
+if (suffix.equals("")) {
+print("   "+modifiers+" "+returns+" "+name+suffix+"("+parms+") "+excepts+" { ");
+print("     "+prefix+(bname[k])+"_"+name+"("+args+");");
+print("   }");
+}
+}
+}
+}
+print("}");
+}

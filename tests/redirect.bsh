@@ -1,0 +1,33 @@
+out.println("testing redirect.");
+source("../contrib/bsh/redirect.bsh");
+ void cp(BufferedReader in,PrintStream out) {
+   for (;;) {
+     String line = in.readLine();
+     if (line == null) break;
+     out.println(line);
+   }
+ }
+ void catout(String file) { cp(bpp.Filters.getBufferedReader(file),out); }
+RedirectBegin("redirect.test1");
+out.println("one");
+RedirectEnd("redirect.test1");
+out.println("test 1:");
+catout("redirect.test1");
+cp("redirect.test1","redirect.test2");
+RedirectAppend("redirect.test2");
+out.println("two");
+RedirectEnd("redirect.test2");
+out.println("test 2:");
+catout("redirect.test2");
+RedirectBegin("redirect.test3");
+out.println("here\'s some stuff.");
+RedirectBegin("redirect.test4");
+out.println("oh, and this.");
+RedirectEnd("redirect.test4");
+out.println("and some more stuff.");
+RedirectEnd("redirect.test3");
+out.println("test 3:");
+catout("redirect.test3");
+out.println("test 4:");
+catout("redirect.test4");
+out.println("done.");

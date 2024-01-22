@@ -1,0 +1,58 @@
+<!-- 
+  *  each table has a default id name (id) which is an integer primary key 
+  *  the following primative types are supported:
+     string(k) UTF-8 encoded strings (the *encoded* length is k bytes)
+     password(k) like string, but 1-way encrypted.
+     integer 4-byte integer (ieee)
+     decimal 8-byte real (ieee)
+     logical boolean
+     blob byte block with 31-bit length (up to 2 billion bytes)
+     timestamp
+     id(name) reference (via key) to given table
+     list(type) a list of the given type of element
+
+-->
+<db id="site">
+  <table id="user">
+    <entry id="username"      type="string(255)"/>
+    <entry id="password"      type="password(255)"/>
+    <entry id="email"         type="string(255)"/>
+    <entry id="firstname"     type="string(255)"/>
+    <entry id="lastname"      type="string(255)"/>
+    <entry id="middleinitial" type="string(255)"/>
+    <entry id="groups"        type="list(id(group))"/>
+  </table>
+
+  <table name="group">
+    <entry id="name" type="string(80)"/>
+  </table>
+
+  <table name="format">
+    <entry id="name"       type="string(255)"/>
+    <entry id="viewer"     type="string(255)"/>
+    <entry id="editor"     type="string(255)"/>
+  </table>
+
+  <table id="log">
+    <entry id="name"       type="string(255)"/>
+    <entry id="user"       type="id(user)"/>
+    <entry id="kind"       type="string(255)"/>
+    <entry id="date"       type="timestamp"/>
+  </table>
+
+  <table id="entity">
+    <entry id="name"       type="string(255)"      />
+    <entry id="location"   type="string(255)"      />
+    <entry id="userread"   type="list(id(user))"   />
+    <entry id="groupread"  type="list(id(group))"  />
+    <entry id="userwrite"  type="list(id(user))"   />
+    <entry id="groupwrite" type="list(id(group))"  />
+    <entry id="content"    type="blob"             />
+    <entry id="format"     type="id(format)"       />
+    <entry id="log"        type="list(log)"        />
+  </table>
+
+  <table id="page" base="entity">
+    <entry id="template" type="id(page)"/>
+  </table>
+</db>

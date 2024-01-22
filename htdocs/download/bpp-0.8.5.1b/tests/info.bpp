@@ -1,0 +1,4 @@
+#static import bpp.Format.*;
+source=$(BPP.source)
+destination=$(BPP.destination)
+args=$(join(",",BPP.args))

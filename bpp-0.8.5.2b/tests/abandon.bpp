@@ -1,0 +1,7 @@
+#if (new File(BPP.source).lastModified() 
+#    < new File(BPP.destination).lastModified()) { out.abandon(); return; }
+Hi there!
+#for (i=0; i<10; ++i) {
+#  Thread.sleep(1000);
+i
+#}

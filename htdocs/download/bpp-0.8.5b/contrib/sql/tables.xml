@@ -1,0 +1,44 @@
+<db id="site">
+  <table id="user">
+    <entry id="username"   type="string(255)"/>
+    <entry id="password"   type="password(255)"/>
+    <entry id="email"      type="string(255)"/>
+    <entry id="firstname"  type="string(255)"/>
+    <entry id="lastname"   type="string(255)"/>
+    <entry id="middleinitial" type="string(255)"/>
+    <entry id="groups"     type="list(table(group))"/>
+    <entry id="history"    type="list(string(255))"/>
+  </table>
+
+  <table name="group">
+    <entry id="name" type="string(80)"/>
+  </table>
+
+  <table name="format">
+    <entry id="name"       type="string(255)"/>
+    <entry id="viewer"     type="string(255)"/>
+    <entry id="editor"     type="string(255)"/>
+  </table>
+
+  <table id="log">
+    <entry id="name" type="string(255)"/>
+    <entry id="kind" type="string(255)"/>
+    <entry id="date" type="timestamp"/>
+  </table>
+
+  <table id="entity">
+    <entry id="name"       type="string(255)"/>
+    <entry id="location"   type="string(255)"/>
+    <entry id="userread"   type="list(table(user))"/>
+    <entry id="groupread"  type="list(table(group))"/>
+    <entry id="userwrite"  type="list(table(user))"/>
+    <entry id="groupwrite" type="list(table(group))"/>
+    <entry id="content"    type="blob"/>
+    <entry id="format"     type="table(format)"/>
+    <entry id="log"        type="list(log)"/>
+  </table>
+
+  <table id="page" base="entity">
+    <entry id="template"   type="table(page)"/>
+  </table>
+</db>

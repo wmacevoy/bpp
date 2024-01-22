@@ -1,0 +1,39 @@
+#import java.lang.reflect.*;
+#import bpp.Format;
+#String nameof(Class c) { return Format.typename(c); }
+#
+#void makeNullAdapter(String interfaceName) {
+# adapter=interfaceName.split("\\.");  adapter=adapter[adapter.length-1];
+# makeNullAdapter(adapter+"Adapter",interfaceName);
+#}
+#
+#void makeNullAdapter(String className,String interfaceName) {
+#
+# m=Class.forName(interfaceName).getMethods();
+class $className implements $interfaceName {
+# for (i=0; i<m.length; ++i) if ((m[i].getModifiers()&Modifier.ABSTRACT)!=0) {
+#   modifiers=Modifier.toString(m[i].getModifiers()&~Modifier.ABSTRACT);
+#   returns=nameof(m[i].getReturnType());
+#   name=m[i].getName();
+#   p=m[i].getParameterTypes();
+#   parms = new StringBuffer();
+#   for (j=0; j<p.length; ++j) {
+#     if (j==0) parms.append(nameof(p[j])+" arg"+(j+1));
+#     else { parms.append(","); parms.append(nameof(p[j])+" arg"+(j+1)); }
+#   }
+#   e=m[i].getExceptionTypes();
+#   excepts = new StringBuffer();
+#   k=0;
+#   for (j=0; j<e.length; ++j) {
+#     if (j==0) excepts.append("throws " + nameof(e[j]));
+#     else { excepts.append(", "); excepts.append(nameof(e[j])); }
+#   }
+
+    $modifiers $returns $name ($parms) $excepts { 
+#     if (!returns.equals("void")) {
+        return $(Format.defval(returns));
+#     }
+    }
+# } // for methods
+} // class $className
+#} // makeNullAdapter(interface)

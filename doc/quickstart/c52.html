@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Format</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="BQG: The BeanShell Quickstart Guide"
+HREF="book1.html"><LINK
+REL="PREVIOUS"
+TITLE="The Three Things You Need To Know"
+HREF="c28.html"></HEAD
+><BODY
+CLASS="chapter"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>BQG: The BeanShell Quickstart Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c28.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+>&nbsp;</TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="chapter"
+><H1
+><A
+NAME="AEN52"
+></A
+>Format</H1
+>
+<P
+>If, near the top of a file to preprocess, you include the statement
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="screen"
+>&#13;#static import bpp.Format.*
+</PRE
+></TD
+></TR
+></TABLE
+>
+You can take advantage of a number of convenient formatting code for producing java source code.  These are <FONT
+COLOR="RED"
+>literal(x)</FONT
+> for formatting literal constants, and <FONT
+COLOR="RED"
+>N(x,format)</FONT
+> for formatting numbers in particular ways.  For example
+<DIV
+CLASS="example"
+><A
+NAME="AEN58"
+></A
+><P
+><B
+>Example 1. Constants.java.bpp: Format examples</B
+></P
+>
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="programlisting"
+>&#13;# static import bpp.Format.*;
+#
+# String CONST="public static final";
+#
+# String s1="Plain";
+# String s2="\"Quoted\"";
+#
+# double n1=Math.atan(1.0);
+# double n2=Math.sqrt(2.0);
+#
+public class Constants {
+  //
+  // same as $CONST S1="$s1";
+  $CONST S1=$(literal(s1)); 
+
+  //
+  // better than $CONST S2="$s2";
+  $CONST S2=$(literal(s2)); 
+
+  // perfect precision (no lost information)
+  $CONST N1version1=$(literal(n1));
+  $CONST N2version1=$(literal(n2));
+
+  // five digits of precision
+  $CONST N1version2=$(N(n1,"0.00000"));
+  $CONST N2version2=$(N(n2,"0.00000"));
+}
+</PRE
+></TD
+></TR
+></TABLE
+>
+</DIV
+>
+Processing this with 
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="screen"
+>&#13;java -cp <I
+CLASS="emphasis"
+>path/to/beanshell;path/to/bpp</I
+> bpp.BPP Constants.java.bpp
+</PRE
+></TD
+></TR
+></TABLE
+>
+produces the following source file (Constants.java)
+<DIV
+CLASS="example"
+><A
+NAME="AEN63"
+></A
+><P
+><B
+>Example 2. Constants.java: Format examples (preprocessed)</B
+></P
+>
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="programlisting"
+>&#13;public class Constants {
+  //
+  // same as public static final S1="Plain";
+  public static final S1="Plain"; 
+
+  //
+  // better than public static final S2=""Quoted"";
+  public static final S2="\"Quoted\""; 
+
+  // perfect precision (no lost information)
+  public static final N1version1=0.7853981633974483;
+  public static final N2version1=1.4142135623730951;
+
+  // five digits of precision
+  public static final N1version2=0.78540;
+  public static final N2version2=1.41421;
+}
+</PRE
+></TD
+></TR
+></TABLE
+>
+</DIV
+>
+</P
+>
+</DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c28.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="book1.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The Three Things You Need To Know</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

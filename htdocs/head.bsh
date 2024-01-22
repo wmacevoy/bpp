@@ -1,0 +1,6 @@
+void head() {
+out.println("<head>");
+out.println("  <link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\"/>");
+{out.print("  <title>");out.print(title);out.println("</title>");}
+out.println("</head>");
+}

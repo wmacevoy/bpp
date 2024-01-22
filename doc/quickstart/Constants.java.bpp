@@ -1,0 +1,27 @@
+# static import bpp.Format.*;
+#
+# String CONST="public static final";
+#
+# String s1="Plain";
+# String s2="\"Quoted\"";
+#
+# double n1=Math.atan(1.0);
+# double n2=Math.sqrt(2.0);
+#
+public class Constants {
+  //
+  // same as $CONST S1="$s1";
+  $CONST S1=$(literal(s1)); 
+
+  //
+  // better than $CONST S2="$s2";
+  $CONST S2=$(literal(s2)); 
+
+  // perfect precision (no lost information)
+  $CONST N1version1=$(literal(n1));
+  $CONST N2version1=$(literal(n2));
+
+  // five digits of precision
+  $CONST N1version2=$(N(n1,"0.00000"));
+  $CONST N2version2=$(N(n2,"0.00000"));
+}

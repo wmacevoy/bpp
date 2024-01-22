@@ -1,0 +1,24 @@
+#void menu(String selected) {
+# String [][] m=new String[][] {
+#   { "Home" , "index.html" },
+#   { "Intro" , "intro.html" },
+#   { "Docs" , "docs.html" },
+#   { "Download" , "download.html" },
+#   { "Contact" , "contact.html" },
+#   { "###" , "pounds.html" },
+# };
+# double percent=100.0/m.length;
+#
+<table width="100%" border="2" cellspacing="0" cellpadding="0">
+  <tr>
+#   for (int i=0; i<m.length; ++i) {
+#     if (m[i][0].equals(selected)) {
+#       cls="menu_reverse";
+#     } else {
+#       cls="menu";
+#     }
+    <td align="center" class="$cls" width="$percent%"><a class="$cls" href="$(m[i][1])"> $(m[i][0]) </a></td>
+#   }
+  </tr>
+</table>
+#}

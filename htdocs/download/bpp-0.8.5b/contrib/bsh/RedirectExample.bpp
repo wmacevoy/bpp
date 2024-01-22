@@ -1,0 +1,40 @@
+#
+#// uses RedirectBegin .. RedirectEnd to write files called one two and three
+#// uses RedirectAppend .. RedirectEnd to log progress to redirect.log
+#
+#
+
+#i=0;
+#source("redirect.bsh");
+#
+#RedirectBegin("redirect.log");
+$(new Date()): redirect started.
+#RedirectEnd("redirect.log");
+#
+#RedirectBegin("one");
+$(++i)
+#RedirectEnd("one");
+#
+#RedirectAppend("redirect.log");
+$(new Date()): completed one.
+#RedirectEnd("redirect.log");
+#
+#RedirectBegin("two");
+$(++i)
+#RedirectEnd("two");
+#
+#RedirectAppend("redirect.log");
+$(new Date()): completed two.
+#RedirectEnd("redirect.log");
+#
+#RedirectBegin("three");
+$(++i)
+#RedirectEnd("three");
+#
+#RedirectAppend("redirect.log");
+$(new Date()): completed three.
+#RedirectEnd("redirect.log");
+#
+#RedirectAppend("redirect.log");
+$(new Date()): redirection finished.
+#RedirectEnd("redirect.log");

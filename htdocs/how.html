@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+  <title>BPP: How</title>
+</head>
+  <body>
+<table border="0" class="banner" width="100%">
+  <tr>
+    <td align="left" valign="center">
+      <img src="logos/bpp.jpg" width="148" height="87" alt="Bob Pat and Pam"/>
+    </td>
+    <td width="50">
+    </td>
+    <td>
+      <table border="0" class="banner">
+        <tr>
+          <td align="left" class="banner">BPP: The Beanshell Preprocessor</td>
+        </tr>
+        <tr>
+          <td align="right" class="banner_quote"><i>The fully caffeinated preprocessor</i></td>
+        </tr>
+      </table>
+    </td>
+    <td width="50">
+    </td>
+    <td align="right" valign="center">
+      <img src="logos/bpp-draft.jpg" width="221" height="126" alt="Bob Pat and Pam draft"/>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="2" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" class="menu" width="16.666666666666668%"><a class="menu" href="index.html"> Home </a></td>
+    <td align="center" class="menu" width="16.666666666666668%"><a class="menu" href="intro.html"> Intro </a></td>
+    <td align="center" class="menu" width="16.666666666666668%"><a class="menu" href="docs.html"> Docs </a></td>
+    <td align="center" class="menu" width="16.666666666666668%"><a class="menu" href="download.html"> Download </a></td>
+    <td align="center" class="menu" width="16.666666666666668%"><a class="menu" href="contact.html"> Contact </a></td>
+    <td align="center" class="menu" width="16.666666666666668%"><a class="menu" href="pounds.html"> ### </a></td>
+  </tr>
+</table>
+    <h3>Welcome to the secret how page!</h3>
+
+    <p>There are lots of scripting options for web-page generation, but they are usually relegated to <i>server-side</i>, implying CPU and security requirments on the server, or <i>client-side</i>, implying support for such on all those nasty web browsers.</p>
+
+    <p>How about <i>None of the above?</i>  The BPP pages have a consistent look, but are essentially static.  So instead of counting on PHP or Javascript, I use BPP to build the pages from a templates using a traditional make file.</p>
+
+<p><b>Makefile</b>.  The make file is very simple: templates come from <tt>.bpt</tt> files, and each page comes from an <tt>html.bpp</tt> page:
+<pre>
+PAGES=$(subst .html.bpp,.html,$(wildcard *.html.bpp))
+TEMPLATES=$(subst .bpt,.bsh,$(wildcard *.bpt))
+
+all : $(TEMPLATES) $(PAGES)
+
+%.bsh : %.bpt
+	bpp -o $*.bsh -b $*.bpt
+
+%.html : $(TEMPLATES) %.html.bpp
+	bpp -o $*.html $*.html.bpp
+</pre>
+If you don't use gnu make, I'm sorry for all the typing you have to do, and you're welcome to send me an equivalent <tt>ant</tt> file to prove it if you would like to.
+</p>
+
+<p><b>index.html.bpp</b>.  The index (source) page is typical of the other pages:
+<pre>
+#title="BPP: Home Page";
+# source("sourceall.bsh");
+#
+# doctype();
+&lt;html&gt;
+# head();
+  &lt;body&gt;
+#   banner();
+#   menu("Home");
+    &lt;img src="logos/Two Beans.png" alt="Fancy BPP Logo"/&gt;
+#   footer();
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p><b>head.bpt</b>.  The <tt>head</tt> template file is very typical:
+<pre>
+#void head() {
+&lt;head&gt;
+  &lt;link rel="stylesheet" type="text/css" href="styles.css"/&gt;
+  &lt;title&gt;$title&lt;/title&gt;
+&lt;/head&gt;
+#}
+</pre>
+The only non-static content is the <tt>title</tt>.  A more complicated template generates the highlighted menu section:
+<pre>
+#void menu(String selected) {
+# String [][] m=new String[][] {
+#   { "Home" , "index.html" },
+#   { "Intro" , "intro.html" },
+#   { "Docs" , "docs.html" },
+#   { "Download" , "download.html" },
+#   { "Contact" , "contact.html" },
+# };
+# double percent=100.0/m.length;
+#
+&lt;table width="100%" border="2" cellspacing="0" cellpadding="0"&gt;
+  &lt;tr&gt;
+#   for (int i=0; i&lt;m.length; ++i) {
+#     if (m[i][0].equals(selected)) {
+#       cls="menu_reverse";
+#     } else {
+#       cls="menu";
+#     }
+    &lt;td align="center" class="$cls" width="$percent%"&gt;&lt;a class="$cls" href="$(m[i][1])"&gt; $(m[i][0]) &lt;/a&gt;&lt;/td&gt;
+#   }
+  &lt;/tr&gt;
+&lt;/table&gt;
+#}
+</pre>
+Purists might complain that I get the highlighting look from a stylesheet, which isn't all <i>that</i> portable, but I'm not saying you have to do it my way.</p>
+
+<p>Each component that needs to be portable can be generated as a new template.  Afterwards, a single <tt>make</tt> rebuilds everything into static vanilla html.</p>
+<hr/>
+<table border="0" width="100%">
+  <tr>
+    <td>
+      Copyright &copy; 2003-2004 <a href="mailto:wmacevoy@mesastate.edu">Warren D. MacEvoy jr. &lt;wmacevoy@mesastate.edu&gt;</a>
+      <br/>Generated from how.html.bpp with BPP on Sat Apr 23 19:17:55 MDT 2005.
+      <a href="how.html">HOW</a>
+    </td>
+    <td align=right>
+      <a href="http://bpp.sourceforge.net"><img src="logos/bpp_logo.jpg" alt="BPP Logo" width="90" height="53" border="0"/></a>
+    </td>
+  </tr>
+</table>
+  </body>
+</html>

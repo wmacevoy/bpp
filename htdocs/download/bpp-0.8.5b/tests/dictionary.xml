@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+  <word name="helloworld" 
+    en="Hello World!" 
+    it="Ciao Mondo!" 
+    ru="&#x043F;&#x0440;&#x0438;&#x0432;&#x0435;&#x0442; &#x043C;&#x0438;&#x0440;"
+  />
+</dictionary>

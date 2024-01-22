@@ -1,0 +1,2 @@
+#static import bpp.Format.*;
+args=($(join(',',BPP.args)))

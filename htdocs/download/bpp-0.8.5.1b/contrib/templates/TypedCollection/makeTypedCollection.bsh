@@ -1,0 +1,70 @@
+
+import pp.Format.*;
+
+void makeTypedCollection(String className,String element) {
+wrapper=Format.getWrapper(element); // null if element is not a primitive type
+zero=Format.defval(element);
+warg1=Format.wrap(element,"arg1");
+print("import java.util.*;");
+print("");
+print("public class "+className+" {");
+print("  public static class "+(className)+"Iterator { ");
+print("    java.util.Iterator iterator;");
+print("    public "+(className)+"Iterator(java.util.Iterator _iterator) { iterator=_iterator; }");
+print("    public boolean hasNext() { return iterator.hasNext(); }");
+print("    public "+element+" next() { ");
+if (wrapper == null) {
+print("      return ("+element+") iterator.next();");
+} else {
+print("      return (("+wrapper+") iterator.next())."+(element)+"Value();");
+}
+print("    }");
+print("    public void remove() { iterator.remove(); }");
+print("  }");
+print("  protected java.util.Collection collection;");
+print("  public "+className+"(Collection _collection) { collection=_collection; } ");
+print("  public boolean add("+element+" arg1) { return collection.add("+warg1+"); }");
+print("  public boolean contains("+element+" arg1) { return collection.contains("+warg1+"); }");
+print("  public boolean remove("+element+" arg1) { return collection.remove("+warg1+"); }");
+print("  public "+(className)+"Iterator iterator() { ");
+print("   return new "+(className)+"Iterator(collection.iterator()); ");
+print("  }");
+print("  public int hashCode ()  { return collection.hashCode(); }");
+print("  public boolean equals (java.lang.Object arg1)  {");
+print("   return collection.equals(arg1); ");
+print("  }");
+print("  public boolean addAll ("+className+" arg1)  { ");
+print("    return collection.addAll(arg1.collection);");
+print("  }");
+print("  public int size ()  { return collection.size(); }");
+print("  public "+element+"[] toArray() { ");
+if (wrapper==null) {
+print("  return ("+element+"[])collection.toArray(); ");
+} else {
+print("  "+wrapper+"[] tmp = ("+wrapper+"[])collection.toArray();");
+print("  "+element+"[] ans = new "+element+"[tmp.length];");
+print("  for (int i=tmp.length-1; i>=0; --i) ans[i]=tmp[i]."+(element)+"Value();");
+print("  return ans;");
+}
+print("}");
+print("  public "+element+"[] toArray("+element+"[] arg1) { ");
+if (wrapper == null) {
+print("  return ("+element+"[])collection.toArray(); ");
+} else {
+print("  "+wrapper+"[] tmp = ("+wrapper+"[])collection.toArray();");
+print("  "+element+"[] ans = (arg1.length >= tmp.length) ? arg1 : new "+element+"[tmp.length];");
+print("  for (int i=ans.length-1; i>=tmp.length; --i) ans[i]="+zero+";");
+print("  for (int i=tmp.length-1; i>=0; --i) ans[i]=tmp[i]."+(element)+"Value();");
+print("  return ans;");
+}
+print("  }");
+print("  public void clear ()  { collection.clear(); }");
+print("  public boolean isEmpty ()  { return collection.isEmpty(); }");
+print("  public boolean containsAll ("+className+" arg1)  { return collection.containsAll(arg1.collection); }");
+print("");
+print("  public boolean removeAll ("+className+" arg1)  { return collection.removeAll(arg1.collection); }");
+print("");
+print("  public boolean retainAll ("+className+" arg1)  { return collection.retainAll(arg1.collection); }");
+print("");
+print("}");
+} // makeTypedCollection

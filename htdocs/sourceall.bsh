@@ -1,0 +1,7 @@
+// source in all template files
+source("banner.bsh");
+source("doctype.bsh");
+source("footer.bsh");
+source("head.bsh");
+source("latest.bsh");
+source("menu.bsh");

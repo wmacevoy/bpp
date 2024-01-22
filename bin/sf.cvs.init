@@ -1,0 +1,10 @@
+echo "you probably don't want to really run this."
+exit 0
+
+export CVS_RSH=ssh
+for d in tests doc src
+do
+  cd $d
+  cvs -d:ext:wmacevoy@cvs.sourceforge.net:/cvsroot/bpp import -m "Initial import." $d vendor start
+  cd ..
+done

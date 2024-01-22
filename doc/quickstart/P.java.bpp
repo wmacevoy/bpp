@@ -1,0 +1,27 @@
+//
+// $(BPP.source) -> $(BPP.destination) on $(new Date())
+//
+public class P {
+#
+#String[] streams = new String[] { "out","err" };
+#String[] types = new String[] { "boolean","int","long","double","Object" };
+#
+#for (int i=0; i<streams.length; ++i) {
+# String stream=streams[i];
+//
+// Shorthand prints for System.$stream
+//
+# for (int j=0; j<types.length; ++j) {
+#   String type = types[j];
+  public static final void $stream($type value) 
+  {
+    System.$stream.print(value);
+  }
+
+  public static final void $(stream)ln($type value) 
+  {
+    System.$stream.println(value);
+  }
+# } // for types
+#} // for streams
+}

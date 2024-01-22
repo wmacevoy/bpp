@@ -1,0 +1,15 @@
+#void footer() {
+<hr/>
+<table border="0" width="100%">
+  <tr>
+    <td>
+      Copyright &copy; 2003-2004 <a href="mailto:wmacevoy@mesastate.edu">Warren D. MacEvoy jr. &lt;wmacevoy@mesastate.edu&gt;</a>
+      <br/>Generated from $(BPP.source) with BPP on $(new Date()).
+      <a href="how.html">HOW</a>
+    </td>
+    <td align=right>
+      <a href="http://bpp.sourceforge.net"><img src="logos/bpp_logo.jpg" alt="BPP Logo" width="90" height="53" border="0"/></a>
+    </td>
+  </tr>
+</table>
+#}

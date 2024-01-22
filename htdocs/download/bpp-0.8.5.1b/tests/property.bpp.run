@@ -1,0 +1,2 @@
+#!/bin/bash
+bpp -Dname=bob property.bpp
