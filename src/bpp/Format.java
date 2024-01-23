@@ -82,14 +82,14 @@ public class Format {
   public static final Map DEFAULTS;
   static {
     Map map=new TreeMap();
-    map.put("boolean",new Boolean(false));
-    map.put("byte",new Byte((byte)0));
-    map.put("char",new Character('\0'));
-    map.put("short",new Short((short)0));
-    map.put("int",new Integer(0));
-    map.put("long",new Long(0L));
-    map.put("float",new Float(0.0f));
-    map.put("double",new Double(0.0));
+    map.put("boolean",Boolean.valueOf(false));
+    map.put("byte",Byte.valueOf((byte)0));
+    map.put("char",Character.valueOf('\0'));
+    map.put("short",Short.valueOf((short)0));
+    map.put("int",Integer.valueOf(0));
+    map.put("long",Long.valueOf(0L));
+    map.put("float",Float.valueOf(0.0f));
+    map.put("double",Double.valueOf(0.0));
     DEFAULTS=map;
   }
 
@@ -125,8 +125,8 @@ public class Format {
   /**
      <p>Selectively wrap primitive types.</p>
 
-     <p>For example, <tt>wrap("String","x")</tt> will produce "x", while
-     <tt>wrap("boolean","x")</tt> will produce "new Boolean(x)".
+     <p>For example, <code>wrap("String","x")</code> will produce "x", while
+     <code>wrap("boolean","x")</code> will produce "new Boolean(x)".
      The type name must be the primitive type.
      </p>
 
@@ -140,8 +140,8 @@ public class Format {
   /**
      <p>Selectively unwrap primitive types.</p>
 
-     <p>For example, <tt>unwrap("String","x")</tt> will produce "x", while
-     <tt>unwrap("boolean","x")</tt> will produce "x.booleanValue()".
+     <p>For example, <code>unwrap("String","x")</code> will produce "x", while
+     <code>unwrap("boolean","x")</code> will produce "x.booleanValue()".
      The type name must be the primitive type.
      </p>
 
@@ -153,7 +153,7 @@ public class Format {
   /**
      <p>Get default value for any type (as a string).</p>
 
-     <p>For example, <tt>defval("String")</tt> will produce "((String)null)".  All non-primitive types, including wrapper types, are treated in this way.  The primitive types produce the following values:
+     <p>For example, <code>defval("String")</code> will produce "((String)null)".  All non-primitive types, including wrapper types, are treated in this way.  The primitive types produce the following values:
      <ul><table border=1>
      <tr><td><b>primitive</b></td><td><b>result</b></td></tr>
      <tr><td>"boolean"</td><td>"false"</td></tr>
@@ -165,7 +165,7 @@ public class Format {
      <tr><td>"float"</td><td>"0f"</td></tr>
      <tr><td>"double"</td><td>"0.0"</td></tr>
      </table></ul>
-     To initialize a wrapper type, use <tt>wrap(primitive,defval(primitive))</tt>.
+     To initialize a wrapper type, use <code>wrap(primitive,defval(primitive))</code>.
      </p>
   */
   public static String defval(String type) {
@@ -259,7 +259,7 @@ public class Format {
 
   /** Join the toString() representations of some objects together. */
   public static String join(char separator,Object [] list) {
-    return join(new Character(separator).toString(),list);
+    return join(Character.valueOf(separator).toString(),list);
   }
 
   /** Join the toString() representations of some objects together. */
@@ -287,7 +287,7 @@ public class Format {
   </p>
   */
   public static String[] split(char separator, String joined,boolean trim) {
-    return split(new Character(separator).toString(),joined,trim);
+    return split(Character.valueOf(separator).toString(),joined,trim);
   }
 
   /** <p>Split a string up.</p>
@@ -349,17 +349,17 @@ public class Format {
   <p>f is the argument to the java.text.DecimalFormat used to format
   the number.  See that class for all that can be done</p>
   */
-  public static String N(double n,String f) { return N(new Double(n),f); }
+  public static String N(double n,String f) { return N(Double.valueOf(n),f); }
 
   /** <p>Format boolean as a java literal.</p>
  
-      <p>For example, <tt>literal(true)="true"</tt>.</p>
+      <p>For example, <code>literal(true)="true"</code>.</p>
   */
   public static String literal(boolean x) { return x ? "true" : "false"; }
 
   /** <p>Format Boolean as a java literal.</p>
  
-      <p>For example, <tt>literal(new Boolean(true))="true"</tt>.</p>
+      <p>For example, <code>literal(new Boolean(true))="true"</code>.</p>
   */
   public static String literal(Boolean x) {
     return literal(x.booleanValue());
@@ -369,13 +369,13 @@ public class Format {
 
   /** <p>Format byte as a java literal.</p>
  
-      <p>For example, <tt>literal((byte) 3)="((byte) 3)"</tt>.</p>
+      <p>For example, <code>literal((byte) 3)="((byte) 3)"</code>.</p>
   */
   public static String literal(byte x) { return "((byte) "+Byte.toString(x)+")"; }
 
   /** <p>Format Byte as a java literal.</p>
  
-      <p>For example, <tt>literal(new Byte(3))="((byte) 3)"</tt>.</p>
+      <p>For example, <code>literal(new Byte(3))="((byte) 3)"</code>.</p>
   */
   public static String literal(Byte x) {
     return literal(x.byteValue());
@@ -383,13 +383,13 @@ public class Format {
 
   /** <p>Format short as a java literal.</p>
  
-      <p>For example, <tt>literal((short) 3)="((short) 3)"</tt>.</p>
+      <p>For example, <code>literal((short) 3)="((short) 3)"</code>.</p>
   */
   public static String literal(short x) { return "((short) "+Short.toString(x)+")"; }
 
   /** <p>Format short as a java literal.</p>
  
-      <p>For example, <tt>literal(new Short(3))="((short) 3)"</tt>.</p>
+      <p>For example, <code>literal(new Short(3))="((short) 3)"</code>.</p>
   */
   public static String literal(Short x) {
     return literal(x.shortValue());
@@ -398,13 +398,13 @@ public class Format {
 
   /** <p>Format int as a java literal.</p>
  
-      <p>For example, <tt>literal(3)="3"</tt>.</p>
+      <p>For example, <code>literal(3)="3"</code>.</p>
   */
   public static String literal(int x) { return Integer.toString(x); }
 
   /** <p>Format Integer as a java literal.</p>
  
-      <p>For example, <tt>literal(new Integer(3))="3"</tt>.</p>
+      <p>For example, <code>literal(new Integer(3))="3"</code>.</p>
   */
   public static String literal(Integer x) {
     return literal(x.intValue());
@@ -412,13 +412,13 @@ public class Format {
 
   /** <p>Format long as a java literal.</p>
  
-      <p>For example, <tt>literal(3L)="3L"</tt>.</p>
+      <p>For example, <code>literal(3L)="3L"</code>.</p>
   */
   public static String literal(long x) { return Long.toString(x)+"L"; }
 
   /** <p>Format Long as a java literal.</p>
  
-      <p>For example, <tt>literal(new Long(3L))="3L"</tt>.</p>
+      <p>For example, <code>literal(new Long(3L))="3L"</code>.</p>
   */
   public static String literal(Long x) {
     return literal(x.longValue());
@@ -427,13 +427,13 @@ public class Format {
 
   /** <p>Format float as a java literal.</p>
  
-      <p>For example, <tt>literal(3.0f))="3.0f"</tt>.</p>
+      <p>For example, <code>literal(3.0f))="3.0f"</code>.</p>
   */
   public static String literal(float x) { return Float.toString(x)+"f"; }
 
   /** <p>Format float as a java literal.</p>
  
-      <p>For example, <tt>literal(new Float(3.0f)))="3.0f"</tt>.</p>
+      <p>For example, <code>literal(new Float(3.0f)))="3.0f"</code>.</p>
   */
   public static String literal(Float x) {
     return literal(x.floatValue());
@@ -441,7 +441,7 @@ public class Format {
 
   /** <p>Format double as a java literal.</p>
  
-      <p>For example, <tt>literal(3.0))="3.0"</tt>.</p>
+      <p>For example, <code>literal(3.0))="3.0"</code>.</p>
   */
   public static String literal(double x) {
     return Double.toString(x);
@@ -449,7 +449,7 @@ public class Format {
 
   /** <p>Format Double as a java literal.</p>
  
-      <p>For example, <tt>literal(new Double(3.0)))="3.0"</tt>.</p>
+      <p>For example, <code>literal(new Double(3.0)))="3.0"</code>.</p>
   */
   public static String literal(Double x) {
     return literal(x.doubleValue());
@@ -490,7 +490,7 @@ public class Format {
 
   /** <p>Format char as a java literal.</p>
  
-      <p>For example, <tt>literal('\'')="\'\\'\'"</tt>.</p>
+      <p>For example, <code>literal('\'')="\'\\'\'"</code>.</p>
   */
   public static String literal(char x) {
     StringBuffer ans=new StringBuffer(4).append('\'');
@@ -501,7 +501,7 @@ public class Format {
 
   /** <p>Format char as a java literal.</p>
  
-      <p>For example, <tt>literal(new Character('\''))="\'\\\'\'"</tt>.</p>
+      <p>For example, <code>literal(Character.valueOf('\''))="\'\\\'\'"</code>.</p>
   */
   public static String literal(Character x) {
     return literal(x.charValue());
@@ -509,7 +509,7 @@ public class Format {
 
   /** <p>Format String as a java literal.</p>
  
-      <p>For example, <tt>literal("\tPress \'return\'\n")="\"\\tPress \\\'return\\\'\\n\""</tt>.</p>
+      <p>For example, <code>literal("\tPress \'return\'\n")="\"\\tPress \\\'return\\\'\\n\""</code>.</p>
   */
   public static String literal(String s) {
     StringBuffer ans=new StringBuffer(2+(s.length()*5)/4).append('\"');

@@ -57,16 +57,16 @@ public class BPP {
      <h2>Examples</h2>
      <ul>
      <p>Example 1.  Process all bpp files in in a directory:
-     <tt><ul>
+     <code><ul>
      java -jar bp.jar *.bpp
-     </ul></tt>
-     The default output file is the same as the input file, except that the <tt>.bpp</tt> extension is removed, so a file called <tt>Thing.java.bpp</tt> will be preprocessed to produce <tt>Thing.java</tt>.</p>  
+     </ul></code>
+     The default output file is the same as the input file, except that the <code>.bpp</code> extension is removed, so a file called <code>Thing.java.bpp</code> will be preprocessed to produce <code>Thing.java</code>.</p>  
 
      <p>Example 2.  Create beanshell script from a source file:
-     <tt><ul>
+     <code><ul>
      java -jar bp.jar -b thing.bpp thang.jpp
-     </ul></tt>
-     Files with a <tt>.bpp</tt> exension will produce <tt>.bsh</tt> extensions, and <tt>.jpp</tt> extensions will produce <tt>.java</tt> extensions.  The internal translations are the same for either extension.
+     </ul></code>
+     Files with a <code>.bpp</code> exension will produce <code>.bsh</code> extensions, and <code>.jpp</code> extensions will produce <code>.java</code> extensions.  The internal translations are the same for either extension.
      </p>
      </ul>
      <h2>Command Line Arguments</h2>
@@ -125,16 +125,16 @@ public class BPP {
      </tr>
      <tr>
      <td valign="top"><b>-Dname=value</b></td>
-     <td>Set system property (available as <tt>System.getProperty(<i>name</i>)</tt>).</td>
+     <td>Set system property (available as <code>System.getProperty(<i>name</i>)</code>).</td>
      </tr>
      <tr>
      <tr>
      <td valign="top"><b>+cp=globbed-paths</b></td>
-     <td>Add these to the classpath for each BeanShell interpreter.  Paths are separated by a <b>;</b> and path parts are separated by a <b>/</b>.  See <a href="Unglobber.html">Unglobber</a> for globbing patterns.  I like <tt>-cp=--/bpp/bin/++/*.jar;--/bpp/bin/++/classes</tt>.  This class path will adjust the class path used <i>by</i> BeanShell, not <i>for</i> BeanShell.  The BPP and BeanShell jar must appear in the standard class path.</td>
+     <td>Add these to the classpath for each BeanShell interpreter.  Paths are separated by a <b>;</b> and path parts are separated by a <b>/</b>.  See <a href="Unglobber.html">Unglobber</a> for globbing patterns.  I like <code>-cp=--/bpp/bin/++/*.jar;--/bpp/bin/++/classes</code>.  This class path will adjust the class path used <i>by</i> BeanShell, not <i>for</i> BeanShell.  The BPP and BeanShell jar must appear in the standard class path.</td>
      </tr>
      <tr>
      <td valign="top"><b>-a arg</b></td>
-     <td>Add <tt>arg</tt> to the list of args passed to each bsh interpreter. (available as BPP.args)</td>
+     <td>Add <code>arg</code> to the list of args passed to each bsh interpreter. (available as BPP.args)</td>
      </tr>
      <tr>
      <td valign="top"><b>-z</b></td>
@@ -164,7 +164,7 @@ public class BPP {
     new BPP().run(args);
   }
 
-  /** <tt>BPP.main(args)</tt> is equivalent to <tt>new BPP().run(args)</tt>. */
+  /** <code>BPP.main(args)</code> is equivalent to <code>new BPP().run(args)</code>. */
   private void run(String [] args) throws Exception {
     for (int i=0; i<args.length; ++i) {
 	    if (args[i].equals("-a")) { bpArgs.add(args[++i]); continue; }
@@ -176,7 +176,7 @@ public class BPP {
 	    if (args[i].equals("+b"))  { minStage=0; continue; }
 	    if (args[i].equals("-s"))  { minStage=Integer.parseInt(args[++i]); continue; }
 	    if (args[i].equals("-u"))  { 
-        Integer stage = new Integer(args[++i]);
+        Integer stage = Integer.valueOf(args[++i]);
         String filterName = args[++i];
         stageMap.put(stage,filterName);
         continue;

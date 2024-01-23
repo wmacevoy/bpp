@@ -218,10 +218,10 @@ nn	</table>
     } else {
 	    BeanshellDecoratorFilter f=null;
       String filterName = (String)
-        ((stageMap != null) ? stageMap.get(new Integer(stage)) : null);
+        ((stageMap != null) ? stageMap.get(Integer.valueOf(stage)) : null);
       if (filterName != null) {
         try {
-          f = (BeanshellDecoratorFilter) Class.forName(filterName).getConstructor(new Class[]{int.class,int.class}).newInstance(new Object[] { new Integer(depth),new Integer(lineNumber)});
+          f = (BeanshellDecoratorFilter) Class.forName(filterName).getConstructor(new Class[]{int.class,int.class}).newInstance(new Object[] { Integer.valueOf(depth),Integer.valueOf(lineNumber)});
         } catch (Exception e) {
           throw new RuntimeException(e.getMessage(),e);
         }

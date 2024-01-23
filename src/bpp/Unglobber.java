@@ -21,10 +21,10 @@ import java.util.*;
 
 <p>Examples:
 <ul>
-<li><tt>--/classes</tt> --- all files named <tt>classes</tt> in this or a parent directory.</li>
-<li><tt>--/java/lib/++/*.jar</tt> --- would match all of the following:
-<tt>./java/lib/local/myjars/jar1.jar</tt>, <tt>../java/lib/jar2.jar</tt> and <tt>../../java/lib/ext/j.jar</tt>.</li>
-<li><tt>--/java/?(doc|docs)/++/?.*\.(htm|html)</tt> all the <tt>.htm</tt> and <tt>.html</tt> files in a subfolder of <tt>java/doc</tt> or <tt>java/docs</tt> in this or a parent directroy.</li>
+<li><code>--/classes</code> --- all files named <code>classes</code> in this or a parent directory.</li>
+<li><code>--/java/lib/++/*.jar</code> --- would match all of the following:
+<code>./java/lib/local/myjars/jar1.jar</code>, <code>../java/lib/jar2.jar</code> and <code>../../java/lib/ext/j.jar</code>.</li>
+<li><code>--/java/?(doc|docs)/++/?.*\.(htm|html)</code> all the <code>.htm</code> and <code>.html</code> files in a subfolder of <code>java/doc</code> or <code>java/docs</code> in this or a parent directroy.</li>
 </ul>
 </p>
 

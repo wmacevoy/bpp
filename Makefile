@@ -17,9 +17,8 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 SHELL=/bin/bash
-JAVA=java -cp "$(BPP_CLASSPATH)"
-JAVAC=javac -classpath "$(BPP_CLASSPATH)" -d classes -sourcepath src
-JAVACC=java -cp "$(BPP_CLASSPATH)" javacc
+JAVA=java -cp "./lib/*"
+JAVAC=javac -classpath "./lib/*" -d classes -sourcepath src
 DIST=bpp-0.8.5.2b
 DOCBOOK=/usr/local/docbook
 
@@ -28,7 +27,7 @@ SRC=$(wildcard src/bpp/*.java)
 all : bpp.jar doc
 
 src/bpp/BshPPParser.java: src/bpp/BshPPParser.jj
-	cd src/bpp; $(JAVACC) BshPPParser.jj
+	cd src/bpp; java -cp "../../lib/*" javacc BshPPParser.jj
 
 classes : $(SRC)
 	if [ ! -d classes ] ; then mkdir classes ; fi
@@ -42,15 +41,15 @@ bpp.jar : classes src/MANIFEST.MF
 doc : doc/javadoc doc/tutorial
 
 doc/javadoc : classes
-	javadoc -d doc/javadoc -sourcepath src bpp
+	javadoc -cp "./lib/*" -d doc/javadoc -sourcepath src bpp || true
 	touch doc/javadoc
 
 doc/tutorial : doc/tutorial/tutorial.docbook
-	xsltproc $(DOCBOOK)/html/docbook.xsl doc/tutorial/tutorial.docbook > doc/tutorial/index.html
+	xsltproc docbook/html/docbook.xsl doc/tutorial/tutorial.docbook > doc/tutorial/index.html
 	touch doc/tutorial
 
 doc/quickstart : doc/quickstart/quickstart.docbook
-	xsltproc $(DOCBOOK)/html/docbook.xsl doc/quickstart/quickstart.docbook > doc/quickstart/index.html
+	xsltproc docbook/html/docbook.xsl doc/quickstart/quickstart.docbook > doc/quickstart/index.html
 	touch doc/quickstart
 
 clean :

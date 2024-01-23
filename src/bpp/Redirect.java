@@ -25,7 +25,7 @@ import java.util.*;
 
 /** <p>This class simplifies redirecting standard output (System.out) to different streams.  The old output stream is maintained on a stack and is restored with end() </p> 
 
-<p><b>WARNING</b>This Redirect works with access through System.out.  Beanshell's <tt>print()</tt> statement apparently caches its PrintStream, so this redirect <i>will not work</i> with beanshell. Use the <tt>redirect.bsh</tt> scripts instead.</p>
+<p><b>WARNING</b>This Redirect works with access through System.out.  Beanshell's <code>print()</code> statement apparently caches its PrintStream, so this redirect <i>will not work</i> with beanshell. Use the <code>redirect.bsh</code> scripts instead.</p>
 
 <br/>The Beanshell Preprocessor
 <br/>Copyright (C) 2003 Warren MacEvoy
