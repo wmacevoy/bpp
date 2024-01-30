@@ -31,7 +31,7 @@ abstract public class StageFilter implements Filter {
      maxLineLength=_maxLineLength;
  }
 
-  public void filter(BufferedReader in, PrintWriter out) throws IOException {
+  public void filter(BufferedReader in, PrintStream out) throws IOException {
     for (;;) {
       String line = null;
       in.mark(maxLineLength);

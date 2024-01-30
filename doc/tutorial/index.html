@@ -1,14 +1,14 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BPT: The BeanShell Preprocessor Tutorial</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id4668683"></a>BPT: The BeanShell Preprocessor Tutorial</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Warren</span> <span class="surname">MacEvoy</span></h3></div></div><div><p class="copyright">Copyright © 2004 Warren D. MacEvoy jr.</p></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#id4668710">Introduction</a></span></dt><dt><span class="chapter"><a href="#id4668749">1. A (yawn) preprocessor?</a></span></dt><dt><span class="chapter"><a href="#id4668784">2. Installation</a></span></dt><dt><span class="chapter"><a href="#id4669025">3. Caio Mondo!</a></span></dt><dt><span class="chapter"><a href="#id4669223">4. BPP Basics</a></span></dt><dt><span class="chapter"><a href="#id4670026">5. BPP Intermediates</a></span></dt><dt><span class="chapter"><a href="#id4670397">6. BPP Patterns</a></span></dt><dt><span class="chapter"><a href="#id4670740">7. Symmetric Preprocessing in BPP</a></span></dt><dt><span class="appendix"><a href="#id4671154">A. Running BPP (part 2)</a></span></dt><dt><span class="appendix"><a href="#id4671286">B. Docbook</a></span></dt></dl></div><div class="list-of-tables"><p><b>List of Tables</b></p><dl><dt>4.1. <a href="#id4669565">BPP to BeanShell translation</a></dt><dt>7.1. <a href="#id4670863">Multi-stage BPP translation</a></dt></dl></div><div class="list-of-examples"><p><b>List of Examples</b></p><dl><dt>2.1. <a href="#id4668981">hello.bpp: Hello, World!</a></dt><dt>2.2. <a href="#id4669001">hello: Hello, World!</a></dt><dt>3.1. <a href="#id4669048">HelloWorld.java.bpp: Hello Ciao &#1087;&#1088;&#1080;&#1074;&#1077;&#1090;</a></dt><dt>3.2. <a href="#id4669100">dictionary.xml: translation table</a></dt><dt>3.3. <a href="#id4669146">HelloWorld.java.bpp: Ciao</a></dt><dt>4.1. <a href="#id4669262">HelloWorld.java: traditional java hello world</a></dt><dt>4.2. <a href="#id4669272">helloworld.bsh: BeanShell hello world</a></dt><dt>4.3. <a href="#id4669330">BeanShell: "Any" variable types</a></dt><dt>4.4. <a href="#id4669382">BeanShell: static import and iterators example program</a></dt><dt>4.5. <a href="#id4669393">BeanShell: static import and iterators example output</a></dt><dt>4.6. <a href="#id4669932">dictionary.bsh: language translation setup file</a></dt><dt>4.7. <a href="#id4669943">HelloWorld.java.bpp: better translation version</a></dt><dt>5.1. <a href="#id4670042">C header file: bad example 1</a></dt><dt>5.2. <a href="#id4670080">C headerfile: bad example 2</a></dt><dt>5.3. <a href="#id4670276">C header file: correct</a></dt><dt>6.1. <a href="#id4670438">Pattern: Version control</a></dt><dt>6.2. <a href="#id4670504">Pattern: Template Definition</a></dt><dt>6.3. <a href="#id4670563">Pattern: Template Instantiation</a></dt><dt>6.4. <a href="#id4670598">Pattern: Tempalate Instantiation (multiple redirects)</a></dt><dt>6.5. <a href="#id4670654">Pattern: Document/View XML Root Document</a></dt><dt>6.6. <a href="#id4670676">Pattern: Document/View HTML Renderer</a></dt><dt>6.7. <a href="#id4670690">Pattern: Document/View Java Renderer</a></dt><dt>7.1. <a href="#id4670763">Useless ### example</a></dt><dt>7.2. <a href="#id4671082">Document/View Renederer without ##-preprocessor</a></dt><dt>7.3. <a href="#id4671104">Document/View Renederer with ##-preprocessor</a></dt><dt>A.1. <a href="#id4671268">BPP in a batch file</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4668710"></a>Introduction</h2></div></div><div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BPT: The BeanShell Preprocessor Tutorial</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="idm1"></a>BPT: The BeanShell Preprocessor Tutorial</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Warren</span> <span class="surname">MacEvoy</span></h3></div></div><div><p class="copyright">Copyright © 2004 Warren D. MacEvoy jr.</p></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#idm10">Introduction</a></span></dt><dt><span class="chapter"><a href="#idm18">1. A (yawn) preprocessor?</a></span></dt><dt><span class="chapter"><a href="#idm24">2. Installation</a></span></dt><dt><span class="chapter"><a href="#idm74">3. Caio Mondo!</a></span></dt><dt><span class="chapter"><a href="#idm106">4. BPP Basics</a></span></dt><dt><span class="chapter"><a href="#idm225">5. BPP Intermediates</a></span></dt><dt><span class="chapter"><a href="#idm293">6. BPP Patterns</a></span></dt><dt><span class="chapter"><a href="#idm353">7. Symmetric Preprocessing in BPP</a></span></dt><dt><span class="appendix"><a href="#idm435">A. Running BPP (part 2)</a></span></dt><dt><span class="appendix"><a href="#idm469">B. Docbook</a></span></dt></dl></div><div class="list-of-tables"><p><b>List of Tables</b></p><dl><dt>4.1. <a href="#idm176">BPP to BeanShell translation</a></dt><dt>7.1. <a href="#idm372">Multi-stage BPP translation</a></dt></dl></div><div class="list-of-examples"><p><b>List of Examples</b></p><dl><dt>2.1. <a href="#idm64">hello.bpp: Hello, World!</a></dt><dt>2.2. <a href="#idm69">hello: Hello, World!</a></dt><dt>3.1. <a href="#idm80">HelloWorld.java.bpp: Hello Ciao &#1087;&#1088;&#1080;&#1074;&#1077;&#1090;</a></dt><dt>3.2. <a href="#idm84">dictionary.xml: translation table</a></dt><dt>3.3. <a href="#idm93">HelloWorld.java.bpp: Ciao</a></dt><dt>4.1. <a href="#idm116">HelloWorld.java: traditional java hello world</a></dt><dt>4.2. <a href="#idm119">helloworld.bsh: BeanShell hello world</a></dt><dt>4.3. <a href="#idm130">BeanShell: "Any" variable types</a></dt><dt>4.4. <a href="#idm141">BeanShell: static import and iterators example program</a></dt><dt>4.5. <a href="#idm144">BeanShell: static import and iterators example output</a></dt><dt>4.6. <a href="#idm214">dictionary.bsh: language translation setup file</a></dt><dt>4.7. <a href="#idm217">HelloWorld.java.bpp: better translation version</a></dt><dt>5.1. <a href="#idm229">C header file: bad example 1</a></dt><dt>5.2. <a href="#idm236">C headerfile: bad example 2</a></dt><dt>5.3. <a href="#idm273">C header file: correct</a></dt><dt>6.1. <a href="#idm302">Pattern: Version control</a></dt><dt>6.2. <a href="#idm316">Pattern: Template Definition</a></dt><dt>6.3. <a href="#idm324">Pattern: Template Instantiation</a></dt><dt>6.4. <a href="#idm332">Pattern: Tempalate Instantiation (multiple redirects)</a></dt><dt>6.5. <a href="#idm341">Pattern: Document/View XML Root Document</a></dt><dt>6.6. <a href="#idm345">Pattern: Document/View HTML Renderer</a></dt><dt>6.7. <a href="#idm349">Pattern: Document/View Java Renderer</a></dt><dt>7.1. <a href="#idm359">Useless ### example</a></dt><dt>7.2. <a href="#idm426">Document/View Renederer without ##-preprocessor</a></dt><dt>7.3. <a href="#idm429">Document/View Renederer with ##-preprocessor</a></dt><dt>A.1. <a href="#idm466">BPP in a batch file</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm10"></a>Introduction</h2></div></div><div></div></div><p>
 The BeanShell Preprocessor, or BPP for short, is the first of a type of preprocessor known as a <span class="emphasis"><em>symmetric</em></span> preprocessor.  It allows  <span class="trademark">Java</span>&#8482; programmers to use all of Java as a preprocessor for either Java source files or to produce other text (possibly UTF-8 encoded unicode) documents.
 </p><p>
 The fact that you can use a full-featured language such as Java as a preprocessor greatly strengthens the expressiveness available in the preprocessor.  The same idea could be applied to other programming languages; but so far only Perl has a similar preprocessing language (see <span class="emphasis"><em>PerlPP: CPP on Steriods</em></span> in the Linux Gazette).  The real value of using the preprocessor is to leverage skills: if you already <span class="emphasis"><em>know</em></span> Java, then, in the short time it takes to read and understand this tutoral, you will know how to use Java to write Java (or XML, SQL and COBOL for that matter).
-</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4668749"></a>Chapter 1. A (yawn) preprocessor?</h2></div></div><div></div></div><p>
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm18"></a>Chapter 1. A (yawn) preprocessor?</h2></div></div><div></div></div><p>
 Yes, BPP is a preprocessor.  BPP supports (and expects) UTF-8 encoded unicode, but its real goal in life is producing source files.  Its intention is to take marked up (mostly ASCII) text documents and produce similar (but somehow better) text documents, which are also probably also mostly ASCII. 
 </p><p>
 Didn't preprocessors die out a long time ago?  Yes and no.  If <span class="emphasis"><em>preprocessor</em></span> makes you think of M4 and CPP, then there hasn't been much innovation in those kind of preprocessors for some time.  If you think of JSP, PHP and XSLT, you might realize that automated preprocessing is alive and kicking, but changed its name to keep away from the Unfashionable Lingo police.
 </p><p>
 BPP can be thought of as an extraordinarily superior version of the C preprocessor for the Java (or any other) programming language.  I know that sounds like an unsupportable claim, but you can be the judge after reading this tutorial.
-</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4668784"></a>Chapter 2. Installation</h2></div></div><div></div></div><p>
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm24"></a>Chapter 2. Installation</h2></div></div><div></div></div><p>
 BPP uses Java, BeanShell, and some of the examples in this tutorial use JDOM.  You can get the latest JDK from Sun at <a href="http://java.sun.com" target="_top">java.sun.com</a>.  BeanShell is a Java interpreter available from <a href="http://beanshell.org" target="_top">beanshell.org</a>, and JDOM is a Java XML document object model available from <a href="http://www.jdom.org" target="_top">www.jdom.org</a>.  The versions available at the time of writing this tutorial are:  JDK SE 1.4.2_03, BeanShell 2.0b1, and JDOM Beta 10.  BPP is available from SourceForge at <a href="http://bpp.sourceforge.net" target="_top">bpp.sourceforge.net</a>.  The jar filese for BeanShell, JDOM, and BPP are in the <tt class="code">bin</tt> folder of the full BPP distribution.
 </p><p>
 If you are using a version of BPP after 0.8.5.2b, then the easiest way to run bpp is:
@@ -47,7 +47,7 @@ print("Hello, "+who);
 in the BeanShell console.  BeanShell should respond with no errors.  BPP uses beanshell indirectly, so you can close the console for now.
 </p><p>
 Finally, you can check if BPP is properly set up.  Create a file called <tt class="code">hello.bpp</tt> containing:
-</p><div class="example"><a name="id4668981"></a><p class="title"><b>Example 2.1. hello.bpp: Hello, World!</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm64"></a><p class="title"><b>Example 2.1. hello.bpp: Hello, World!</b></p><pre class="programlisting">
 #name="World";
 #greet="Hello";
 $greet, $name!
@@ -57,14 +57,14 @@ Type
 java -jar /path/to/bpp.jar hello.bpp
 </pre><p>
 If this works correctly, then you have just created a file named <tt class="code">hello</tt> containing:
-</p><div class="example"><a name="id4669001"></a><p class="title"><b>Example 2.2. hello: Hello, World!</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm69"></a><p class="title"><b>Example 2.2. hello: Hello, World!</b></p><pre class="programlisting">
 Hello, World!
 </pre></div><p>
 </p><p>
 Contratulations! We are now ready to explore the power and expressiveness of BPP.<sup>[<a name="running" href="#ftn.running">1</a>]</sup>
-</p><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4669025"></a>Chapter 3. Caio Mondo!</h2></div></div><div></div></div><p>
+</p><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm74"></a>Chapter 3. Caio Mondo!</h2></div></div><div></div></div><p>
 Suppose you wanted to deliver an application in various <span class="emphasis"><em>specific</em></span> languages.  The product you deliver to your customer is a simple small application with information in their language, without the bulk and burden of carrying information about <span class="emphasis"><em>all</em></span> languages.  Consider this modified "hello world" program, presumably written in <tt class="code">HelloWorld.java.bpp</tt>:
-</p><div class="example"><a name="id4669048"></a><p class="title"><b>Example 3.1. HelloWorld.java.bpp: Hello Ciao &#1087;&#1088;&#1080;&#1074;&#1077;&#1090;</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm80"></a><p class="title"><b>Example 3.1. HelloWorld.java.bpp: Hello Ciao &#1087;&#1088;&#1080;&#1074;&#1077;&#1090;</b></p><pre class="programlisting">
 # //
 # // get some useful Java formatting tools:
 # //
@@ -113,7 +113,7 @@ public class HelloWorld
 }
 </pre></div><p>
 Now create the <tt class="code">dictionary.xml</tt> file with the following contents:
-</p><div class="example"><a name="id4669100"></a><p class="title"><b>Example 3.2. dictionary.xml: translation table</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm84"></a><p class="title"><b>Example 3.2. dictionary.xml: translation table</b></p><pre class="programlisting">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;dictionary&gt;
   &lt;word name="helloworld" 
@@ -133,7 +133,7 @@ Note that each time you run BPP, it will overwrite <tt class="code">HelloWorld.j
 java  -jar /path/to/bpp.jar -Dlang=it -o it/HelloWorld.java HelloWorld.java.bpp
 </pre><p>
 </p><p>Let's look at the Java source file generated as the Italian translation:
-</p><div class="example"><a name="id4669146"></a><p class="title"><b>Example 3.3. HelloWorld.java.bpp: Ciao</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm93"></a><p class="title"><b>Example 3.3. HelloWorld.java.bpp: Ciao</b></p><pre class="programlisting">
 public class HelloWorld
 {
   public static final String LANGUAGE="it";
@@ -159,13 +159,13 @@ Fifth, the preprocessor code is just Java (well, BeanShell) code with a <tt clas
 These are all significant payoffs.  Now aren't you glad that you read up to here?
 </p><p>
 For being the first example, I know this was fairly complex, but you probably wanted to see up-front why you should spend any more time learning BPP.  From here on out, we will start from the beginning and work our way up.
-</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4669223"></a>Chapter 4. BPP Basics</h2></div></div><div></div></div><p>
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm106"></a>Chapter 4. BPP Basics</h2></div></div><div></div></div><p>
 Seeing something happen isn't as easy as making it happen (and you haven't seen everything anyway), so lets start with some simple exercises to get the basic ideas.  We will move on to some power tools later on.
-</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4669235"></a>BeanShell</h3></div></div><div></div></div><p>
+</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="idm109"></a>BeanShell</h3></div></div><div></div></div><p>
 I mentioned already that BPP uses beanshell under the hood.  If you are familar with Java it should take you a very short time to become familar with BeanShell, and there are some excellent tutorials on the <a href="http://www.beanshell.org" target="_top">official beanshell website</a>.  However, here are a few samples good enough to get through this tutorial on BPP.
-</p><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id4669254"></a>BeanShell example 1: Hello World, version 3</h4></div></div><div></div></div><p>
+</p><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="idm113"></a>BeanShell example 1: Hello World, version 3</h4></div></div><div></div></div><p>
 Writing a console application in Java takes a bit of typing:
-</p><div class="example"><a name="id4669262"></a><p class="title"><b>Example 4.1. HelloWorld.java: traditional java hello world</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm116"></a><p class="title"><b>Example 4.1. HelloWorld.java: traditional java hello world</b></p><pre class="programlisting">
 public class Main {
   public static void main(String [] args) {
     System.out.println("hello world!");
@@ -174,7 +174,7 @@ public class Main {
 
 </pre></div><p>
 Typing this in BeanShell will work, but here's BeanShell's shorthand version:
-</p><div class="example"><a name="id4669272"></a><p class="title"><b>Example 4.2. helloworld.bsh: BeanShell hello world</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm119"></a><p class="title"><b>Example 4.2. helloworld.bsh: BeanShell hello world</b></p><pre class="programlisting">
 print("hello world!");
 
 </pre></div><p>
@@ -184,9 +184,9 @@ java -cp /path/to/bsh-2.0b1.jar bsh.Interpreter hello.bsh
 </pre><p>
 </p><p>
 In short, BeanShell is a get-to-the-point Java.  It allows you to use native Java in an interpreted environment, and is written in Java.  In the example above, <tt class="code">print("hello world")</tt> in BeanShell is equivalent to <tt class="code">System.out.println("hello world")</tt>, and there are a number of other useful shorthand notations as well, but if you write Java statements beanshell will interpret them the same way Java does.
-</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id4669320"></a>BeanShell example 2: Types</h4></div></div><div></div></div><p>
+</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="idm127"></a>BeanShell example 2: Types</h4></div></div><div></div></div><p>
 One important simplification BeanShell supports is the idea of an "any" type.  "Any" types are simply used without a declaration, and take on whatever value is assigned to them.  For example, running
-</p><div class="example"><a name="id4669330"></a><p class="title"><b>Example 4.3. BeanShell: "Any" variable types</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm130"></a><p class="title"><b>Example 4.3. BeanShell: "Any" variable types</b></p><pre class="programlisting">
 x=1;
 print("x="+x);
 x="two";
@@ -202,9 +202,9 @@ x=two
 x=Tue Feb 17 12:53:30 MST 2004
 </pre><p>
 "Wait!" You say.  What about type safety?  Java saves my cookies all the time by remembering what is what.  You <span class="emphasis"><em>can</em></span> declare <tt class="code">x</tt> and give it a type and BeanShell will check its type during assignments, but you <span class="emphasis"><em>don't have to</em></span>.  You can also set strict java modes if you are paranoid.  Don't be too paranoid in the preprocessor; any bad code generated by the preprocessor must also pass the plain old (strict) Java compiler.
-</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id4669367"></a>BeanShell example 3: JDK 1.5 extensions</h4></div></div><div></div></div><p>
+</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="idm137"></a>BeanShell example 3: JDK 1.5 extensions</h4></div></div><div></div></div><p>
 There are two convenient syntaxes which will be supported in the JDK 1.5 that beanshell already supports.  The first is the idea of a <tt class="code">static import</tt>, and the second is an iterator over a collection notation.  These two extensions are illustrated in the following:
-</p><div class="example"><a name="id4669382"></a><p class="title"><b>Example 4.4. BeanShell: static import and iterators example program</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm141"></a><p class="title"><b>Example 4.4. BeanShell: static import and iterators example program</b></p><pre class="programlisting">
 // get static methods and values from the java.Math class
 static import java.lang.Math.*;
 
@@ -229,7 +229,7 @@ for (Iterator i=list.iterator(); i.hasNext(); ) {
 
 </pre></div><p>
 Running this example through beanshell produces the output
-</p><div class="example"><a name="id4669393"></a><p class="title"><b>Example 4.5. BeanShell: static import and iterators example output</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm144"></a><p class="title"><b>Example 4.5. BeanShell: static import and iterators example output</b></p><pre class="programlisting">
 (x,y)=(0.8660254037844387,0.49999999999999994)
 new: thing one
 new: thing two
@@ -237,7 +237,7 @@ old: thing one
 old: thing two
 </pre></div><p>
 Most people aren't paid more to type more, and the new syntax is easier to read, so why not use it?
-</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id4669429"></a>BeanShell example 4: Downcasts and exceptions.</h4></div></div><div></div></div><p>
+</p></div><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="idm147"></a>BeanShell example 4: Downcasts and exceptions.</h4></div></div><div></div></div><p>
 I slipped something by you on the last example.  I assign a <tt class="code">LinkedList</tt> to an "any" type variable called <tt class="code">list</tt>.  Later on, I ask for <tt class="code">list.iterator()</tt>.  Generally speaking, I might get a <tt class="code">ClassCastException</tt> if I had, say, made <tt class="code">list</tt> an array instead.  There are several aspects of loosening up strict java syntax here:
 </p><div class="itemizedlist"><ul type="disc"><li>BeanShell uses reflection to invoke methods and inspect or change attributes.  This means that, if you know a list contains only <tt class="code">StringBuffer</tt> elements, you can append an "x" to each of them with:
 <pre class="programlisting">
@@ -257,10 +257,10 @@ In the beanshell specific example, you will get an exception if the list contain
 </li></ul></div><p>
 </p><p>
 BeanShell is an extremely useful tool independently of BPP, and you will need to be modestly comfortable with it before understanding and using BPP.  I suggest you spend a little time working through some tutorials on BeanShell.  It is sure to get into your development process somewhere.
-</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4669528"></a>A simplified reduction of BPP.</h3></div></div><div></div></div><p>
+</p></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="idm167"></a>A simplified reduction of BPP.</h3></div></div><div></div></div><p>
 Let me begin by stating that I am lying to you.  BPP does more than what you will read in this section, but it is a convenient jumping-off point for understanding BPP.
 </p><p>Let's begin by inspecting what BPP does to transform the <tt class="code">HelloWorld.java.bpp</tt> BPP source file into the <tt class="code">HelloWorld.java</tt> java source file.  You can see this by running BPP with the <tt class="code">-b</tt> option; which means "generate a beanshell script, but don't execute it."  On the left is the origional source file (<tt class="code">HelloWorld.java.bpp</tt>) and on the right is the generated beanshell script (<tt class="code">HelloWorld.java.bsh</tt>):
-</p><div class="table"><a name="id4669565"></a><p class="title"><b>Table 4.1. BPP to BeanShell translation</b></p><table summary="BPP to BeanShell translation" border="1"><colgroup><col><col></colgroup><thead><tr><th align="left"><tt class="code">HelloWorld.java.bpp</tt></th><th align="left"><tt class="code">HelloWorld.java.bsh</tt></th></tr></thead><tbody><tr><td align="left"><pre class="programlisting">
+</p><div class="table"><a name="idm176"></a><p class="title"><b>Table 4.1. BPP to BeanShell translation</b></p><table summary="BPP to BeanShell translation" border="1"><colgroup><col><col></colgroup><thead><tr><th align="left"><tt class="code">HelloWorld.java.bpp</tt></th><th align="left"><tt class="code">HelloWorld.java.bsh</tt></th></tr></thead><tbody><tr><td align="left"><pre class="programlisting">
 # //
 # // get some useful Java formatting tools:
 # //
@@ -362,7 +362,7 @@ At the first level,
 </p><p>
 Executing the script on the right will produce the various versions of the HelloWorld class given the proper <tt class="code">lang</tt> system property.  However, it is easier to <span class="emphasis"><em>maintain</em></span> the BPP code on the left, because it knows how to encode odd characters like the double quote without you worrying about it.
 </p><p>Without the <tt class="code">-b</tt> option, BPP generates and executes the beanshell script on the right (without ever explicitly creating the file <tt class="code">HelloWorld.java.bsh</tt>).  For a number of substantial problems, this is enough to use BPP effectively.</p><p>Knowing this allows us to simplify the maintenence of several source files all of which have to allow for various language translations.  Since reading the dictionary is a common feature of such an application, it would be smarter to have a single beanshell source file with the dictionary code in it, called <tt class="code">dictionary.bsh</tt>.  This is just the top part of the <tt class="code">HelloWorld.java.bpp</tt> file with the <tt class="code">#</tt>'s removed:
-</p><div class="example"><a name="id4669932"></a><p class="title"><b>Example 4.6. dictionary.bsh: language translation setup file</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm214"></a><p class="title"><b>Example 4.6. dictionary.bsh: language translation setup file</b></p><pre class="programlisting">
 //
 // get some useful Java formatting tools:
 //
@@ -403,7 +403,7 @@ String word(String name) {
 
 </pre></div><p>
 With this handy file, the typical translated source file would look like:
-</p><div class="example"><a name="id4669943"></a><p class="title"><b>Example 4.7. HelloWorld.java.bpp: better translation version</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm217"></a><p class="title"><b>Example 4.7. HelloWorld.java.bpp: better translation version</b></p><pre class="programlisting">
 #
 # source("dictionary.bsh");
 #
@@ -423,9 +423,9 @@ Now it looks almost like plain Java, and we have seperated any details about our
 A few parting words before I let the translate-at-preprocess-time idea go.  First, for a large dictionary, a better solution would be to use a database to store the translations.  In our model that only implies changing the contents of the <tt class="code">dictionary.bsh</tt> file to reflect using JDBC to access the new flavor of dictionary.  If you are used to the power of the C preprocessor, you probably see how BPP broadens your vision what a preprocessor can do for you.
 </p><p>
 In the next Chapter, we'll talk about generating other kinds of source files (like C programs) using BPP.  This will bring a few more details about BPP syntax for non-default translation rules.
-</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4670026"></a>Chapter 5. BPP Intermediates</h2></div></div><div></div></div><p>
+</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm225"></a>Chapter 5. BPP Intermediates</h2></div></div><div></div></div><p>
 Suppose you wanted certain "unusual" numerical constants to be defined in a C program, but defined in such a way that these constants were computed at compile time.  The natural place to put these in a C program is in a header file.  As an example, suppose we wanted something along the lines of the following header file <tt class="code">MyConstants.h</tt>:
-</p><div class="example"><a name="id4670042"></a><p class="title"><b>Example 5.1. C header file: bad example 1</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm229"></a><p class="title"><b>Example 5.1. C header file: bad example 1</b></p><pre class="programlisting">
 #ifndef MY_CONSTANTS_H
 #define MY_CONSTANTS_H
 
@@ -437,7 +437,7 @@ Suppose you wanted certain "unusual" numerical constants to be defined in a C pr
 
 </pre></div><p>
 The problem with this technique is pretty obvious:  there is no way to inspect the correctness of this header file.  In fact it is wrong; the correct value to <tt class="code">SINE_X</tt> is <tt class="code">-0.536572918<span class="emphasis"><em>000</em></span>4349716653742282424</tt> (three zeros instead of two).  This could easily happen with an accidental press of the delete key and would create a very subtle error.  How about this instead (now defined in <tt class="code">MyConstants.h.bpp</tt>, and not yet quite correct):
-</p><div class="example"><a name="id4670080"></a><p class="title"><b>Example 5.2. C headerfile: bad example 2</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm236"></a><p class="title"><b>Example 5.2. C headerfile: bad example 2</b></p><pre class="programlisting">
 #static import java.lang.Math.*;
 #static import bpp.Format.*;
 #ifndef MY_CONSTANTS_H
@@ -506,7 +506,7 @@ out.println("  System.out.println($(word(\"helloworld\")));");
 </p><p>
 What does BPP do with a line that has not translate directive in column 1?  It applies the <span class="emphasis"><em>default</em></span>.  If BPP is run normally, then the default is to quote magially (like a double quote <tt class="code">"</tt> in column 1).  If, however, you pass the -q option to BPP, it will quote exactly by default.
 </p><p>So now we can fix the C header file (now <tt class="code">MyHeader.h.bpp</tt>):
-</p><div class="example"><a name="id4670276"></a><p class="title"><b>Example 5.3. C header file: correct</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm273"></a><p class="title"><b>Example 5.3. C header file: correct</b></p><pre class="programlisting">
 #//
 #// for bpp to execute at preprocess time...
 #//
@@ -560,12 +560,12 @@ Would generate the perl statement <tt class="code">$x=12</tt> just as well as <t
 You now have seen a lot about BPP.  You have seen how it works by translating the BPP source file in a BeanShell script, and executes that to produce an output file.  You also know the small number of translation rules it has about how to translate a source line into a beanshell script line.  There is really only one more thing to know: the preprocessor has a preprocessor (with a preprocessor, etc.).
 </p><p>
 I'm actually going to talk about that <span class="emphasis"><em>two</em></span> chapters from here.  For now it is more important to see how to use this syntax to do a lot of useful things.  So the next chapter is a preprocessor <span class="emphasis"><em>patterns</em></span> recipe book.
-</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4670397"></a>Chapter 6. BPP Patterns</h2></div></div><div></div></div><p>
+</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm293"></a>Chapter 6. BPP Patterns</h2></div></div><div></div></div><p>
 This chapter is a "patterns of use" section.  We're not saying you can't use BPP in other ways, but here are some places BPP has been useful.
-</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4670407"></a>Version Control</h3></div></div><div></div></div><p>
+</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="idm296"></a>Version Control</h3></div></div><div></div></div><p>
 As much as Java tries to be a "build once, run anywhere" environment, there are still plenty of reasons to want to do different things under different circumstances.  A good example of this is the transition between JDK 1.1 and JDK 1.2.  It might be convenient to use Java 2 collections for your problem, and some of your customers would benefit from better performance (or perhaps adaptability) by writing code that uses the framework.  However, out of backwards compatibility concerns, you may be limited to a <tt class="code">Vector</tt> and <tt class="code">Hashtable</tt>.
 </p><p>C programmers face this in spades, since there are potentially important variations on fundamental information (like the size of an int) accross platforms.  The solution they came up with, and you can use with BPP in Java, is conditional compilation.  The basic pattern of use is:
-</p><div class="example"><a name="id4670438"></a><p class="title"><b>Example 6.1. Pattern: Version control</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm302"></a><p class="title"><b>Example 6.1. Pattern: Version control</b></p><pre class="programlisting">
 #
 #String JAVA_VERSION=System.getProperty("java.version");
 #boolean JAVA2=(version.compareTo("1.2")&gt;=0);
@@ -582,10 +582,10 @@ interface Juggler {
 } // Juggler
 
 </pre></div><p>
-</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4670449"></a>Templates</h3></div></div><div></div></div><p>
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="idm305"></a>Templates</h3></div></div><div></div></div><p>
 Templates represents the idea of writing code that writes code.  This is easy to set up in BPP: first write the template, second translate the template into BeanShell code, and third use it.
 </p><p><span class="emphasis"><em>Write the template.</em></span> Suppose we wanted <span class="emphasis"><em>mutable</em></span> versions of the primative wrapper types.  For consistency with the <tt class="code">String</tt> and <tt class="code">StringBuffer</tt> relation, we want each to have a <tt class="code">XXXXBuffer</tt> class that has a <tt class="code">toXXXX()</tt> method which returns the standard (immutable) wrapper class, along with a <tt class="code">toXXXXPrimitive()</tt>.  For times that we don't want to know which specific type is behind the mutable wrappers, we also want generically named bean-like get and set methods.  Like this:
-</p><div class="example"><a name="id4670504"></a><p class="title"><b>Example 6.2. Pattern: Template Definition</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm316"></a><p class="title"><b>Example 6.2. Pattern: Template Definition</b></p><pre class="programlisting">
 #makeWrapperBuffer(String primitive) {
 # String Wrapper=bpp.Format.getWrapper(primitive);
 public class $(Wrapper)Buffer {
@@ -611,7 +611,7 @@ Running this through BPP with the <span class="emphasis"><em>-b</em></span> opti
 bpp -b -o makeWrapperBuffer.bsh makeWrapperBuffer.bpt
 </pre><p>
 The -b option tells BPP to generate the beanshell script, but not to execute it.</p><p>From here, there are two options.  The simplest is to create files like <tt class="code">IntegerBuffer.java.bpp</tt> with the code:
-</p><div class="example"><a name="id4670563"></a><p class="title"><b>Example 6.3. Pattern: Template Instantiation</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm324"></a><p class="title"><b>Example 6.3. Pattern: Template Instantiation</b></p><pre class="programlisting">
 #source("makeWrapperBuffer.bsh");
 package mutable;
 
@@ -619,7 +619,7 @@ package mutable;
 
 </pre></div><p>
 </p><p>So how many of these do I need to make?  Did I forget to make one for <tt class="code">Byte</tt> or <tt class="code">Float</tt>?  BPP can automate this as well with the handy <tt class="code">RedirectBegin()..RedirectEnd()</tt> beanshell functions in the <tt class="code">contrib/bsh</tt> directory of the full distribution.  Here's the way I would have really done it:
-</p><div class="example"><a name="id4670598"></a><p class="title"><b>Example 6.4. Pattern: Tempalate Instantiation (multiple redirects)</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm332"></a><p class="title"><b>Example 6.4. Pattern: Tempalate Instantiation (multiple redirects)</b></p><pre class="programlisting">
 #source("makeWrapperBuffer.bsh");
 #source("redirect.bsh");
 #
@@ -635,8 +635,8 @@ package mutable;
 #}
 
 </pre></div><p>
-Mutable wrapper types for all the primitive types in three easy steps: write the template, convert it to beanshell, and use it.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4670625"></a>Document/View</h3></div></div><div></div></div><p>This pattern is very handy in software development.  The idea is that there is some fundamental information stored in some "Root Document."  From this fundamental information, different views are generated with "Renderers."</p><p>For software development, the root document may be in a database or XML document, and the renderers can be BPP scripts that write code according to whatever is in the root document.</p><p>As an example, suppose you wanted to view a form from both a Java application and a web page.  The root document in this case could be a description of the form and the data behind it, and the views would generate HTML or Java code depending on the renderer.  Let's place our data in an XML root document called <tt class="code">MyForm.xml</tt>:
-</p><div class="example"><a name="id4670654"></a><p class="title"><b>Example 6.5. Pattern: Document/View XML Root Document</b></p><pre class="programlisting">
+Mutable wrapper types for all the primitive types in three easy steps: write the template, convert it to beanshell, and use it.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="idm335"></a>Document/View</h3></div></div><div></div></div><p>This pattern is very handy in software development.  The idea is that there is some fundamental information stored in some "Root Document."  From this fundamental information, different views are generated with "Renderers."</p><p>For software development, the root document may be in a database or XML document, and the renderers can be BPP scripts that write code according to whatever is in the root document.</p><p>As an example, suppose you wanted to view a form from both a Java application and a web page.  The root document in this case could be a description of the form and the data behind it, and the views would generate HTML or Java code depending on the renderer.  Let's place our data in an XML root document called <tt class="code">MyForm.xml</tt>:
+</p><div class="example"><a name="idm341"></a><p class="title"><b>Example 6.5. Pattern: Document/View XML Root Document</b></p><pre class="programlisting">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;form name="MyForm"&gt;
   &lt;element type="label"    name="nameLabel"   value="Name?"/&gt;
@@ -645,7 +645,7 @@ Mutable wrapper types for all the primitive types in three easy steps: write the
 
 </pre></div><p>
 The <tt class="code">MyForm.html.bpp</tt> file might contain something like:
-</p><div class="example"><a name="id4670676"></a><p class="title"><b>Example 6.6. Pattern: Document/View HTML Renderer</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm345"></a><p class="title"><b>Example 6.6. Pattern: Document/View HTML Renderer</b></p><pre class="programlisting">
 # //
 # // read in our form using JDOM
 # //
@@ -677,7 +677,7 @@ The <tt class="code">MyForm.html.bpp</tt> file might contain something like:
 
 </pre></div><p>
 The equivalent Java-source renderer might be called <tt class="code">Form.java.bpp</tt>:
-</p><div class="example"><a name="id4670690"></a><p class="title"><b>Example 6.7. Pattern: Document/View Java Renderer</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm349"></a><p class="title"><b>Example 6.7. Pattern: Document/View Java Renderer</b></p><pre class="programlisting">
 # //
 # // read in our form using JDOM
 # //
@@ -725,8 +725,8 @@ public class $(v(form,"name")) extends JFrame {
 }
 
 </pre></div><p>
-Think about this.  I know the above renderers are toys compared to a real renderer for either case, but BPP gives a systematic way to keep several views up to date simultaneously.  Even a single renderer will pay for itself through reuse, but that's back to the <span class="emphasis"><em>Template</em></span> idea.</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4670740"></a>Chapter 7. Symmetric Preprocessing in BPP</h2></div></div><div></div></div><p>If preprocessing is useful, it is because it enhances the expressiveness of the language that it preprocesses.  In the case of BPP, it enhances Java with Java (well, BeanShell).  But if Java is better with a preprocessor, shouldn't the preprocessor be better with one too?</p><p>In fact, BPP is a <span class="emphasis"><em>symmetric preprocessor</em></span>, meaning that it <span class="emphasis"><em>does</em></span> have a preprocessor (which is also BeanShell), with a preprocesser, etc.  The following source file illustrates (in an unuseful way) using the preprocessor up to three levels:
-</p><div class="example"><a name="id4670763"></a><p class="title"><b>Example 7.1. Useless ### example</b></p><pre class="programlisting">
+Think about this.  I know the above renderers are toys compared to a real renderer for either case, but BPP gives a systematic way to keep several views up to date simultaneously.  Even a single renderer will pay for itself through reuse, but that's back to the <span class="emphasis"><em>Template</em></span> idea.</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm353"></a>Chapter 7. Symmetric Preprocessing in BPP</h2></div></div><div></div></div><p>If preprocessing is useful, it is because it enhances the expressiveness of the language that it preprocesses.  In the case of BPP, it enhances Java with Java (well, BeanShell).  But if Java is better with a preprocessor, shouldn't the preprocessor be better with one too?</p><p>In fact, BPP is a <span class="emphasis"><em>symmetric preprocessor</em></span>, meaning that it <span class="emphasis"><em>does</em></span> have a preprocessor (which is also BeanShell), with a preprocesser, etc.  The following source file illustrates (in an unuseful way) using the preprocessor up to three levels:
+</p><div class="example"><a name="idm359"></a><p class="title"><b>Example 7.1. Useless ### example</b></p><pre class="programlisting">
 a=0;
 #b=1;
 ##c=2;
@@ -737,7 +737,7 @@ g=a+$f;
 
 </pre></div><p>
 The actual steps BPP takes to preprocess this is a little complex, but the results are reasonably easy to understand, and boils down to this: magic $-information at the k-<tt class="code">#</tt>-level comes from the k+1-<tt class="code">#</tt> level.  This can be seen as processing the highest <tt class="code">#</tt>-level first, and passing that to the next lower level, etc.</p><p>In fact, the above script can be dissected by stopping the filtering process at the various stages (there are 6 for this example.  Seeing the output from a given stage of the filtering process is done by passing the <tt class="code">-s</tt> <span class="emphasis"><em>stage</em></span> option to BPP.</p><p>###-decorator.  Passing <tt class="code">-s 6</tt> to BPP while it processes the above example generates only the output of the <tt class="code">###-decorator</tt> filter, which generates the following<sup>[<a href="#ftn."></a>]</sup>
-</p><div class="table"><a name="id4670863"></a><p class="title"><b>Table 7.1. Multi-stage BPP translation</b></p><table summary="Multi-stage BPP translation" border="1"><colgroup><col><col><col><col><col><col></colgroup><thead><tr><th align="left"><tt class="code">Input</tt></th><th align="left"><tt class="code">Output from stage 6: ###-decorator</tt></th><th align="left"><tt class="code">Output from stage 5: ###-interpreter</tt></th><th align="left"><tt class="code">Output from stage 4: ##-decorator</tt></th><th align="left"><tt class="code">Output from stage 3: ##-interpreter</tt></th><th align="left"><tt class="code">Output from stage 2: #-decorator</tt></th><th align="left"><tt class="code">Output from stage 1: #-interpreter</tt></th></tr></thead><tbody><tr><td align="left"><pre class="programlisting">
+</p><div class="table"><a name="idm372"></a><p class="title"><b>Table 7.1. Multi-stage BPP translation</b></p><table summary="Multi-stage BPP translation" border="1"><colgroup><col><col><col><col><col><col></colgroup><thead><tr><th align="left"><tt class="code">Input</tt></th><th align="left"><tt class="code">Output from stage 6: ###-decorator</tt></th><th align="left"><tt class="code">Output from stage 5: ###-interpreter</tt></th><th align="left"><tt class="code">Output from stage 4: ##-decorator</tt></th><th align="left"><tt class="code">Output from stage 3: ##-interpreter</tt></th><th align="left"><tt class="code">Output from stage 2: #-decorator</tt></th><th align="left"><tt class="code">Output from stage 1: #-interpreter</tt></th></tr></thead><tbody><tr><td align="left"><pre class="programlisting">
 a=0;
 #b=1;
 ##c=2;
@@ -783,7 +783,7 @@ g=a+6;
 </pre></td></tr></tbody></table></div><p>
 The decorator stages create beanshell scripts which are executed in the interpreter stages.  Eventually the first-level interpreter executes to generate the final output<sup>[<a href="#ftn.lies">2</a>]</sup>.</p><sup>[<a name="lies" href="#ftn.lies">2</a>]</sup><p>Just because you've never seen a preprocessor with a preprocessor before doesn't mean they are not useful, but it takes a little brain stretching to see where and why you want to use it.  I do think there is one of those 80-20 rules at hand though:
 </p><div class="itemizedlist"><ul type="disc"><li>80% of the code that BPP preprocesses is level 0 (no pound signs).</li><li>80% of what remains is level 1 (one pound sign).</li><li>80% of what remains is level 2 (two pound signs).</li><li>...</li></ul></div><p>
-In fact, we have not yet found a practical application of the ###-level of the preprocessor.  But I'm sure that it exists!  If you find one please tell me about it, and I will get it in this tutorial.</p><p>All the code examples in this book only show the #-level of the preprocessor, but we have so far found two useful applications of the ##-level, and only one of those seems generically useful enough to put in this tutorial.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4671052"></a>Uses of ##</h3></div></div><div></div></div><p>When applying the document/view pattern in software development, specific BPP renderers often look like:
+In fact, we have not yet found a practical application of the ###-level of the preprocessor.  But I'm sure that it exists!  If you find one please tell me about it, and I will get it in this tutorial.</p><p>All the code examples in this book only show the #-level of the preprocessor, but we have so far found two useful applications of the ##-level, and only one of those seems generically useful enough to put in this tutorial.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="idm419"></a>Uses of ##</h3></div></div><div></div></div><p>When applying the document/view pattern in software development, specific BPP renderers often look like:
 </p><pre class="programlisting">
 #
 #FORALL ELEMENTS IN ROOT DOCUMENT
@@ -825,7 +825,7 @@ The actual implementation of this pseudo-code usually have a fairly complex set 
 #
 </pre><p>
 </p><p>To be specific, suppose you had a Collection of classes containing a transaction (String), along with a debit (negative) or credit (positive) number, and you wanted a report with all credits followed by all debits.  With one level of the preprocessor, you could write:
-</p><div class="example"><a name="id4671082"></a><p class="title"><b>Example 7.2. Document/View Renederer without ##-preprocessor</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm426"></a><p class="title"><b>Example 7.2. Document/View Renederer without ##-preprocessor</b></p><pre class="programlisting">
 #static import bpp.Format.*;
 CREDITS:
 #int count=0;
@@ -850,7 +850,7 @@ $(++count). $information ($(N(-amount,"$#,###.00")))
 #} // account
 </pre></div><p>
 The #-preprocessor certainly has a lot of kinda-the-same going on, so I am inclined to write this instead:
-</p><div class="example"><a name="id4671104"></a><p class="title"><b>Example 7.3. Document/View Renederer with ##-preprocessor</b></p><pre class="programlisting">
+</p><div class="example"><a name="idm429"></a><p class="title"><b>Example 7.3. Document/View Renederer with ##-preprocessor</b></p><pre class="programlisting">
 #static import bpp.Format.*;
 #
 ##void forall_begin() {
@@ -880,9 +880,9 @@ $(++count). $information ($(N(-amount,"$#,###.00")))
 ##forall_end();
 </pre></div><p>
 Now all the looping logic is in one spot, and just recycled for each stage of the rendering.  The more loops, the better this solution starts to look.
-</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4671133"></a>Uses of ###</h3></div></div><div></div></div><p>Your ad here!</p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.lies" href="#lies">2</a>] </sup>
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="idm432"></a>Uses of ###</h3></div></div><div></div></div><p>Your ad here!</p></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.lies" href="#lies">2</a>] </sup>
 I'm still lying, but less and less as time goes on.  The only thing I'm leaving out now is that BPP <span class="emphasis"><em>dynamically</em></span> brings preprocessors to life as they are required, but it fudges things so that it is <span class="emphasis"><em>equivalent</em></span> to these six seperate passes.
-</p></div></div></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4671154"></a>Appendix A. Running BPP (part 2)</h2></div></div><div></div></div><p>
+</p></div></div></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm435"></a>Appendix A. Running BPP (part 2)</h2></div></div><div></div></div><p>
 Using the 
 </p><pre class="screen">java -cp ... bpp.BPP <span class="emphasis"><em>args...</em></span></pre><p> 
 works, but gets tedious, and is sure to get scripted pretty quickly in your build process.  Here are a few suggestions for simplifying the execution of BPP:
@@ -890,11 +890,11 @@ works, but gets tedious, and is sure to get scripted pretty quickly in your buil
 </li><li>Windows users <span class="emphasis"><em>without</em></span> cygwin.  I shed a small tear for you.  There is a batch file <tt class="code">BPP.BAT</tt> in the full bpp distibution for you, but since windows couldn't even get a stinking <span class="emphasis"><em>for</em></span> loop right in their scripting language, you have to set up your environment variables up yourself.
 </li><li>Unixes without the full bpp distribution.  I suggest setting up an alias, such as: <tt class="code">alias bpp='java -cp <span class="emphasis"><em>bpp_classpath</em></span> bpp.BPP'</tt>.  You don't need much of the distribution to get the unix scripts to work nice, just get the <tt class="code">bin</tt> folder of the distribution, so that is probably the better solution.
 </li><li>Windows without the full bpp distribution.  I suggest setting up an environment variable which behaves similarly to the unix alias above, so you can just type: <tt class="code">%BPP% <span class="emphasis"><em>args...</em></span></tt>.  One BPP project is set up like this:
-<div class="example"><a name="id4671268"></a><p class="title"><b>Example A.1. BPP in a batch file</b></p><pre class="programlisting">
+<div class="example"><a name="idm466"></a><p class="title"><b>Example A.1. BPP in a batch file</b></p><pre class="programlisting">
 set JAVA=java lasspath "../common/lib/bpp.jar;../common/lib/bsh-2.0b1.jar;../common/lib/jdom.jar;../common/lib/ExcelXML.jar"w %JAVA_FLAGS%
 set BSH=%JAVA% bsh.Interpreter
 set BPP=%JAVA% bpp.BPP
 </pre></div></li></ul></div><p>
-</p></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id4671286"></a>Appendix B. Docbook</h2></div></div><div></div></div><p>
+</p></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="idm469"></a>Appendix B. Docbook</h2></div></div><div></div></div><p>
 This tutorial was created using DocBook.  See <a href="http://www.oasis-open.org/docbook/documentation/reference/html/docbook.html" target="_top">DocBook: The Definiative Guide</a> and <a href="http://www.sagehill.net/docbookxsl" target="_top">www.sagehill.net</a> for a tutorial on using DocBook tools.
 </p></div></div></body></html>

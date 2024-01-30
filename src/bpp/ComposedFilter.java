@@ -30,26 +30,26 @@ public class ComposedFilter implements Filter {
   Filter after;
 
   class Pump extends Thread {
-    PrintWriter printWriter;
-    PipedReader pipedReader;
-    PipedWriter pipedWriter;
-    BufferedReader in;
-    BufferedReader bufferedReader;
-    PrintWriter out;
+      PrintStream printStream;
+      PipedInputStream pipedInputStream;
+      PipedOutputStream pipedOutputStream;
+      BufferedReader in;
+      BufferedReader bufferedReader;
+      PrintStream out;
     
-    IOException exception;
+      IOException exception;
 
-    Pump(BufferedReader _in,PrintWriter _out) {
+    Pump(BufferedReader _in,PrintStream _out) {
       in=_in;
       out=_out;
-      pipedWriter = new PipedWriter();
-      printWriter = new PrintWriter(pipedWriter);
       try {
-        pipedReader = new PipedReader(pipedWriter);
+	  pipedInputStream = new PipedInputStream();
+	  pipedOutputStream = new PipedOutputStream();
+	  pipedOutputStream.connect(pipedInputStream);
       } catch (IOException e) {
-        throw new RuntimeException(e.getMessage());
+	  throw new RuntimeException(e.getMessage());
       }
-      bufferedReader = new BufferedReader(pipedReader);
+      bufferedReader = Filters.getBufferedReader(pipedInputStream);
       exception=null;
       start();
     }
@@ -70,7 +70,7 @@ public class ComposedFilter implements Filter {
     after=_after;
   }
 
-  public void filter(BufferedReader in,PrintWriter out) throws IOException {
+  public void filter(BufferedReader in,PrintStream out) throws IOException {
     Pump p = new Pump(in,out);
     after.filter(p.bufferedReader,out);
     try {

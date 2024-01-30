@@ -1,3 +1,0 @@
-name="World";
-greet="Hello";
-print(""+greet+", "+name+"!");

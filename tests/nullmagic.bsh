@@ -1,2 +1,0 @@
-{out.print("There\'s some ");out.println();}
-{out.print("null ");out.print();out.println(" magic here.");}

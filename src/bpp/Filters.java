@@ -23,55 +23,53 @@ import java.io.*;
 import java.net.*;
 
 public class Filters {
-  public static PrintWriter getPrintWriter() {
-    return new PrintStringBufferWriter();
-  }
-  public static PrintWriter getPrintWriter(int capacity) {
-    return new PrintStringBufferWriter(capacity);
-  }
-
-  public static PrintWriter getPrintWriter(StringBuffer sb) {
-    return new PrintStringBufferWriter(sb);
-  }
-
-  public static PrintWriter getPrintWriter(Writer w) {
-    return (w instanceof PrintWriter) ?
-      (PrintWriter) w : new PrintWriter(w,true);
-  }
-
-  public static PrintWriter getPrintWriter(OutputStream out) {
-    try {
-      return new PrintWriter(new OutputStreamWriter(out,"UTF-8"),true);
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
+    public static PrintStream getPrintStream() {
+	boolean autoFlush = true;
+	return new PrintStream(new ByteArrayOutputStream(),autoFlush);
     }
-  }
-
-  public static PrintWriter getPrintWriter(File file) {
-    try {
-      return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new LazyFileOutputStream(file),"UTF-8")),true);
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
+    public static PrintStream getPrintStream(int capacity) {
+	boolean autoFlush = true;
+	return new PrintStream(new ByteArrayOutputStream(capacity),autoFlush);
     }
-  }
+    public static PrintStream getPrintStream(Appendable appendable) {
+	if (appendable instanceof PrintStream) {
+	    return (PrintWriter) appendable;
+	}
+	if (appendable instanceof OutputStream) {
+	    boolean autoFlush = true;
+	    return new PrintWriter((OutputStream) appendable, autoFlush);
+	}
+	return new PrintWriter(new AppendableOutputStream(appendable),autoFlush);
+    }
+    
+    public static PrintStream getPrintStream(File file) {
+	boolean autoFlush = true;
+	OutputStream out = new BufferedOutputStream(new LazyFileOutputStream(file));
+	return new PrintStream(out,autoFlush,"UTF-8");
+    }
 
-  public static PrintWriter getPrintWriter(String file) {
-    if (file == null || file.equals("") || file.equals("-")) return getPrintWriter(System.out);
-    return getPrintWriter(new File(file));
-  }
+    public static PrintStream getPrintStream(String file) {
+	if (file == null || file.equals("") || file.equals("-") || file.equals("stdout")) {
+	    return System.out;
+	}
+	if (file.equals("stderr")) {
+	    return System.err;
+	}
+	return getPrintStream(new File(file));
+    }
+    
+    public static BufferedReader getBufferedReader(Reader reader) {
+	return (reader instanceof BufferedReader) ?
+	    (BufferedReader) reader : new BufferedReader(reader);
+    }
 
-  public static BufferedReader getBufferedReader(Reader r) {
-    return (r instanceof BufferedReader) ?
-	    (BufferedReader) r : new BufferedReader(r);
-  }
-
-  public static BufferedReader getBufferedReader(InputStream in) {
-    try {
+    public static BufferedReader getBufferedReader(InputStream in) {
+	try {
 	    return new BufferedReader(new InputStreamReader(in,"UTF-8"));
-    } catch (IOException e) {
+	} catch (IOException e) {
 	    throw new RuntimeException(e.getMessage());
+	}
     }
-  }
 
   public static BufferedReader getBufferedReader(File file) {
     try {
@@ -81,18 +79,19 @@ public class Filters {
     }
   }
 
-  public static BufferedReader getBufferedReader(String file) {
-    if (file == null || file.equals("") || file.equals("-")) {
-      return getBufferedReader(System.in);
-    } else if (file.startsWith("http:") || file.startsWith("jar:")) {
-      try {
-        return getBufferedReader(new URL(file).openStream());
-      } catch (Exception e) {
-        throw new RuntimeException(e.getMessage());
-      }
-    } else {
-      return getBufferedReader(new File(file));
+    public static BufferedReader getBufferedReader(String file) {
+	if (file == null || file.equals("") || file.equals("-")) {
+	    return getBufferedReader(System.in);
+	} else if (file.startsWith("http:") || file.startsWith("jar:")) {
+	    try {
+		return getBufferedReader(new URL(file).openStream());
+	    } catch (Exception e) {
+		throw new RuntimeException(e.getMessage());
+	    }
+	} else {
+	    return getBufferedReader(new File(file));
+	}
     }
-  }
 
 }
+

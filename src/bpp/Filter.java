@@ -24,8 +24,11 @@ import java.io.*;
 /** <p>Abstract filter.</p>
 
 <p>Implementations should <i>not</i> close the input or
-    output streams.  See the Filters class for convienience methods to create
+    output streams.  They should flush the output stream
+    after newlines and at the end of the stream.
+
+    See the Filters class for convienience methods to create
     buffered readers and print writers.</p> */
 public interface Filter {
-    public void filter(BufferedReader in,PrintWriter out) throws IOException;
+    public void filter(BufferedReader in,PrintStream out) throws IOException;
 }

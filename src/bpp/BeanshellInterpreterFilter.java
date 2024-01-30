@@ -1,4 +1,4 @@
-/**
+/**A
    BPP: The Beanshell Preprocessor, version 0.4
    Copyright (C) 2003-2004  Warren D. MacEvoy jr.
 
@@ -34,7 +34,7 @@ public class BeanshellInterpreterFilter implements Filter {
   }
 
   public void filter(BufferedReader in,PrintWriter out) {
-    OutputStreamToWriterConverter c = new OutputStreamToWriterConverter();
+      OutputStreamToWriterConverter c = new OutputStreamToWriterConverter();
     PrintStream ps = null;
     try {
       ps = new PrintStream(c.pout,true,"UTF-8");

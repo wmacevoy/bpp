@@ -53,7 +53,7 @@ public class Redirect {
   }
 
   public static void begin(String filename,boolean append) throws IOException {
-    begin(new PrintStream(new BufferedOutputStream(new FileOutputStream(filename,append)),false,"UTF-8"));
+    begin(new PrintStream(new BufferedOutputStream(new FileOutputStream(filename,append)),true,"UTF-8"));
 
   }
 

@@ -259,8 +259,8 @@ public class BPP {
     } else {
       f.setModeMagic();
     }
-    BufferedReader in = Filters.getBufferedReader(ifile);
-    PrintWriter out = Filters.getPrintWriter(ofile);
+    Reader in = Filters.getReader(ifile);
+    PrintStream out = Filters.getPrintStream(ofile);
     
     f.filter(in,out);
     in.close();

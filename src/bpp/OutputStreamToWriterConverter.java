@@ -29,33 +29,38 @@ class OutputStreamToWriterConverter extends Thread {
   BufferedReader br;
   
   OutputStreamToWriterConverter() {
-    pout = new PipedOutputStream();
-    try {
-	    pin = new PipedInputStream(pout);
-    } catch (IOException e) {
-	    throw new RuntimeException(e.getMessage());
-    }
-    try {
-	    isr = new InputStreamReader(pin,"UTF-8");
-    } catch (UnsupportedEncodingException e) {
-	    throw new RuntimeException(e.getMessage());
-    }
-    br = new BufferedReader(isr);
+      pout = new PipedOutputStream();
+      try {
+	  pin = new PipedInputStream(pout);
+      } catch (IOException e) {
+	  throw new RuntimeException(e.getMessage());
+      }
+      try {
+	  isr = new InputStreamReader(pin,"UTF-8");
+      } catch (UnsupportedEncodingException e) {
+	  throw new RuntimeException(e.getMessage());
+      }
+      br = new BufferedReader(isr);
   }
-  
-  public void run() {
-    for (;;) {
+    
+    public void run() {
+	for (;;) {
 	    String line=null;
 	    try {
-        line = br.readLine();
+		line = br.readLine();
 	    } catch (IOException e) {
-        exception(e);
+		exception(e);
 	    }
 	    if (line == null) break;
 	    out.println(line);
-      out.flush();
+	    out.flush();
+	}
+	try {
+	    out.close();
+	} catch (IOException e) {
+	    exception(e);
+	}
     }
-  }
-  
-  public void exception(Exception e) { e.printStackTrace(System.err); }
+    
+    public void exception(Exception e) { e.printStackTrace(System.err); }
 }

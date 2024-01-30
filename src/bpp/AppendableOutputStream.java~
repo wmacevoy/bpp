@@ -1,0 +1,158 @@
+/**
+   BPP: The Beanshell Preprocessor, version 0.4
+   Copyright (C) 2003-2004  Warren D. MacEvoy jr.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
+package bpp;
+
+import java.io.*;
+import java.net.*;
+
+class AppendableOutputStream extends OutputStream {
+    Appendable appendable;
+    byte [] utf8 = new byte [ 4 ];
+    int n = 0;
+    AppendableOutputStream(Appendable appendable) {
+	this.appendable=appendable;
+    }
+
+    int utf8declen() {
+	if (n <= 0) return -1;
+	byte c = utf8[0];
+	if ((c & 0x80) == 0) return 1;
+	if ((c & 0x40) != 0) {
+	    for (int len=2; len <= 4; ++len) {
+		if (n < len || (utf8[len-1] & 0xC0) != 0x80) {
+		    return -1;
+		}
+		if ((c & (0x80 >> len)) == 0) return len;
+	    }
+	}
+	return -1;
+    }
+
+    int utf8decval(int len) {
+	if (len == 1) {
+	    return utf8[0];
+	} else if (len > 0) {
+	    int val = utf8[0] & ~(0xFF << (7-len));
+	    for (int i=1; i<len; ++i) {
+		val = (val  << 6) | (utf8[i] & 0x3F);
+	    }
+	    return val;
+	}
+	return -1;
+    }
+    
+    public void write(int c) {
+	utf8[n]=(byte) c;
+	++n;
+	int len=utf8enclen();
+	if (len > 0) {
+	    appendable.append(utf8encval(len));
+	    n=0;
+	}
+    }
+}
+
+public class Filters {
+    public static PrintStream getPrintStream() {
+	boolean autoFlush = true;
+	return new PrintStream(new ByteArrayOutputStream(),autoFlush);
+    }
+    public static PrintStream getPrintStream(int capacity) {
+	boolean autoFlush = true;
+	return new PrintStream(new ByteArrayOutputStream(capacity),autoFlush);
+    }
+    public static PrintStream getPrintStream(Appendable appendable) {
+	if (appendable instanceof PrintStream) {
+	    return (PrintWriter) appendable;
+	}
+	if (appendable instanceof OutputStream) {
+	    boolean autoFlush = true;
+	    return new PrintWriter((OutputStream) appendable, autoFlush);
+	}
+	return new PrintStringBufferWriter(sb);
+    }
+
+  public static PrintWriter getPrintWriter(Writer w) {
+    return (w instanceof PrintWriter) ?
+      (PrintWriter) w : new PrintWriter(w,true);
+  }
+
+  public static PrintWriter getPrintWriter(OutputStream out) {
+    try {
+      return new PrintWriter(new OutputStreamWriter(out,"UTF-8"),true);
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public static PrintWriter getPrintWriter(File file) {
+    try {
+      return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new LazyFileOutputStream(file),"UTF-8")),true);
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public static PrintWriter getPrintWriter(String file) {
+      if (file == null || file.equals("") || file.equals("-") || file.equals("stdout")) {
+	  return getPrintWriter(System.out);
+      }
+      if (file.equals("stderr")) {
+	  return getPrintWriter(System.err);
+      }
+      return getPrintWriter(new File(file));
+  }
+
+  public static BufferedReader getBufferedReader(Reader r) {
+    return (r instanceof BufferedReader) ?
+	    (BufferedReader) r : new BufferedReader(r);
+  }
+
+  public static BufferedReader getBufferedReader(InputStream in) {
+    try {
+	    return new BufferedReader(new InputStreamReader(in,"UTF-8"));
+    } catch (IOException e) {
+	    throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public static BufferedReader getBufferedReader(File file) {
+    try {
+	    return new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
+    } catch (IOException e) {
+	    throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  public static BufferedReader getBufferedReader(String file) {
+    if (file == null || file.equals("") || file.equals("-")) {
+      return getBufferedReader(System.in);
+    } else if (file.startsWith("http:") || file.startsWith("jar:")) {
+      try {
+        return getBufferedReader(new URL(file).openStream());
+      } catch (Exception e) {
+        throw new RuntimeException(e.getMessage());
+      }
+    } else {
+      return getBufferedReader(new File(file));
+    }
+  }
+
+}

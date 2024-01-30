@@ -38,19 +38,19 @@ public class BeanshellDecoratorFilter extends PreprocessorDecoratorFilter {
     lineNumber=blankLines;
   }
   
-  public void begin(PrintWriter out) throws IOException {
+  public void begin(PrintStream out) throws IOException {
     for (int i=blankLines-1; i>=0; --i) out.println();
     out.flush();
   }
   
-  public void exact(String line,PrintWriter out) throws IOException {
+  public void exact(String line,PrintStream out) throws IOException {
     out.print("out.println(");
     out.print(Format.literal(line));
     out.println(");");
     out.flush();
   }
   
-  public void magic(String line,PrintWriter out) throws IOException {
+  public void magic(String line,PrintStream out) throws IOException {
     BPPContext context = new BPPContext();
     context.pw = out;
     try {
@@ -61,7 +61,7 @@ public class BeanshellDecoratorFilter extends PreprocessorDecoratorFilter {
     out.flush();
   }
   
-  public void echo(String line,PrintWriter out) throws IOException {
+  public void echo(String line,PrintStream out) throws IOException {
     String output = line.substring(depth);
     out.println(output);
     out.flush();
