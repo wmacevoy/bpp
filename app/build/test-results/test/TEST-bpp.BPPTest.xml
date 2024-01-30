@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="bpp.BPPTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-01-30T19:54:19" hostname="fa7cc3aa2e39" time="0.016">
+  <properties/>
+  <testcase name="testHello" classname="bpp.BPPTest" time="0.016">
+    <failure message="java.io.IOException: Write end dead" type="java.io.IOException">java.io.IOException: Write end dead
+	at java.base/java.io.PipedInputStream.read(PipedInputStream.java:310)
+	at java.base/java.io.PipedInputStream.read(PipedInputStream.java:377)
+	at java.base/sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:284)
+	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:181)
+	at java.base/java.io.BufferedReader.fill(BufferedReader.java:161)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:326)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:392)
+	at bpp.DecoratorFilter.filter(DecoratorFilter.java:28)
+	at bpp.ComposedFilter.lambda$filter$1(ComposedFilter.java:37)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
