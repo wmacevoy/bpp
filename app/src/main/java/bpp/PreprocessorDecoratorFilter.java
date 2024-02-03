@@ -10,15 +10,15 @@ abstract public class PreprocessorDecoratorFilter extends DecoratorFilter {
   protected char magicIdentifier = '$';
   protected int depth;
 
-  public char getEchoCommmand() {
+  public char getEchoCommand() {
     return echoCommand;
   }
 
-  public char getExactCommmand() {
+  public char getExactCommand() {
     return exactCommand;
   }
 
-  public char getMagicCommmand() {
+  public char getMagicCommand() {
     return magicCommand;
   }
 
