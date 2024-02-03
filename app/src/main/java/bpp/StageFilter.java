@@ -25,40 +25,51 @@ abstract public class StageFilter implements Filter {
   protected int stage;
   protected int maxLineLength;
   protected int lineNumber;
-  public int getLineNumber() { return lineNumber; }
-  public StageFilter(int _stage,int _maxLineLength) {
-     stage=_stage;
-     maxLineLength=_maxLineLength;
- }
+
+  public int getLineNumber() {
+    return lineNumber;
+  }
+
+  public StageFilter(int _stage, int _maxLineLength) {
+    stage = _stage;
+    maxLineLength = _maxLineLength;
+  }
 
   public void filter(BufferedReader in, PrintStream out) throws IOException {
-    for (;;) {
-      String line = null;
-      in.mark(maxLineLength);
-      line=in.readLine();
-      ++lineNumber;
-      if (line == null) return;
-      int lineStage = getLineStage(line);
-      if (lineStage > stage) {
-        try {
-          in.reset();
-          --lineNumber;
-        } catch (IOException e) {
-          throw new IOException("Max line limit exceeded.  Rerun with -maxline "
-                                + 3*line.length()/2 + " option");
+    try {
+      for (;;) {
+        String line = null;
+        in.mark(maxLineLength);
+        line = in.readLine();
+        ++lineNumber;
+        if (line == null) {
+          return;
         }
-        break;
+        int lineStage = getLineStage(line);
+        if (lineStage > stage) {
+          try {
+            in.reset();
+            --lineNumber;
+          } catch (IOException e) {
+            throw new IOException("Max line limit exceeded.  Rerun with -maxline "
+                + 3 * line.length() / 2 + " option");
+          }
+          break;
+        }
+        out.println(line);
+        out.flush();
       }
-      out.println(line);
+
+      ++stage;
+      Filter f2 = getStageFilter();
+      Filter f12 = new ComposedFilter(this, f2);
+      f12.filter(in, out);
+    } finally {
       out.flush();
     }
-    ++stage;
-    Filter f2 = getStageFilter();
-    Filter f12=new ComposedFilter(this,f2);
-    f12.filter(in,out);
-    out.flush();
   }
-  
- public abstract int getLineStage(String line);
- public abstract Filter getStageFilter();
+
+  public abstract int getLineStage(String line);
+
+  public abstract Filter getStageFilter();
 }

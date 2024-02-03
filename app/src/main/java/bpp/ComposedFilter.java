@@ -2,6 +2,8 @@ package bpp;
 
 import java.io.*;
 
+import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
+
 public class ComposedFilter implements Filter {
   Filter before;
   Filter after;
@@ -30,6 +32,7 @@ public class ComposedFilter implements Filter {
         exceptions.before = ex;
       } finally {
         psOut.flush();
+        psOut.close();
       }
     });
     Thread afterThread = new Thread(() -> {

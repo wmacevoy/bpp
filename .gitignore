@@ -1,4 +1,11 @@
 # -*- mode: gitignore; -*-
+
+/.DS_Store
+/.gradle
+
+/private
+javac.*.args
+
 *~
 \#*\#
 /.emacs.desktop
@@ -6,7 +13,7 @@
 *.elc
 auto-save-list
 tramp
-.\#*
+a.\#*
 
 # Org-mode
 .org-id-locations

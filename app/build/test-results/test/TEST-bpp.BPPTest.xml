@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="bpp.BPPTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-01-30T19:54:19" hostname="fa7cc3aa2e39" time="0.016">
+<testsuite name="bpp.BPPTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-02-02T23:16:55" hostname="fa7cc3aa2e39" time="0.017">
   <properties/>
-  <testcase name="testHello" classname="bpp.BPPTest" time="0.016">
+  <testcase name="testHello" classname="bpp.BPPTest" time="0.017">
     <failure message="java.io.IOException: Write end dead" type="java.io.IOException">java.io.IOException: Write end dead
 	at java.base/java.io.PipedInputStream.read(PipedInputStream.java:310)
 	at java.base/java.io.PipedInputStream.read(PipedInputStream.java:377)

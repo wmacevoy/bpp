@@ -186,6 +186,15 @@ else
     UOPT="-u root"
 fi
 
+if [ "$build" = true  ]
+then
+    if ! docker run --platform $platform $UOPT -v "$REPO_HOME:/tmp/home" -v "$REPO:/repo" -w "/repo/$WORK" --rm -it "$tag" ./test-cloudbox-tests --platform $platform --user $user bash -c 'cp $HOME/.bashrc /tmp/home'
+    then
+	echo "failed to collect bashrc file'
+	exit 1
+    fi
+fi
+
 if [ "$test" = true ]
 then
     if ! docker run --platform $platform $UOPT -v "$REPO_HOME:$CONTAINER_HOME" -v "$REPO:/repo" -w "/repo/$WORK" --rm -it "$tag" ./test-cloudbox-tests --platform $platform --user $user

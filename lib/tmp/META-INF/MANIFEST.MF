@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.12
+Created-By: 11.0.16.1+1 (Eclipse OpenJ9)
+Main-Class: bsh.Console
+Specification-Title: BeanShell
+Specification-Version: 2.1.1
+Specification-Vendor: http://www.beanshell.org/
+Implementation-Version: 2.1.1 2022-12-02 01:54:08
+Implementation-Vendor: https://github.com/beanshell/beanshell
+

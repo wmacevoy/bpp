@@ -25,12 +25,20 @@ import java.net.*;
 public class Filters {
 	public static PrintStream getPrintStream() {
 		boolean autoFlush = true;
-		return new PrintStream(new ByteArrayOutputStream(), autoFlush);
+		try {
+			return new PrintStream(new ByteArrayOutputStream(), autoFlush, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 
 	public static PrintStream getPrintStream(int capacity) {
 		boolean autoFlush = true;
-		return new PrintStream(new ByteArrayOutputStream(capacity), autoFlush);
+		try {
+			return new PrintStream(new ByteArrayOutputStream(capacity), autoFlush, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 
 	public static PrintStream getPrintStream(Appendable appendable) {
@@ -39,10 +47,18 @@ public class Filters {
 		}
 		if (appendable instanceof OutputStream) {
 			boolean autoFlush = true;
-			return new PrintStream((OutputStream) appendable, autoFlush);
+			try {
+				return new PrintStream((OutputStream) appendable, autoFlush, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 		boolean autoFlush = true;
-		return new PrintStream(new AppendableOutputStream(appendable, autoFlush), autoFlush);
+		try {
+			return new PrintStream(new AppendableOutputStream(appendable, autoFlush), autoFlush, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 
 	public static PrintStream getPrintStream(File file) throws IOException {

@@ -16,7 +16,7 @@ public class BPPTest {
         File inf = File.createTempFile("testHello", ".txt");
         PrintStream ps = new PrintStream(inf);
         ps.println("# who = \"World\"");
-        ps.println("Hello, ${who}!");
+        ps.println("Hello, $(who)!");
         ps.flush();
         ps.close();
         File outf = File.createTempFile("testHello",".out");

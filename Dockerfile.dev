@@ -16,14 +16,16 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
      gnupg \
      less \
      mandoc \
-     openjdk-17-jdk \
      openssl \
      openssh-server \
      python3 \
      python3-pip \
      python3-venv \     
      sudo \
-     uuid-runtime
+     uuid-runtime \
+     zip
+
+#      openjdk-17-jdk \
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     xsltproc docbook docbook-xsl
@@ -38,4 +40,11 @@ RUN chown -R node:node /usr/local/bin
 USER node
 WORKDIR /home/node
 
+RUN curl -s "https://get.sdkman.io" | bash && sudo mv /home/node/.sdkman /usr/local/share/.sdkman
+RUN ln -s /usr/local/share/.sdkman /home/node/.sdkman
+RUN echo 'if [ ! -f "${HOME}/.sdkman" ] ; then ln -s /usr/local/share/.sdkman "${HOME}/.sdkman" ; fi' >> /home/node/.bashrc
+RUN echo '. "${HOME}/.sdkman/bin/sdkman-init.sh' >> /home/node/.bashrc
+RUN bash -c ". /home/node/.sdkman/bin/sdkman-init.sh && sdk install java"
+# RUN sdk install java 8-amzn
+# RUN sdk install gradle
 CMD bash
