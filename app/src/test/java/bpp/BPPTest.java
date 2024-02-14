@@ -5,21 +5,21 @@ package bpp;
 
 import org.junit.Test;
 
-import com.google.common.io.ByteArrayDataInput;
-
 import static org.junit.Assert.*;
 
 import java.io.*;
 
 public class BPPTest {
     @Test public void testHello() throws Exception {
-        File inf = File.createTempFile("testHello", ".txt");
+        //File inf = File.createTempFile("testHello", ".txt");
+        File inf = new File("testHello.bpp");
         PrintStream ps = new PrintStream(inf);
         ps.println("# who = \"World\"");
         ps.println("Hello, $(who)!");
         ps.flush();
         ps.close();
-        File outf = File.createTempFile("testHello",".out");
+        //File outf = File.createTempFile("testHello",".out");
+        File outf = new File("testHello.out");
         String[] args = {"-o",outf.getPath(),"-qq",inf.getPath()};
         BPP.main(args);
         BufferedReader br = new BufferedReader(new FileReader(outf));
@@ -29,5 +29,6 @@ public class BPPTest {
         String expect2 = null;
         String result2 = br.readLine();
         assertEquals(expect2,result2);
+        br.close();
     }
 }

@@ -2,8 +2,6 @@ package bpp;
 
 import java.io.*;
 
-import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
-
 public class ComposedFilter implements Filter {
   Filter before;
   Filter after;
@@ -20,10 +18,30 @@ public class ComposedFilter implements Filter {
 
   public void filter(BufferedReader in, PrintStream out) throws IOException {
     PipedOutputStream pipeOut = new PipedOutputStream();
-    PrintStream psOut = new PrintStream(pipeOut, true);
+    PrintStream untracedOut = new PrintStream(pipeOut, true);
     PipedInputStream pipeIn = new PipedInputStream();
-    BufferedReader brIn = new BufferedReader(new InputStreamReader(pipeIn, "UTF-8"));
+    BufferedReader untracedIn = new BufferedReader(new InputStreamReader(pipeIn, "UTF-8"));
     pipeOut.connect(pipeIn);
+
+    PrintStream psOut; // maybe traced
+    if (in instanceof TracedBufferedReader) {
+      TracedBufferedReader tbr = (TracedBufferedReader) in;
+      String prefix = tbr.prefix + ">" + this.getClass(); 
+
+      psOut = new TracedPrintStream(untracedOut,prefix,tbr.log);
+    } else {
+      psOut = untracedOut;
+    }
+
+    BufferedReader brIn; // maybe traced
+    if (out instanceof TracedPrintStream) {
+      TracedPrintStream tps = (TracedPrintStream) out;
+      String prefix = this.getClass() + ">" + tps.prefix;
+      brIn = new TracedBufferedReader(untracedIn,prefix,tps.log);
+    } else {
+      brIn = untracedIn;
+    }
+
     IOExceptions exceptions = new IOExceptions();
     Thread beforeThread = new Thread(() -> {
       try {

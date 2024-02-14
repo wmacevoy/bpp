@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.*;
 
 import org.junit.Test;
 

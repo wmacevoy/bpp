@@ -8,34 +8,12 @@ import static org.junit.Assert.assertTrue;
 import java.io.*;
 
 public class BeanshellConsoleInterfaceTest {
-    class MockOut {
-        StringBuilder sb = new StringBuilder();
-        AppendableOutputStream aos = new AppendableOutputStream(sb, false);
-        PrintStream ps = new PrintStream(aos);
-
-        public String toString() {
-            ps.flush();
-            return sb.toString();
-        }
-    }
-
-    class MockReader {
-        String s;
-        StringReader sr;
-        BufferedReader br;
-
-        MockReader(String _s) {
-            s = _s;
-            sr = new StringReader(s);
-            br = new BufferedReader(sr);
-        }
-    }
 
     class MockBCI {
         MockOut mockOut = new MockOut();
         MockOut mockErr = new MockOut();
         MockReader mockIn = new MockReader("");
-        BeanshellConsoleInterface bci = new BeanshellConsoleInterface(mockIn.br, mockOut.ps, mockErr.ps);
+        BeanshellConsoleInterface bci = new BeanshellConsoleInterface(mockIn.bufferedReader, mockOut.out, mockErr.out);
     }
 
     @Test
@@ -49,16 +27,16 @@ public class BeanshellConsoleInterfaceTest {
     public void testGetErr() {
         MockBCI mock = new MockBCI();
         MockOut mockErr2 = new MockOut();
-        mock.bci.setErr(mockErr2.ps);
-        assertTrue(mock.bci.getErr() == mockErr2.ps);
+        mock.bci.setErr(mockErr2.out);
+        assertTrue(mock.bci.getErr() == mockErr2.out);
     }
 
     @Test
     public void testGetIn() {
         MockBCI mock = new MockBCI();
         MockReader mockIn2 = new MockReader("");
-        mock.bci.setIn(mockIn2.br);
-        assertTrue(mock.bci.getIn() == mockIn2.br);
+        mock.bci.setIn(mockIn2.bufferedReader);
+        assertTrue(mock.bci.getIn() == mockIn2.bufferedReader);
 
     }
 
@@ -66,8 +44,8 @@ public class BeanshellConsoleInterfaceTest {
     public void testGetOut() {
         MockBCI mock = new MockBCI();
         MockOut mockOut2 = new MockOut();
-        mock.bci.setOut(mockOut2.ps);
-        assertTrue(mock.bci.getOut() == mockOut2.ps);
+        mock.bci.setOut(mockOut2.out);
+        assertTrue(mock.bci.getOut() == mockOut2.out);
 
     }
 

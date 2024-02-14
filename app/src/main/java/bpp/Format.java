@@ -801,6 +801,7 @@ public class Format {
    * </p>
    */
   public static String literal(String s) {
+    if (s == null) return "null";
     StringBuffer ans = new StringBuffer(2 + (s.length() * 5) / 4).append('\"');
     for (int i = 0; i < s.length(); ++i)
       encodeTo(s.charAt(i), ans);

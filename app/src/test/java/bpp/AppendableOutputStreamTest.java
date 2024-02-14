@@ -1,46 +1,12 @@
 package bpp;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import org.junit.Test;
 
-import java.io.*;
-import java.util.*;
 
-class MockAppendable implements Appendable, Closeable, Flushable {
-    StringBuilder data = new StringBuilder();
-
-    @Override
-    public Appendable append(CharSequence csq) throws IOException {
-        data.append(csq);
-        return this;
-    }
-
-    @Override
-    public Appendable append(CharSequence csq, int start, int end) throws IOException {
-        data.append(csq, start, end);
-        return this;
-    }
-
-    @Override
-    public Appendable append(char c) throws IOException {
-        data.append(c);
-        return this;
-    }
-
-    boolean closed = false;
-
-    @Override
-    public void close() throws IOException {
-        closed = true;
-    }
-
-    boolean flushed = false;
-
-    @Override
-    public void flush() throws IOException {
-        flushed = true;
-    }
-}
 
 public class AppendableOutputStreamTest {
     int[] utf8boundaries = new int[] { 0x7F, 0x7FF, 0xFFFF, 0x10FFFF };
@@ -126,6 +92,7 @@ public class AppendableOutputStreamTest {
                 }
                 out.close();
                 assertEquals(sb.toString(), mock.data.toString());
+                
             }
         }
     }

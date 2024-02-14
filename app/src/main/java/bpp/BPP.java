@@ -47,7 +47,7 @@ public class BPP {
     try {
       DEBUG = System.getProperty("bpp.debug").length() > 0;
     } catch (Exception e) {
-      DEBUG = false;
+      DEBUG = true;
     }
   }
 
@@ -358,9 +358,16 @@ public class BPP {
       f.setModeMagic();
     }
 
-    try (BufferedReader in = Filters.getBufferedReader(ifile);
-        PrintStream out = Filters.getPrintStream(ofile)) {
-      f.filter(in, out);
+    try (BufferedReader in = IO.getBufferedReader(ifile);
+        PrintStream out = IO.getPrintStream(ofile)) {
+          if (DEBUG) {
+            PrintStream log = IO.isStdout(ofile) ? System.err : IO.getPrintStream(ifile + ".log");
+            BufferedReader tracedIn = new TracedBufferedReader(in, ifile + ">", log);
+            PrintStream tracedOut = new TracedPrintStream(out, ">" + ofile, log);
+            f.filter(tracedIn,tracedOut);
+          } else {
+            f.filter(in,out);
+          }
     }
     ofile = null;
   }

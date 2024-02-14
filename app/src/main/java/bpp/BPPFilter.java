@@ -32,7 +32,7 @@ public class BPPFilter extends StageFilter {
   private String destination;
   private String[] args;
   private URL[] classPath;
-  private Map<Integer,String> stageMap = new TreeMap();
+  private Map<Integer,String> stageMap = new TreeMap<Integer,String>();
   private PrintStream err;
   private bsh.NameSpace nameSpace;
   private bsh.Interpreter parent;
@@ -99,8 +99,8 @@ nn	</table>
   }
   public int getMinStage() { return minStage; }
 
-  public Map getStageMap() { return stageMap; }
-  public void setStageMap(Map _stageMap) { stageMap=_stageMap; }
+  public Map<Integer,String> getStageMap() { return stageMap; }
+  public void setStageMap(Map<Integer,String> _stageMap) { stageMap=_stageMap; }
 
   /** Lines that do not begin with a pound(#), quote, (') or double quote("), are subject to some default translation.  This sets up exact translation by default. */
   public void setModeExact() { mode='\''; }

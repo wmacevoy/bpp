@@ -3,38 +3,12 @@ package bpp;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
-import java.io.PrintStream;
-import java.io.StringReader;
 import java.net.URL;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class DefaultBeanshellInterpreterFactoryTest {
-    class MockOut {
-        StringBuilder sb = new StringBuilder();
-        AppendableOutputStream aos = new AppendableOutputStream(sb, false);
-        PrintStream ps = new PrintStream(aos);
-
-        public String toString() {
-            ps.flush();
-            return sb.toString();
-        }
-    }
-
-    class MockReader {
-        String s;
-        StringReader sr;
-        BufferedReader br;
-
-        MockReader(String _s) {
-            s = _s;
-            sr = new StringReader(s);
-            br = new BufferedReader(sr);
-        }
-    }
-
 
     DefaultBeanshellInterpreterFactory factory;
 
@@ -55,16 +29,16 @@ public class DefaultBeanshellInterpreterFactoryTest {
     @Test
     public void testGetErr() {
         MockOut mockErr = new MockOut();
-        factory.setErr(mockErr.ps);
-        assertTrue(mockErr.ps == factory.getErr());
+        factory.setErr(mockErr.out);
+        assertTrue(mockErr.out == factory.getErr());
 
     }
 
     @Test
     public void testGetIn() {
         MockReader mockReader = new MockReader("");
-        factory.setIn(mockReader.br);
-        assertTrue(mockReader.br == factory.getIn());
+        factory.setIn(mockReader.bufferedReader);
+        assertTrue(mockReader.bufferedReader == factory.getIn());
 
     }
 
@@ -89,8 +63,8 @@ public class DefaultBeanshellInterpreterFactoryTest {
     @Test
     public void testGetOut() {
         MockOut mockOut = new MockOut();
-        factory.setOut(mockOut.ps);
-        assertTrue(mockOut.ps == factory.getOut());
+        factory.setOut(mockOut.out);
+        assertTrue(mockOut.out == factory.getOut());
 
     }
 
@@ -99,9 +73,9 @@ public class DefaultBeanshellInterpreterFactoryTest {
         MockOut mockOut = new MockOut();
         MockOut mockErr = new MockOut();
         MockReader mockReader = new MockReader("");
-        factory.setIn(mockReader.br);
-        factory.setOut(mockOut.ps);
-        factory.setErr(mockErr.ps);
+        factory.setIn(mockReader.bufferedReader);
+        factory.setOut(mockOut.out);
+        factory.setErr(mockErr.out);
         bsh.Interpreter parent = factory.interpreter();
         factory.setParent(parent);
         assertTrue(parent == factory.getParent());
@@ -122,9 +96,9 @@ public class DefaultBeanshellInterpreterFactoryTest {
         String input = "out.println(\"hi\");" + eol
         + "err.println(\"oops\");" + eol;
         MockReader mockReader = new MockReader(input);
-        factory.setIn(mockReader.br);
-        factory.setOut(mockOut.ps);
-        factory.setErr(mockErr.ps);
+        factory.setIn(mockReader.bufferedReader);
+        factory.setOut(mockOut.out);
+        factory.setErr(mockErr.out);
         bsh.Interpreter interpreter = factory.interpreter();
         interpreter.run();
         assertEquals("hi"+eol,mockOut.toString());
